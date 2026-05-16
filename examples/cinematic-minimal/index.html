@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="zh-CN" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>沈予安 | 个人品牌与产品叙事顾问</title>
+    <meta
+      name="description"
+      content="沈予安帮助创始人、独立顾问和小型团队梳理个人品牌、产品叙事与内容系统，让表达更清楚，信任建立更自然。"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              ink: {
+                950: "#0F1115",
+                900: "#151821",
+                850: "#1B1F27",
+                800: "#22252D",
+                700: "#2C2E35",
+              },
+              warm: {
+                50: "#EEEAE0",
+                100: "#D8D1C1",
+                200: "#B8AF9E",
+                300: "#948B7D",
+                400: "#746D62",
+              },
+              gold: {
+                300: "#F4C84A",
+                400: "#D9B861",
+                500: "#C59B4A",
+              },
+            },
+            fontFamily: {
+              sans: [
+                "Inter",
+                "ui-sans-serif",
+                "system-ui",
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "Segoe UI",
+                "Microsoft YaHei",
+                "sans-serif",
+              ],
+            },
+            boxShadow: {
+              quiet: "0 24px 80px rgba(0, 0, 0, 0.22)",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+
+      body {
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at 78% 14%, rgba(197, 155, 74, 0.1), transparent 30rem),
+          radial-gradient(circle at 12% 18%, rgba(120, 96, 72, 0.12), transparent 34rem),
+          linear-gradient(135deg, #0f1115 0%, #151821 46%, #111318 100%);
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: -1;
+        opacity: 0.32;
+        background-image:
+          linear-gradient(rgba(238, 234, 224, 0.025) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(238, 234, 224, 0.02) 1px, transparent 1px);
+        background-size: 64px 64px;
+        mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), transparent 72%);
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: -1;
+        opacity: 0.18;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+      }
+
+      .focus-ring:focus-visible {
+        outline: 2px solid rgba(244, 200, 74, 0.9);
+        outline-offset: 3px;
+      }
+
+      .ambient-line {
+        background: linear-gradient(90deg, transparent, rgba(244, 200, 74, 0.28), transparent);
+      }
+
+      .nav-link[aria-current="page"] {
+        color: #eeeae0;
+      }
+
+      .nav-link[aria-current="page"] .nav-dot {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .soft-in {
+          animation: softIn 760ms ease both;
+        }
+
+        .soft-in-delay {
+          animation: softIn 760ms 120ms ease both;
+        }
+
+        @keyframes softIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      }
+    </style>
+  </head>
+  <body class="font-sans text-warm-100 antialiased selection:bg-gold-300/25 selection:text-warm-50">
+    <header class="sticky top-0 z-40 border-b border-warm-50/[0.08] bg-ink-950/[0.76] backdrop-blur-xl">
+      <nav class="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-6 lg:px-8" aria-label="主导航">
+        <a href="#home" class="focus-ring -ml-2 rounded-md px-2 py-2 text-sm font-medium tracking-wide text-warm-50">
+          沈予安
+        </a>
+
+        <div class="hidden items-center gap-7 md:flex">
+          <a class="nav-link focus-ring group rounded-md py-2 text-sm text-warm-200/[0.72] transition-colors hover:text-warm-50 active:text-gold-400" href="#work">
+            <span class="nav-dot mr-2 inline-block h-1.5 w-1.5 scale-75 rounded-full bg-gold-400 opacity-0 transition"></span>工作方式
+          </a>
+          <a class="nav-link focus-ring group rounded-md py-2 text-sm text-warm-200/[0.72] transition-colors hover:text-warm-50 active:text-gold-400" href="#writing">
+            <span class="nav-dot mr-2 inline-block h-1.5 w-1.5 scale-75 rounded-full bg-gold-400 opacity-0 transition"></span>内容
+          </a>
+          <a class="nav-link focus-ring group rounded-md py-2 text-sm text-warm-200/[0.72] transition-colors hover:text-warm-50 active:text-gold-400" href="#contact">
+            <span class="nav-dot mr-2 inline-block h-1.5 w-1.5 scale-75 rounded-full bg-gold-400 opacity-0 transition"></span>联系
+          </a>
+        </div>
+
+        <div class="hidden md:block">
+          <a
+            href="#contact"
+            class="focus-ring inline-flex h-10 items-center justify-center rounded-lg border border-gold-300/20 bg-gold-300 px-4 text-sm font-medium text-ink-950 transition hover:bg-[#e4bd43] active:bg-gold-500 disabled:pointer-events-none disabled:opacity-50"
+          >
+            预约 20 分钟
+          </a>
+        </div>
+
+        <button
+          id="menuButton"
+          type="button"
+          class="focus-ring inline-flex h-11 w-11 items-center justify-center rounded-lg border border-warm-50/10 bg-warm-50/[0.03] text-warm-100 transition hover:bg-warm-50/[0.07] active:bg-warm-50/[0.1] md:hidden"
+          aria-label="打开导航菜单"
+          aria-controls="mobileMenu"
+          aria-expanded="false"
+        >
+          <svg id="menuIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+          </svg>
+        </button>
+      </nav>
+
+      <div id="mobileMenu" class="hidden border-t border-warm-50/[0.08] bg-ink-950/[0.96] md:hidden">
+        <div class="mx-auto grid max-w-6xl gap-1 px-5 py-4">
+          <a class="mobile-link focus-ring rounded-lg px-3 py-3 text-sm text-warm-100 hover:bg-warm-50/[0.05] active:bg-warm-50/[0.08]" href="#work">工作方式</a>
+          <a class="mobile-link focus-ring rounded-lg px-3 py-3 text-sm text-warm-100 hover:bg-warm-50/[0.05] active:bg-warm-50/[0.08]" href="#writing">内容</a>
+          <a class="mobile-link focus-ring rounded-lg px-3 py-3 text-sm text-warm-100 hover:bg-warm-50/[0.05] active:bg-warm-50/[0.08]" href="#contact">联系</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="home">
+      <section class="mx-auto grid min-h-[calc(100vh-4rem)] max-w-6xl items-center gap-12 px-5 py-16 sm:px-6 sm:py-20 lg:grid-cols-[1.02fr_.88fr] lg:px-8 lg:py-24">
+        <div class="soft-in max-w-2xl">
+          <p class="mb-5 text-sm leading-6 text-gold-400/90">个人品牌 · 产品叙事 · 内容系统</p>
+          <h1 class="max-w-[13em] text-4xl font-semibold leading-[1.16] tracking-normal text-warm-50 sm:text-5xl lg:text-[4rem] lg:leading-[1.08]">
+            把专业能力整理成别人愿意信任的表达。
+          </h1>
+          <p class="mt-7 max-w-xl text-base leading-8 text-warm-200/[0.74] sm:text-lg">
+            我帮助创始人、独立顾问和小型团队梳理定位、案例与内容节奏。不是制造人设，而是把真实经验讲清楚，让合适的人更快理解你。
+          </p>
+          <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+            <a
+              href="#contact"
+              class="focus-ring inline-flex h-12 items-center justify-center rounded-lg bg-gold-300 px-5 text-sm font-medium text-ink-950 transition hover:bg-[#e4bd43] active:bg-gold-500 disabled:pointer-events-none disabled:opacity-50"
+            >
+              说明你的项目
+            </a>
+            <a
+              href="#work"
+              class="focus-ring inline-flex h-12 items-center justify-center rounded-lg border border-warm-50/[0.12] bg-warm-50/[0.035] px-5 text-sm font-medium text-warm-50 transition hover:bg-warm-50/[0.07] active:bg-warm-50/[0.1]"
+            >
+              查看工作方式
+            </a>
+          </div>
+        </div>
+
+        <div class="soft-in-delay relative mx-auto w-full max-w-[520px] lg:justify-self-end" aria-label="个人品牌内容工作台预览">
+          <div class="absolute -inset-4 rounded-[2rem] bg-gold-300/[0.04] blur-2xl"></div>
+          <div class="relative overflow-hidden rounded-2xl border border-warm-50/10 bg-[#171A21]/[0.88] shadow-quiet">
+            <div class="flex items-center justify-between border-b border-warm-50/[0.08] px-5 py-4">
+              <div>
+                <p class="text-sm font-medium text-warm-50">品牌叙事整理</p>
+                <p class="mt-1 text-xs text-warm-300">2026 春季合作项目</p>
+              </div>
+              <span class="rounded-full border border-gold-300/[0.18] bg-gold-300/10 px-3 py-1 text-xs text-gold-400">进行中</span>
+            </div>
+
+            <div class="grid gap-6 p-5 sm:p-6">
+              <div class="rounded-xl border border-warm-50/[0.08] bg-warm-50/[0.025] p-4">
+                <div class="flex items-start justify-between gap-4">
+                  <div>
+                    <p class="text-xs text-warm-300">核心判断</p>
+                    <h2 class="mt-2 text-xl font-medium leading-7 text-warm-50">从“我能做什么”转向“我帮谁少走弯路”。</h2>
+                  </div>
+                  <div class="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-gold-300"></div>
+                </div>
+              </div>
+
+              <div class="grid gap-3">
+                <div class="flex items-center justify-between gap-4 rounded-lg border border-warm-50/[0.08] bg-ink-950/30 px-4 py-3">
+                  <span class="text-sm text-warm-100">定位备忘录</span>
+                  <span class="text-xs text-warm-300">已定稿</span>
+                </div>
+                <div class="flex items-center justify-between gap-4 rounded-lg border border-warm-50/[0.08] bg-ink-950/30 px-4 py-3">
+                  <span class="text-sm text-warm-100">案例重写</span>
+                  <span class="text-xs text-gold-400">本周</span>
+                </div>
+                <div class="flex items-center justify-between gap-4 rounded-lg border border-warm-50/[0.08] bg-ink-950/30 px-4 py-3">
+                  <span class="text-sm text-warm-100">内容节奏</span>
+                  <span class="text-xs text-warm-300">待确认</span>
+                </div>
+              </div>
+
+              <div class="ambient-line h-px"></div>
+
+              <blockquote class="text-sm leading-7 text-warm-200/[0.78]">
+                “第一次感觉介绍自己不用用力证明，项目背景和判断过程本身就能建立信任。”
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="work" class="border-y border-warm-50/[0.08] bg-ink-950/[0.22]">
+        <div class="mx-auto max-w-6xl px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+          <div class="max-w-2xl">
+            <p class="text-sm text-gold-400/[0.88]">工作方式</p>
+            <h2 class="mt-3 text-3xl font-semibold leading-tight text-warm-50 sm:text-4xl">先把问题说准，再决定页面、内容和节奏。</h2>
+          </div>
+
+          <div class="mt-11 grid gap-5 md:grid-cols-3">
+            <article class="rounded-xl border border-warm-50/[0.09] bg-warm-50/[0.025] p-6">
+              <p class="text-sm text-gold-400">01</p>
+              <h3 class="mt-5 text-lg font-medium text-warm-50">梳理可信资产</h3>
+              <p class="mt-3 text-sm leading-7 text-warm-200/[0.72]">访谈你的项目、方法、客户语境和真实限制，找出真正能让人相信你的证据。</p>
+            </article>
+            <article class="rounded-xl border border-warm-50/[0.09] bg-warm-50/[0.025] p-6">
+              <p class="text-sm text-gold-400">02</p>
+              <h3 class="mt-5 text-lg font-medium text-warm-50">建立表达结构</h3>
+              <p class="mt-3 text-sm leading-7 text-warm-200/[0.72]">把定位、首页、案例和常见问答放进同一套语言里，减少重复解释和临场发挥。</p>
+            </article>
+            <article class="rounded-xl border border-warm-50/[0.09] bg-warm-50/[0.025] p-6">
+              <p class="text-sm text-gold-400">03</p>
+              <h3 class="mt-5 text-lg font-medium text-warm-50">交付可继续使用的系统</h3>
+              <p class="mt-3 text-sm leading-7 text-warm-200/[0.72]">输出页面文案、内容选题和更新规范，让品牌不是一次装修，而是日常工作的一部分。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="writing" class="mx-auto max-w-6xl px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+        <div class="grid gap-10 lg:grid-cols-[.8fr_1fr] lg:items-start">
+          <div>
+            <p class="text-sm text-gold-400/[0.88]">近期内容</p>
+            <h2 class="mt-3 text-3xl font-semibold leading-tight text-warm-50 sm:text-4xl">一些关于信任、表达和小团队增长的笔记。</h2>
+            <p class="mt-5 max-w-md text-sm leading-7 text-warm-200/[0.72]">
+              内容不追热点，主要记录项目里反复出现的判断。适合在合作前了解我的工作习惯。
+            </p>
+          </div>
+
+          <div class="divide-y divide-warm-50/[0.09] border-y border-warm-50/[0.09]">
+            <a href="#contact" class="focus-ring group block py-6 transition hover:bg-warm-50/[0.025] active:bg-warm-50/[0.045] sm:px-4">
+              <div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                <h3 class="text-lg font-medium leading-7 text-warm-50 group-hover:text-gold-300">为什么独立顾问不需要把自己包装成公司</h3>
+                <time class="shrink-0 text-sm text-warm-300" datetime="2026-04-18">2026.04.18</time>
+              </div>
+              <p class="mt-3 max-w-2xl text-sm leading-7 text-warm-200/70">越小的团队越需要清楚地呈现判断过程，而不是用规模感弥补不确定。</p>
+            </a>
+            <a href="#contact" class="focus-ring group block py-6 transition hover:bg-warm-50/[0.025] active:bg-warm-50/[0.045] sm:px-4">
+              <div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                <h3 class="text-lg font-medium leading-7 text-warm-50 group-hover:text-gold-300">案例页应该回答的三个问题</h3>
+                <time class="shrink-0 text-sm text-warm-300" datetime="2026-03-27">2026.03.27</time>
+              </div>
+              <p class="mt-3 max-w-2xl text-sm leading-7 text-warm-200/70">好案例不是结果展示，而是让客户看见你如何理解约束、取舍方案和推动变化。</p>
+            </a>
+            <a href="#contact" class="focus-ring group block py-6 transition hover:bg-warm-50/[0.025] active:bg-warm-50/[0.045] sm:px-4">
+              <div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                <h3 class="text-lg font-medium leading-7 text-warm-50 group-hover:text-gold-300">内容系统的价值，是让表达变得稳定</h3>
+                <time class="shrink-0 text-sm text-warm-300" datetime="2026-02-12">2026.02.12</time>
+              </div>
+              <p class="mt-3 max-w-2xl text-sm leading-7 text-warm-200/70">稳定不是高频输出，而是每次出现都能延续同一种专业判断。</p>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="border-t border-warm-50/[0.08] bg-ink-900/[0.44]">
+        <div class="mx-auto grid max-w-6xl gap-10 px-5 py-16 sm:px-6 sm:py-20 lg:grid-cols-[.9fr_1fr] lg:px-8">
+          <div>
+            <p class="text-sm text-gold-400/[0.88]">开始一次对话</p>
+            <h2 class="mt-3 text-3xl font-semibold leading-tight text-warm-50 sm:text-4xl">如果你正在整理自己的表达，我们可以先谈二十分钟。</h2>
+            <p class="mt-5 max-w-md text-sm leading-7 text-warm-200/[0.72]">
+              留下项目背景即可。我通常会在两个工作日内回复，并说明是否适合继续沟通。
+            </p>
+
+            <div class="mt-8 rounded-xl border border-warm-50/[0.09] bg-warm-50/[0.025] p-5">
+              <p class="text-sm font-medium text-warm-50">适合的合作</p>
+              <ul class="mt-4 space-y-3 text-sm leading-6 text-warm-200/[0.72]">
+                <li>个人品牌首页与服务页文案</li>
+                <li>顾问、创始人、独立工作室定位梳理</li>
+                <li>案例体系、内容栏目与发布节奏</li>
+              </ul>
+            </div>
+          </div>
+
+          <form id="contactForm" class="rounded-2xl border border-warm-50/10 bg-[#171A21]/[0.84] p-5 sm:p-6" novalidate>
+            <div class="grid gap-5">
+              <div>
+                <label for="name" class="block text-sm font-medium text-warm-50">称呼</label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  autocomplete="name"
+                  placeholder="例如：陈晓"
+                  class="focus-ring mt-2 h-12 w-full rounded-lg border border-warm-50/10 bg-ink-950/[0.44] px-4 text-sm text-warm-50 placeholder:text-warm-300/70 transition hover:border-warm-50/[0.18] focus:border-gold-300/70 disabled:cursor-not-allowed disabled:opacity-50"
+                  required
+                />
+                <p class="mt-2 hidden text-sm text-[#e0a6a0]" data-error-for="name">请填写你的称呼。</p>
+              </div>
+
+              <div>
+                <label for="email" class="block text-sm font-medium text-warm-50">邮箱</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  placeholder="name@example.com"
+                  class="focus-ring mt-2 h-12 w-full rounded-lg border border-warm-50/10 bg-ink-950/[0.44] px-4 text-sm text-warm-50 placeholder:text-warm-300/70 transition hover:border-warm-50/[0.18] focus:border-gold-300/70 disabled:cursor-not-allowed disabled:opacity-50"
+                  required
+                />
+                <p class="mt-2 hidden text-sm text-[#e0a6a0]" data-error-for="email">请填写有效邮箱，方便回复。</p>
+              </div>
+
+              <div>
+                <label for="message" class="block text-sm font-medium text-warm-50">项目背景</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="5"
+                  placeholder="简单说说你是谁、现在卡在哪里、希望整理出什么。"
+                  class="focus-ring mt-2 w-full resize-y rounded-lg border border-warm-50/10 bg-ink-950/[0.44] px-4 py-3 text-sm leading-7 text-warm-50 placeholder:text-warm-300/70 transition hover:border-warm-50/[0.18] focus:border-gold-300/70 disabled:cursor-not-allowed disabled:opacity-50"
+                  required
+                ></textarea>
+                <p class="mt-2 text-sm text-warm-300">80 字以内也可以，重点是具体。</p>
+                <p class="mt-2 hidden text-sm text-[#e0a6a0]" data-error-for="message">请补充一点项目背景。</p>
+              </div>
+
+              <div id="formStatus" class="hidden rounded-lg border px-4 py-3 text-sm leading-6" role="status" aria-live="polite"></div>
+
+              <button
+                id="submitButton"
+                type="submit"
+                class="focus-ring inline-flex h-12 items-center justify-center rounded-lg bg-gold-300 px-5 text-sm font-medium text-ink-950 transition hover:bg-[#e4bd43] active:bg-gold-500 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                <span id="submitText">发送说明</span>
+                <span id="submitLoading" class="hidden items-center gap-2">
+                  <span class="h-4 w-4 animate-spin rounded-full border-2 border-ink-950/25 border-t-ink-950"></span>
+                  发送中
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-warm-50/[0.08]">
+      <div class="mx-auto flex max-w-6xl flex-col gap-3 px-5 py-8 text-sm text-warm-300 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+        <p>© 2026 沈予安 Studio</p>
+        <a class="focus-ring rounded-md py-2 text-warm-200/[0.76] transition hover:text-warm-50 active:text-gold-400" href="mailto:hello@shenyuan.example">hello@shenyuan.example</a>
+      </div>
+    </footer>
+
+    <script>
+      const menuButton = document.querySelector("#menuButton");
+      const mobileMenu = document.querySelector("#mobileMenu");
+      const menuIcon = document.querySelector("#menuIcon");
+      const mobileLinks = document.querySelectorAll(".mobile-link");
+      const navLinks = document.querySelectorAll(".nav-link");
+      const sections = document.querySelectorAll("#work, #writing, #contact");
+
+      function setMenu(open) {
+        mobileMenu.classList.toggle("hidden", !open);
+        menuButton.setAttribute("aria-expanded", String(open));
+        menuButton.setAttribute("aria-label", open ? "关闭导航菜单" : "打开导航菜单");
+        menuIcon.innerHTML = open
+          ? '<path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />'
+          : '<path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />';
+      }
+
+      menuButton.addEventListener("click", () => {
+        const open = menuButton.getAttribute("aria-expanded") !== "true";
+        setMenu(open);
+      });
+
+      mobileLinks.forEach((link) => {
+        link.addEventListener("click", () => setMenu(false));
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") setMenu(false);
+      });
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+          if (!visible) return;
+
+          navLinks.forEach((link) => {
+            const isCurrent = link.getAttribute("href") === `#${visible.target.id}`;
+            if (isCurrent) {
+              link.setAttribute("aria-current", "page");
+            } else {
+              link.removeAttribute("aria-current");
+            }
+          });
+        },
+        { threshold: [0.28, 0.45, 0.62], rootMargin: "-18% 0px -55% 0px" }
+      );
+
+      sections.forEach((section) => observer.observe(section));
+
+      const form = document.querySelector("#contactForm");
+      const submitButton = document.querySelector("#submitButton");
+      const submitText = document.querySelector("#submitText");
+      const submitLoading = document.querySelector("#submitLoading");
+      const formStatus = document.querySelector("#formStatus");
+
+      function setFieldError(field, show) {
+        const error = document.querySelector(`[data-error-for="${field.id}"]`);
+        field.setAttribute("aria-invalid", String(show));
+        field.classList.toggle("border-[#c98f87]/70", show);
+        field.classList.toggle("border-warm-50/10", !show);
+        if (error) error.classList.toggle("hidden", !show);
+      }
+
+      function setLoading(loading) {
+        submitButton.disabled = loading;
+        form.querySelectorAll("input, textarea").forEach((field) => {
+          field.disabled = loading;
+        });
+        submitText.classList.toggle("hidden", loading);
+        submitLoading.classList.toggle("hidden", !loading);
+        submitLoading.classList.toggle("inline-flex", loading);
+      }
+
+      function showStatus(type, message) {
+        const styles = {
+          success: "border-gold-300/[0.18] bg-gold-300/[0.08] text-warm-100",
+          error: "border-[#c98f87]/30 bg-[#c98f87]/[0.08] text-[#e8b9b3]",
+        };
+        formStatus.className = `rounded-lg border px-4 py-3 text-sm leading-6 ${styles[type]}`;
+        formStatus.textContent = message;
+        formStatus.classList.remove("hidden");
+      }
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        formStatus.classList.add("hidden");
+
+        const fields = [...form.querySelectorAll("input, textarea")];
+        let valid = true;
+
+        fields.forEach((field) => {
+          const fieldValid = field.checkValidity();
+          setFieldError(field, !fieldValid);
+          if (!fieldValid) valid = false;
+        });
+
+        if (!valid) {
+          showStatus("error", "有几项信息还需要补充。请检查标红的位置。");
+          fields.find((field) => !field.checkValidity())?.focus();
+          return;
+        }
+
+        setLoading(true);
+        window.setTimeout(() => {
+          setLoading(false);
+          form.reset();
+          fields.forEach((field) => setFieldError(field, false));
+          showStatus("success", "已记录。这个静态页面不会真的发送邮件，但交互状态已经准备好。");
+        }, 900);
+      });
+    </script>
+  </body>
+</html>
