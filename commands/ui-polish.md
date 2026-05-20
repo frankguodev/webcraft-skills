@@ -17,5 +17,5 @@ Examples:
 
 ## Agent Instructions
 
-Use the `ai-ui-constitution` skill in Polish mode. Improve spacing, typography, color hierarchy, radius, border, component states, responsive behavior, and copy restraint. Avoid unrelated redesign.
+Use the `webcraft-skills` skill in Polish mode. Improve spacing, typography, color hierarchy, radius, border, component states, responsive behavior, and copy restraint. Avoid unrelated redesign.
 

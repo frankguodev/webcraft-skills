@@ -1,6 +1,6 @@
 # /ui-review
 
-Review a page, component, screenshot, or site with AI UI Constitution.
+Review a page, component, screenshot, or site with Webcraft Skills.
 
 ## Usage
 
@@ -17,5 +17,5 @@ Examples:
 
 ## Agent Instructions
 
-Use the `ai-ui-constitution` skill in Review mode. Read `ui-audit.zh.md`. Lead with Critical, Major, Minor findings. Each finding must include location, problem, impact, and fix.
+Use the `webcraft-skills` skill in Review mode. Read `ui-audit.zh.md`. Lead with Critical, Major, Minor findings. Each finding must include location, problem, impact, and fix.
 

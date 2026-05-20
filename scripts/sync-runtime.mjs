@@ -6,15 +6,15 @@ const root = process.cwd();
 const mappings = [
   {
     source: "core/checklists",
-    target: "skills/ai-ui-constitution/references/checklists"
+    target: "skills/webcraft-skills/references/checklists"
   },
   {
     source: "core/workflows",
-    target: "skills/ai-ui-constitution/references/workflows"
+    target: "skills/webcraft-skills/references/workflows"
   },
   {
     source: "core/presets",
-    target: "skills/ai-ui-constitution/references/presets"
+    target: "skills/webcraft-skills/references/presets"
   }
 ];
 

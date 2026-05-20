@@ -11,9 +11,9 @@ const args = process.argv.slice(2);
 const command = args[0] ?? "install";
 
 const usage = `Usage:
-  npx ai-ui-constitution install --agent codex
-  npx ai-ui-constitution install --agent claude
-  npx ai-ui-constitution install --agent all
+  npx webcraft-skills install --agent codex
+  npx webcraft-skills install --agent claude
+  npx webcraft-skills install --agent all
 
 Options:
   --agent <codex|claude|all>  Target agent. Default: codex.
@@ -43,7 +43,7 @@ const targets =
     ? ["codex", "claude"]
     : [agent];
 
-const skillName = "ai-ui-constitution";
+const skillName = "webcraft-skills";
 const skillSource = join(root, "skills", skillName);
 const commandSource = join(root, "commands");
 

@@ -1,9 +1,9 @@
 ---
-name: ai-ui-constitution
+name: webcraft-skills
 description: UI quality, generation, review, audit, and polish skill for Codex. Use when building, redesigning, reviewing, auditing, or fixing web pages, websites, landing pages, dashboards, portfolios, frontend prototypes, visual systems, component states, responsive layouts, typography, colors, borders, radius, modals, and AI-generated UI that feels rough, generic, inconsistent, or template-like.
 ---
 
-# AI UI Constitution
+# Webcraft Skills
 
 Use this skill as a senior UI/UX reviewer and frontend implementation guide. Treat UI quality as a system: information architecture, layout, typography, color, spacing, border/radius/shadow, interaction states, responsive behavior, accessibility, and visual restraint.
 
@@ -31,7 +31,7 @@ Reference files are paired by locale. For the selected locale, read only the mat
 ## Required Behavior
 
 1. Respect the existing codebase, framework, component system, and user-provided content.
-2. Before major UI work, check whether project-level `.ai-ui-constitution/EXTEND.md` or `.ai-ui-constitution/config.json` exists. If present, apply it after the built-in rules.
+2. Before major UI work, check whether project-level `.webcraft-skills/EXTEND.md` or `.webcraft-skills/config.json` exists. If present, apply it after the built-in rules.
 3. Prefer concrete implementation or concrete findings over abstract design commentary.
 4. For UI review/audit, lead with issues ordered by severity.
 5. For UI build/fix/polish, verify responsive behavior and interactive states when possible.

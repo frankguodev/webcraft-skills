@@ -1,4 +1,4 @@
-# AI UI Constitution
+# Webcraft Skills
 
 English | [中文](./README_zh_CN.md)
 
@@ -10,7 +10,7 @@ AI coding tools can generate code quickly, but their UI often feels too crowded,
 
 # What Is This?
 
-AI UI Constitution is a UI quality system for AI agents.
+Webcraft Skills is a UI quality system for AI agents.
 
 It is not a UI framework, design system, component library, or product builder.
 
@@ -35,32 +35,32 @@ The currently tested commands are `/ui-audit` and `/ui-fix`. Other command promp
 Install the skill and slash commands with npx:
 
 ```bash
-npx ai-ui-constitution install --agent codex
+npx webcraft-skills install --agent codex
 ```
 
 For Claude Code:
 
 ```bash
-npx ai-ui-constitution install --agent claude
+npx webcraft-skills install --agent claude
 ```
 
 To install for both:
 
 ```bash
-npx ai-ui-constitution install --agent all
+npx webcraft-skills install --agent all
 ```
 
 This installs:
 
 ```text
-~/.codex/skills/ai-ui-constitution
+~/.codex/skills/webcraft-skills
 ~/.codex/commands/*.md
 ```
 
 or:
 
 ```text
-~/.claude/skills/ai-ui-constitution
+~/.claude/skills/webcraft-skills
 ~/.claude/commands/*.md
 ```
 
@@ -81,7 +81,7 @@ Full parameter-style usage:
 If a client does not load commands from `~/.codex/commands`, use explicit natural invocation:
 
 ```text
-Use ai-ui-constitution to audit the current website.
+Use webcraft-skills to audit the current website.
 ```
 
 ## Cursor
@@ -94,7 +94,7 @@ Plain prompt usage is not part of the stable release yet.
 
 ## Project Extensions
 
-Create `.ai-ui-constitution/EXTEND.md` and `.ai-ui-constitution/config.json` in the target project to override default audit standards, brand constraints, radius scale, viewports, and visual rules.
+Create `.webcraft-skills/EXTEND.md` and `.webcraft-skills/config.json` in the target project to override default audit standards, brand constraints, radius scale, viewports, and visual rules.
 
 ---
 

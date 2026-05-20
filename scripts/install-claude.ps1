@@ -1,5 +1,5 @@
 param(
-  [string]$SkillName = "ai-ui-constitution"
+  [string]$SkillName = "webcraft-skills"
 )
 
 $ErrorActionPreference = "Stop"

@@ -1,4 +1,4 @@
-# AI UI Constitution
+# Webcraft Skills
 
 [English](./README.md) | 中文
 
@@ -10,7 +10,7 @@ AI Coding 工具已经很会写代码，但生成的 UI 经常会显得太拥挤
 
 # 这是什么？
 
-AI UI Constitution 是一个面向 AI Agent 的网页 UI 质量系统。
+Webcraft Skills 是一个面向 AI Agent 的网页 UI 质量系统。
 
 它不是 UI 框架、设计系统、组件库，也不是可视化建站工具。
 
@@ -35,32 +35,32 @@ AI UI Constitution 是一个面向 AI Agent 的网页 UI 质量系统。
 使用 npx 安装 skill 和 slash commands：
 
 ```bash
-npx ai-ui-constitution install --agent codex
+npx webcraft-skills install --agent codex
 ```
 
 Claude Code 使用：
 
 ```bash
-npx ai-ui-constitution install --agent claude
+npx webcraft-skills install --agent claude
 ```
 
 同时安装 Codex 和 Claude Code：
 
 ```bash
-npx ai-ui-constitution install --agent all
+npx webcraft-skills install --agent all
 ```
 
 这会安装到：
 
 ```text
-~/.codex/skills/ai-ui-constitution
+~/.codex/skills/webcraft-skills
 ~/.codex/commands/*.md
 ```
 
 或：
 
 ```text
-~/.claude/skills/ai-ui-constitution
+~/.claude/skills/webcraft-skills
 ~/.claude/commands/*.md
 ```
 
@@ -81,7 +81,7 @@ npx ai-ui-constitution install --agent all
 如果当前客户端没有从 `~/.codex/commands` 加载命令，可以直接显式调用：
 
 ```text
-Use ai-ui-constitution to audit the current website.
+Use webcraft-skills to audit the current website.
 ```
 
 ## Cursor
@@ -94,7 +94,7 @@ Plain Prompt 暂时不属于稳定发布能力。
 
 ## 项目扩展
 
-在目标项目中创建 `.ai-ui-constitution/EXTEND.md` 和 `.ai-ui-constitution/config.json`，可覆盖默认 UI 审查标准、品牌约束、圆角体系、默认视口等。
+在目标项目中创建 `.webcraft-skills/EXTEND.md` 和 `.webcraft-skills/config.json`，可覆盖默认 UI 审查标准、品牌约束、圆角体系、默认视口等。
 
 ---
 

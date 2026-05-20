@@ -4,14 +4,38 @@
 
 ---
 
+## v0.1.1 - 2026-05-21
+
+`webcraft-skills` 的公开发布准备版本。
+
+### 变更
+
+- 项目名和包名从偏 UI 的旧名称调整为 `webcraft-skills`，为后续扩展成更完整的网站 skill pack 预留空间。
+- 更新公开 README 和 usage 文档，只承诺当前已验证的稳定命令：`/ui-audit` 和 `/ui-fix`。
+- 从面向用户的文档中移除维护者内部实现和同步运行层说明。
+- 统一安装器帮助、package metadata 和 skill 路径，使其全部指向新的包名。
+
+### Audit
+
+- 继续打磨 audit checklist，强化原生表单控件、自定义组件复用、响应式断点、后台工作流和真实内容压力检查。
+- 明确输入框、选择框、下拉框、多选框、菜单等原生控件在不符合网站风格，或绕过项目已有自定义组件时，应被识别为问题。
+
+### Fix
+
+- 补充控件修复策略：将不协调的原生控件替换或封装为符合项目风格的自定义组件。
+- 强化修复后的复检范围：表单、弹窗、菜单、导航、响应式布局和交互状态。
+
+### 发布
+
+- 已通过项目校验和 npm dry-run 打包预检。
+
 ## v0.1.0 - 2026-05-20
 
-第一个面向外部用户的 Skill 化版本。
+Skill 化基础版本。
 
 ### 稳定能力
 
-- 新增 npm/npx 安装方式：`npx ai-ui-constitution install --agent codex|claude|all`。
-- 安装时会同时安装 `ai-ui-constitution` skill 和 slash command prompts。
+- 安装时会同时安装 skill package 和 slash command prompts。
 - 当前稳定命令：
   - `/ui-audit`：严格排查 UI 质量问题。
   - `/ui-fix`：根据明确的 audit findings 修复问题。
@@ -40,4 +64,4 @@
 
 ## v0.0.1 - 2026-05-16
 
-AI UI Constitution 的第一个公开版本。
+项目的第一个公开版本。

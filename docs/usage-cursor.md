@@ -12,5 +12,5 @@ For now, create Cursor Project Rules manually from:
 Use Cursor Agent normally, or explicitly ask:
 
 ```text
-Review this page with AI UI Constitution rules.
+Review this page with Webcraft Skills rules.
 ```

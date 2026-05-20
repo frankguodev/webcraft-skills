@@ -1,17 +1,41 @@
 # Changelog
 
-English| [中文](./CHANGELOG_zh_CN.md)
+English | [中文](./CHANGELOG_zh_CN.md)
 
 ---
 
+## v0.1.1 - 2026-05-21
+
+Public release preparation for `webcraft-skills`.
+
+### Changed
+
+- Renamed the project and package from the UI-specific name to `webcraft-skills`, leaving room for a broader website skill pack.
+- Updated the public README and usage docs to present only the currently verified stable commands: `/ui-audit` and `/ui-fix`.
+- Removed maintainer-only implementation details from public-facing documentation.
+- Aligned installer help, package metadata, and skill paths with the new package name.
+
+### Audit
+
+- Tightened the audit checklist around native form controls, custom component reuse, responsive breakpoints, admin workflows, and content stress.
+- Clarified that native inputs, selects, dropdowns, multiselects, and menus should be flagged when they clash with the product style or bypass existing custom controls.
+
+### Fix
+
+- Added clearer repair guidance for replacing or wrapping mismatched native controls with project-appropriate custom components.
+- Strengthened post-fix verification for forms, dialogs, menus, navigation, responsive layouts, and interaction states.
+
+### Release
+
+- Verified the skill package with validation and npm dry-run packaging.
+
 ## v0.1.0 - 2026-05-20
 
-First skill-focused release for external users.
+Skill-focused foundation release.
 
 ### Stable
 
-- Added npm/npx installer: `npx ai-ui-constitution install --agent codex|claude|all`.
-- Installs both the `ai-ui-constitution` skill and slash command prompts.
+- Installs both the skill package and slash command prompts.
 - Stable commands:
   - `/ui-audit`: run a strict UI quality audit.
   - `/ui-fix`: fix confirmed audit findings.
@@ -40,4 +64,4 @@ First skill-focused release for external users.
 
 ## v0.0.1 - 2026-05-16
 
-Initial public version of AI UI Constitution.
+Initial public version of the project.

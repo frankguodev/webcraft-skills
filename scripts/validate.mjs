@@ -3,22 +3,22 @@ import { extname, join, relative } from "node:path";
 
 const root = process.cwd();
 const requiredFiles = [
-  "skills/ai-ui-constitution/SKILL.md",
-  "skills/ai-ui-constitution/agents/openai.yaml",
-  "skills/ai-ui-constitution/references/checklists/ui-audit.md",
-  "skills/ai-ui-constitution/references/checklists/ui-audit.zh.md",
-  "skills/ai-ui-constitution/references/workflows/audit-ui.md",
-  "skills/ai-ui-constitution/references/workflows/audit-ui.zh.md",
-  "skills/ai-ui-constitution/references/workflows/build-ui.md",
-  "skills/ai-ui-constitution/references/workflows/build-ui.zh.md",
-  "skills/ai-ui-constitution/references/workflows/review-ui.md",
-  "skills/ai-ui-constitution/references/workflows/review-ui.zh.md",
-  "skills/ai-ui-constitution/references/workflows/polish-ui.md",
-  "skills/ai-ui-constitution/references/workflows/polish-ui.zh.md",
-  "skills/ai-ui-constitution/references/workflows/fix-ui.md",
-  "skills/ai-ui-constitution/references/workflows/fix-ui.zh.md",
-  "skills/ai-ui-constitution/references/presets/cinematic-minimal.md",
-  "skills/ai-ui-constitution/references/presets/cinematic-minimal.zh.md",
+  "skills/webcraft-skills/SKILL.md",
+  "skills/webcraft-skills/agents/openai.yaml",
+  "skills/webcraft-skills/references/checklists/ui-audit.md",
+  "skills/webcraft-skills/references/checklists/ui-audit.zh.md",
+  "skills/webcraft-skills/references/workflows/audit-ui.md",
+  "skills/webcraft-skills/references/workflows/audit-ui.zh.md",
+  "skills/webcraft-skills/references/workflows/build-ui.md",
+  "skills/webcraft-skills/references/workflows/build-ui.zh.md",
+  "skills/webcraft-skills/references/workflows/review-ui.md",
+  "skills/webcraft-skills/references/workflows/review-ui.zh.md",
+  "skills/webcraft-skills/references/workflows/polish-ui.md",
+  "skills/webcraft-skills/references/workflows/polish-ui.zh.md",
+  "skills/webcraft-skills/references/workflows/fix-ui.md",
+  "skills/webcraft-skills/references/workflows/fix-ui.zh.md",
+  "skills/webcraft-skills/references/presets/cinematic-minimal.md",
+  "skills/webcraft-skills/references/presets/cinematic-minimal.zh.md",
   "commands/ui-audit.md",
   "docs/commands.md",
   "docs/configuration.md",
@@ -71,7 +71,7 @@ function collectMarkdownFiles(directory) {
 
 for (const referenceRoot of [
   "core",
-  "skills/ai-ui-constitution/references"
+  "skills/webcraft-skills/references"
 ]) {
   const directory = join(root, referenceRoot);
   if (!existsSync(directory)) continue;
@@ -103,7 +103,7 @@ function countHeadings(content) {
 
 for (const referenceRoot of [
   "core",
-  "skills/ai-ui-constitution/references"
+  "skills/webcraft-skills/references"
 ]) {
   const directory = join(root, referenceRoot);
   if (!existsSync(directory)) continue;
@@ -132,10 +132,10 @@ for (const referenceRoot of [
   }
 }
 
-const skillPath = join(root, "skills/ai-ui-constitution/SKILL.md");
+const skillPath = join(root, "skills/webcraft-skills/SKILL.md");
 if (existsSync(skillPath)) {
   const skill = readFileSync(skillPath, "utf8");
-  if (!/^---\r?\nname: ai-ui-constitution\r?\ndescription: .+\r?\n---/s.test(skill)) {
+  if (!/^---\r?\nname: webcraft-skills\r?\ndescription: .+\r?\n---/s.test(skill)) {
     errors.push("Invalid SKILL.md frontmatter");
   }
 }
@@ -159,4 +159,4 @@ if (warnings.length > 0) {
   console.log(warnings.join("\n"));
 }
 
-console.log("ai-ui-constitution validation ok");
+console.log("webcraft-skills validation ok");

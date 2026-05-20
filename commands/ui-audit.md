@@ -17,5 +17,5 @@ Examples:
 
 ## Agent Instructions
 
-Use the `ai-ui-constitution` skill in Audit mode. Read the selected-locale audit workflow and UI audit checklist before reporting findings. Inspect layout, typography, color, borders, radius, shadow, components, forms, modals, responsive behavior, motion, accessibility, content stress, and AI template smell. Prefer browser verification when available.
+Use the `webcraft-skills` skill in Audit mode. Read the selected-locale audit workflow and UI audit checklist before reporting findings. Inspect layout, typography, color, borders, radius, shadow, components, forms, modals, responsive behavior, motion, accessibility, content stress, and AI template smell. Prefer browser verification when available.
 

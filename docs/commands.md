@@ -1,6 +1,6 @@
 # Commands
 
-AI UI Constitution is designed for explicit CLI-style use. Automatic skill triggering is useful, but explicit commands are the recommended workflow when many skills are installed.
+Webcraft Skills is designed for explicit CLI-style use. Automatic skill triggering is useful, but explicit commands are the recommended workflow when many skills are installed.
 
 Current stable commands are `/ui-audit` and `/ui-fix`. Other command prompts are included for iteration and are not yet fully tested.
 

@@ -1,6 +1,6 @@
 # /ui-preset
 
-List, select, or apply AI UI Constitution presets.
+List, select, or apply Webcraft Skills presets.
 
 ## Usage
 
@@ -11,5 +11,5 @@ List, select, or apply AI UI Constitution presets.
 
 ## Agent Instructions
 
-Use the `ai-ui-constitution` skill. Explain when the preset fits, when it does not, and what constraints it applies.
+Use the `webcraft-skills` skill. Explain when the preset fits, when it does not, and what constraints it applies.
 

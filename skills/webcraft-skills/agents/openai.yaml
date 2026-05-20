@@ -1,4 +1,4 @@
-display_name: AI UI Constitution
+display_name: Webcraft Skills
 short_description: Build, review, audit, polish, and fix AI-generated web UI.
 default_prompt: Audit this UI for layout, typography, color, radius, states, responsiveness, and AI-template smell.
 
