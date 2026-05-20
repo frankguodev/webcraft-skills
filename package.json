@@ -1,0 +1,21 @@
+{
+  "name": "ai-ui-constitution",
+  "version": "0.1.0",
+  "description": "Cross-agent UI quality skill for building, reviewing, auditing, polishing, and fixing web interfaces.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "sync:runtime": "node scripts/sync-runtime.mjs"
+  },
+  "keywords": [
+    "ai",
+    "ui",
+    "frontend",
+    "codex",
+    "claude",
+    "cursor",
+    "skills",
+    "design-review"
+  ]
+}

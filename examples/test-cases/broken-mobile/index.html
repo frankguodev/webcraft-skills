@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Broken Mobile</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f7f7fb;
+        color: #111827;
+      }
+      .shell {
+        min-width: 1180px;
+        padding: 32px;
+      }
+      .hero {
+        display: flex;
+        justify-content: space-between;
+        gap: 48px;
+        align-items: center;
+      }
+      h1 {
+        font-size: 64px;
+        line-height: 1;
+        max-width: 620px;
+      }
+      .actions {
+        display: flex;
+        gap: 12px;
+        width: 620px;
+      }
+      .actions a {
+        display: inline-block;
+        padding: 16px 24px;
+        border-radius: 14px;
+        background: #111827;
+        color: white;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .board {
+        width: 680px;
+        display: grid;
+        grid-template-columns: repeat(3, 220px);
+        gap: 16px;
+      }
+      .card {
+        height: 180px;
+        padding: 20px;
+        border-radius: 24px;
+        background: white;
+        box-shadow: 0 24px 60px rgba(17,24,39,.12);
+      }
+      .sticky {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 18px 32px;
+        background: #111827;
+        color: white;
+      }
+      @media (max-width: 640px) {
+        h1 { font-size: 48px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <section class="hero">
+        <div>
+          <h1>Manage every project from one clean workspace</h1>
+          <p>Track tasks, notes, decisions, files, and teams in one place.</p>
+          <div class="actions">
+            <a href="#">Start free trial with team workspace</a>
+            <a href="#">View product walkthrough</a>
+          </div>
+        </div>
+        <div class="board">
+          <div class="card">Roadmap</div>
+          <div class="card">Tasks</div>
+          <div class="card">Notes</div>
+          <div class="card">Files</div>
+          <div class="card">Team</div>
+          <div class="card">Insights</div>
+        </div>
+      </section>
+    </div>
+    <div class="sticky">Book a demo today and get onboarding support</div>
+  </body>
+</html>
+

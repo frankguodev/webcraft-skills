@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Existing Style</title>
+    <style>
+      :root {
+        --bg: #fbfaf7;
+        --text: #1f2933;
+        --muted: #6b7280;
+        --line: #e6e1d8;
+        --brand: #2f6f68;
+        --surface: #ffffff;
+        --radius: 10px;
+      }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+      .page {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 32px 24px 80px;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 18px;
+      }
+      a { color: var(--brand); }
+      .hero {
+        padding: 72px 0;
+        display: grid;
+        grid-template-columns: 1.1fr .9fr;
+        gap: 42px;
+      }
+      h1 {
+        font-size: 52px;
+        line-height: 1.05;
+        margin: 0 0 18px;
+      }
+      p {
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      .button {
+        display: inline-flex;
+        align-items: center;
+        height: 44px;
+        padding: 0 18px;
+        border-radius: var(--radius);
+        background: var(--brand);
+        color: white;
+        text-decoration: none;
+      }
+      .stack {
+        display: grid;
+        gap: 14px;
+      }
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header>
+        <strong>CalmOps</strong>
+        <nav><a href="#">Docs</a></nav>
+      </header>
+      <section class="hero">
+        <div>
+          <h1>Operational clarity for small teams</h1>
+          <p>CalmOps helps teams keep decisions, projects, and follow-ups organized without turning work into another noisy dashboard.</p>
+          <a class="button" href="#">View workspace</a>
+        </div>
+        <div class="stack">
+          <div class="card">Decision notes</div>
+          <div class="card">Project follow-ups</div>
+          <div class="card">Weekly review</div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
+

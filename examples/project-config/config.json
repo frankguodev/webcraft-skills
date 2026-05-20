@@ -1,0 +1,20 @@
+{
+  "defaultPreset": "cinematic-minimal",
+  "defaultViewports": [375, 768, 1280],
+  "auditStrictness": "normal",
+  "visualTokens": {
+    "radius": {
+      "card": "8px",
+      "button": "6px",
+      "input": "6px",
+      "modal": "10px"
+    },
+    "avoid": [
+      "decorative gradient blobs",
+      "excessive bento grids",
+      "neon glow",
+      "generic AI badges"
+    ]
+  }
+}
+

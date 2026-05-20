@@ -1,0 +1,12 @@
+Reference image description:
+
+- Dark editorial hero.
+- Large left-aligned title.
+- Right side has a vertical stack of three feature cards.
+- Background has a subtle image and dramatic contrast.
+- One primary CTA and one text link below the title.
+
+Use case:
+
+This reference should be treated as layout structure only unless the user explicitly asks to adopt the visual style.
+

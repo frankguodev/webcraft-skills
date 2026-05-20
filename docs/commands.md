@@ -1,0 +1,83 @@
+# Commands
+
+AI UI Constitution is designed for explicit CLI-style use. Automatic skill triggering is useful, but explicit commands are the recommended workflow when many skills are installed.
+
+## `/ui-audit`
+
+Strictly inspect a page, app, screenshot, or whole site.
+
+```text
+/ui-audit --scope whole-site --strict --viewports 375,768,1280
+/ui-audit --scope homepage --focus layout,typography,radius,states
+```
+
+Options:
+
+- `--scope`: `current-page`, `homepage`, `whole-site`, `component`, `screenshot`, or a custom path.
+- `--strict`: report more minor visual and interaction issues.
+- `--viewports`: comma-separated viewport widths to check.
+- `--focus`: comma-separated audit areas: `layout`, `typography`, `color`, `radius`, `border`, `shadow`, `states`, `modal`, `responsive`, `a11y`, `ai-smell`.
+- `--report`: `summary`, `detailed`, or `fix-plan`.
+
+## `/ui-review`
+
+Review UI without automatically changing code.
+
+```text
+/ui-review --page homepage --focus layout,typography,responsive
+```
+
+Output findings by `Critical`, `Major`, and `Minor`, with location, problem, impact, and fix.
+
+## `/ui-polish`
+
+Refine an existing UI while preserving product meaning.
+
+```text
+/ui-polish --scope homepage --preset cinematic-minimal --preserve-content
+```
+
+Options:
+
+- `--preset`: visual preset name.
+- `--preserve-content`: do not rewrite product claims, data, or positioning.
+- `--reduce-ai-template-feel`: remove generic AI UI patterns.
+
+## `/ui-fix`
+
+Implement fixes from an audit or review.
+
+```text
+/ui-fix --severity critical,major --yes
+```
+
+Options:
+
+- `--severity`: `critical`, `major`, `minor`, or a comma-separated list.
+- `--yes`: apply clear deterministic fixes without asking for each one.
+- `--scope`: limit fixes to a page, component, or file.
+
+## `/ui-build`
+
+Build a new page or site.
+
+```text
+/ui-build --preset cinematic-minimal --target landing-page --stack next-tailwind
+```
+
+Options:
+
+- `--preset`: visual preset name.
+- `--target`: page or site type.
+- `--stack`: implementation stack, such as `html-css-js`, `next-tailwind`, `astro`, `vue`, or `svelte`.
+- `--content`: use provided content instead of inventing copy.
+
+## `/ui-preset`
+
+Inspect or apply presets.
+
+```text
+/ui-preset list
+/ui-preset cinematic-minimal --explain
+```
+

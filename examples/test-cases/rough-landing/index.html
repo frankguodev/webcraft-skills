@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NovaFlow AI</title>
+    <style>
+      :root {
+        --bg: #090b18;
+        --panel: #12162a;
+        --text: #ffffff;
+        --muted: #9ca3ff;
+        --accent: #7c3aed;
+        --hot: #00f5ff;
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 15% 20%, rgba(124, 58, 237, .75), transparent 28%),
+          radial-gradient(circle at 85% 10%, rgba(0, 245, 255, .55), transparent 26%),
+          linear-gradient(135deg, var(--bg), #171135 55%, #080914);
+      }
+
+      .page {
+        width: 1180px;
+        margin: 0 auto;
+        padding: 28px 0 80px;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 22px;
+        border: 1px solid rgba(255,255,255,.18);
+        border-radius: 999px;
+        background: rgba(255,255,255,.08);
+        box-shadow: 0 24px 80px rgba(0,0,0,.38);
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        margin-left: 26px;
+        font-size: 14px;
+      }
+
+      .hero {
+        padding: 86px 0 48px;
+        display: grid;
+        grid-template-columns: 560px 620px;
+        gap: 42px;
+        align-items: center;
+      }
+
+      .badges {
+        display: flex;
+        gap: 12px;
+        flex-wrap: nowrap;
+        margin-bottom: 22px;
+      }
+
+      .badge {
+        padding: 9px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,.2);
+        background: linear-gradient(90deg, rgba(124,58,237,.28), rgba(0,245,255,.18));
+        color: white;
+        white-space: nowrap;
+      }
+
+      h1 {
+        font-size: 76px;
+        line-height: .92;
+        letter-spacing: -3px;
+        margin: 0 0 22px;
+      }
+
+      p {
+        color: #d3d7ff;
+        font-size: 19px;
+        line-height: 1.5;
+      }
+
+      .actions {
+        display: flex;
+        gap: 16px;
+        margin-top: 28px;
+        width: 520px;
+      }
+
+      button {
+        border: 0;
+        padding: 18px 26px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--accent), var(--hot));
+        color: white;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+
+      .secondary {
+        background: rgba(255,255,255,.14);
+        border-radius: 18px;
+      }
+
+      .mockup {
+        width: 620px;
+        min-height: 440px;
+        border-radius: 34px;
+        border: 3px solid rgba(255,255,255,.18);
+        background: rgba(255,255,255,.11);
+        padding: 18px;
+        box-shadow: 0 44px 140px rgba(0,0,0,.55);
+      }
+
+      .metric-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+
+      .metric {
+        border-radius: 10px;
+        padding: 18px;
+        background: rgba(255,255,255,.12);
+        border: 1px solid rgba(255,255,255,.18);
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-top: 28px;
+      }
+
+      .card {
+        min-height: 180px;
+        border-radius: 28px 8px 20px 14px;
+        padding: 22px;
+        border: 2px solid rgba(255,255,255,.12);
+        background: rgba(255,255,255,.08);
+      }
+
+      @media (max-width: 760px) {
+        .page { width: 100%; padding: 16px; }
+        nav { min-width: 720px; }
+        .hero { grid-template-columns: 1fr; }
+        h1 { font-size: 56px; }
+        .actions { width: 520px; }
+        .mockup { width: 620px; }
+        .cards { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <nav>
+        <strong>NovaFlow</strong>
+        <div>
+          <a href="#">Platform</a>
+          <a href="#">Automations</a>
+          <a href="#">Customers</a>
+          <a href="#">Pricing</a>
+        </div>
+      </nav>
+
+      <section class="hero">
+        <div>
+          <div class="badges">
+            <span class="badge">#1 AI Workspace</span>
+            <span class="badge">Next-gen</span>
+            <span class="badge">10x Growth</span>
+            <span class="badge">Loved by 50,000 teams</span>
+          </div>
+          <h1>Unlock Limitless AI Productivity</h1>
+          <p>NovaFlow redefines team execution with revolutionary AI agents that empower every workflow across your entire organization.</p>
+          <div class="actions">
+            <button>Start transforming your workflow today</button>
+            <button class="secondary">Watch the platform demo</button>
+          </div>
+        </div>
+        <div class="mockup">
+          <div class="metric-row">
+            <div class="metric">99.9%<br />Uptime</div>
+            <div class="metric">10x<br />ROI</div>
+            <div class="metric">500%<br />Faster</div>
+            <div class="metric">0<br />Setup</div>
+          </div>
+          <div class="cards">
+            <div class="card">AI Revenue Engine</div>
+            <div class="card">Autonomous Ops</div>
+            <div class="card">Predictive Growth</div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
+

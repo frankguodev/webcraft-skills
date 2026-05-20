@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Missing States</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, sans-serif;
+        background: #ffffff;
+        color: #1f2937;
+      }
+      .wrap {
+        max-width: 920px;
+        margin: 48px auto;
+        padding: 0 20px;
+      }
+      .panel {
+        border: 1px solid #e5e7eb;
+        border-radius: 18px;
+        padding: 28px;
+      }
+      input, select {
+        width: 100%;
+        height: 44px;
+        margin-bottom: 12px;
+        padding: 0 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+      }
+      input:focus, select:focus, button:focus {
+        outline: none;
+      }
+      button {
+        height: 44px;
+        padding: 0 18px;
+        border: 0;
+        border-radius: 8px;
+        background: #2563eb;
+        color: white;
+      }
+      .danger {
+        background: #ef4444;
+      }
+      .empty {
+        margin-top: 24px;
+        padding: 36px;
+        text-align: center;
+        color: #9ca3af;
+        border: 1px dashed #e5e7eb;
+        border-radius: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <h1>Invite a teammate</h1>
+      <div class="panel">
+        <input placeholder="Email address" />
+        <select>
+          <option>Choose a role</option>
+          <option>Admin</option>
+          <option>Editor</option>
+        </select>
+        <button>Send invite</button>
+        <button class="danger">Remove all pending invites</button>
+        <div class="empty">
+          No teammates yet
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
+
