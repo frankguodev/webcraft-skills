@@ -2,6 +2,8 @@
 
 AI UI Constitution is designed for explicit CLI-style use. Automatic skill triggering is useful, but explicit commands are the recommended workflow when many skills are installed.
 
+Current stable commands are `/ui-audit` and `/ui-fix`. Other command prompts are included for iteration and are not yet fully tested.
+
 ## `/ui-audit`
 
 Strictly inspect a page, app, screenshot, or whole site.
@@ -21,6 +23,8 @@ Options:
 
 ## `/ui-review`
 
+Status: experimental / not yet fully tested.
+
 Review UI without automatically changing code.
 
 ```text
@@ -30,6 +34,8 @@ Review UI without automatically changing code.
 Output findings by `Critical`, `Major`, and `Minor`, with location, problem, impact, and fix.
 
 ## `/ui-polish`
+
+Status: experimental / not yet fully tested.
 
 Refine an existing UI while preserving product meaning.
 
@@ -59,6 +65,8 @@ Options:
 
 ## `/ui-build`
 
+Status: experimental / not yet fully tested.
+
 Build a new page or site.
 
 ```text
@@ -73,6 +81,8 @@ Options:
 - `--content`: use provided content instead of inventing copy.
 
 ## `/ui-preset`
+
+Status: experimental / not yet fully tested.
 
 Inspect or apply presets.
 

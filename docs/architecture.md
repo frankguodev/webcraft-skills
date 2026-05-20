@@ -35,9 +35,18 @@ The project is not only a style preset library. It is a UI quality system for ag
 
 ## Source Of Truth
 
-Edit `core/` for platform-neutral rules and `skills/ai-ui-constitution` for the canonical skill runtime. Keep adapter generation out of the main workflow until the skill stabilizes.
+Edit `core/` as the source of truth for platform-neutral references. Run `npm run sync:runtime` to copy those references into `skills/ai-ui-constitution/references/`, which is the canonical installable skill runtime. Edit `skills/ai-ui-constitution/SKILL.md` directly because it is runtime-specific and is not generated from `core/`.
 
-Use files without a language suffix, such as `ui-audit.md`, as the runtime defaults for `SKILL.md` and agent execution. Keep `.zh.md` files as first-class source material for Chinese users, Chinese typography and line-breaking concerns, and more precise Chinese aesthetic language.
+Do not put maintainer-only paths, sync instructions, or repository architecture notes inside runtime reference files. Runtime files should speak only to the agent executing the skill.
+
+Reference files are maintained as locale pairs:
+
+- Files without a language suffix, such as `ui-audit.md`, are the English/default references.
+- `.zh.md` files are first-class Chinese references for Chinese users, Chinese typography and line-breaking concerns, mixed Chinese/English content, and more precise Chinese aesthetic language.
+- Runtime skill execution must choose one locale first, then read only the matching workflow/checklist/preset files.
+- Do not read both English and Chinese references unless the task is translation, bilingual comparison, localization, or consistency checking between locales.
+
+English and Chinese files do not need to be literal translations, but they should preserve the same capability surface: the same workflows, checklist coverage, preset intent, and operational boundaries.
 
 ## Configuration
 

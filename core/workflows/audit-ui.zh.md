@@ -1,8 +1,15 @@
 # UI Audit Workflow
 
-用于严格、系统地排查网页、页面、组件、截图或整站 UI 质量。`audit-ui` 负责执行流程，UI Audit Rubric 负责判断标准。
+用于严格、系统地排查网页、页面、组件、截图或整站 UI 质量。`audit-ui` 负责执行流程，`ui-audit` rubric 负责判断标准。
 
 审查的目标是发现问题、给出证据和修复顺序，不是直接重写设计。只有当用户明确要求修复时，才进入修复流程。
+
+## 职责边界
+
+- 本 workflow 只定义如何执行 audit：选择模式、收集上下文、验证视口、采集证据、组织报告、决定是否转入修复。
+- 具体什么算问题、如何分级、各页面类型和 UI 维度的判断标准，读取 `references/checklists/ui-audit.zh.md`。
+- 不要把 rubric 逐条复制进报告；只输出有证据、有影响、有修复价值的问题。
+- 不要同时读取英文和中文 reference，除非任务是翻译、双语对齐或一致性检查。
 
 ## 1. 选择审查模式
 
@@ -44,21 +51,14 @@
 
 ## 4. 读取审查标准
 
-使用：
+运行时读取 `references/checklists/ui-audit.zh.md`。重点应用其中：
 
-```text
-编辑态：core/checklists/ui-audit.zh.md
-运行态：references/checklists/ui-audit.zh.md
-```
-
-重点应用其中：
-
-- Audit Modes
 - 审查边界
 - 去重与优先级
 - 设备检查矩阵
 - 证据标准
 - 页面类型差异
+- 评分模型
 - Layout / Typography / Color / Border Radius Shadow / Components / Navigation / Forms / Modals / Responsive / Motion / Accessibility / Content Stress / AI Template Smell
 
 不要逐条机械输出所有分类。只报告有证据、有影响、有修复价值的问题。
@@ -100,11 +100,21 @@
 
 - 页面入口：`app/`、`pages/`、`src/routes/`、`src/pages/`、`index.html` 等。
 - 全局样式：`globals.css`、`app.css`、`tailwind.config.*`、design tokens。
-- 组件：button、card、input、modal、nav、table、list、toast。
+- 组件：button、card、input、select、combobox、dropdown、checkbox、radio、modal、nav、table、list、toast。
 - 路由和页面类型：home、pricing、dashboard、settings、docs、auth、checkout。
 - 已有 UI 系统：shadcn、Radix、MUI、自定义组件、Tailwind utility 体系。
 
 不要在不了解项目结构时直接给大范围设计建议。
+
+### 自定义控件一致性检查
+
+代码审查时必须主动检查项目是否已有自定义基础控件，并反查页面是否仍混用原生控件：
+
+- 先找已有组件：`Select`、`Combobox`、`Dropdown`、`MultiSelect`、`Checkbox`、`RadioGroup`、`Input`、`Textarea`、`Button` 等。
+- 再找原生用法：`<select>`、`<option>`、`<input type="checkbox">`、`<input type="radio">`、未封装的 `<input>` / `<textarea>`，以及只靠浏览器默认样式的控件。
+- 如果项目已有对应自定义控件，但某个页面仍使用突兀原生控件，必须作为 `Components And States` 或 `Forms` finding 评估，不要只放进 `Content Stress` 或 `Pass Notes`。
+- 如果项目没有对应自定义控件，但原生控件明显不符合当前网站风格，也要报告；修复方向是建立或封装与现有视觉体系一致的基础控件，而不是只调整单个页面。
+- 如果原生控件只是视觉略不协调且不影响操作，通常是 `Minor`；如果出现在筛选、批量操作、编辑表单等核心后台流程，并明显破坏视觉系统或操作信心，通常是 `Major`。
 
 ## 7. 运行与视口检查
 
@@ -147,10 +157,11 @@ Deep Audit 增加：
 2. Responsive：移动端、平板、大屏、fixed/sticky、图片和表格溢出。
 3. Information hierarchy：首屏主次、页面类型是否清楚、核心任务是否明确。
 4. Components and states：hover、active、focus-visible、disabled、loading、empty、error、success。
-5. Visual system：spacing、typography、color、radius、border、shadow。
-6. Content stress：长文案、中英文混排、不同数据数量、不同图片比例。
-7. AI template smell：空泛口号、过度 badge、bento grid、渐变光斑、虚假数据。
-8. Minor polish：对齐、节奏、动效、文案细节。
+5. Form/control consistency：输入、选择、下拉、多选、菜单、批量操作是否沿用项目已有组件体系。
+6. Visual system：spacing、typography、color、radius、border、shadow。
+7. Content stress：长文案、中英文混排、不同数据数量、不同图片比例。
+8. AI template smell：空泛口号、过度 badge、bento grid、渐变光斑、虚假数据。
+9. Minor polish：对齐、节奏、动效、文案细节。
 
 ## 10. Findings 数量控制
 

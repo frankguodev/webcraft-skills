@@ -1,9 +1,22 @@
 {
   "name": "ai-ui-constitution",
   "version": "0.1.0",
-  "description": "Cross-agent UI quality skill for building, reviewing, auditing, polishing, and fixing web interfaces.",
+  "description": "Codex and Claude Code skill for auditing and fixing rough AI-generated web UI.",
   "license": "MIT",
   "type": "module",
+  "bin": {
+    "ai-ui-constitution": "scripts/install.mjs"
+  },
+  "files": [
+    "skills/",
+    "commands/",
+    "scripts/install.mjs",
+    "README.md",
+    "README_zh_CN.md",
+    "CHANGELOG.md",
+    "CHANGELOG_zh_CN.md",
+    "LICENSE"
+  ],
   "scripts": {
     "validate": "node scripts/validate.mjs",
     "sync:runtime": "node scripts/sync-runtime.mjs"

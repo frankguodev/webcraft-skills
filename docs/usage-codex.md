@@ -2,22 +2,28 @@
 
 ## Install
 
-Current recommended local install:
-
-```powershell
-.\scripts\install-codex.ps1
-```
-
-Future marketplace / skills CLI install, after publication:
+Recommended npx install:
 
 ```bash
-npx skills add frankguodev/ai-ui-constitution
+npx ai-ui-constitution install --agent codex
+```
+
+Skill-only install through the generic skills CLI is also possible after publication, but it does not install this repo's slash command prompts:
+
+```bash
+npx skills add frankguodev/ai-ui-constitution --skill ai-ui-constitution -g -a codex
 ```
 
 This installs:
 
 ```text
 ~/.codex/skills/ai-ui-constitution
+~/.codex/commands/ui-audit.md
+~/.codex/commands/ui-fix.md
+~/.codex/commands/ui-review.md
+~/.codex/commands/ui-polish.md
+~/.codex/commands/ui-build.md
+~/.codex/commands/ui-preset.md
 ```
 
 ## Use In CLI
@@ -40,7 +46,7 @@ Parameter-style usage:
 /ui-fix --severity critical,major --yes
 ```
 
-If slash commands are not wired in the current client, use natural explicit invocation:
+If a client does not load slash commands from `~/.codex/commands`, use natural explicit invocation:
 
 ```text
 Use ai-ui-constitution to audit the current website.

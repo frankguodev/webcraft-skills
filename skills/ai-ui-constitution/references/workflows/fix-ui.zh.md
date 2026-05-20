@@ -132,6 +132,8 @@
 - 再补体验状态：hover、active、empty、success。
 - 状态反馈不要导致布局位移。
 - 图标按钮必须有文本、tooltip 或 `aria-label`。
+- 修复输入、选择、下拉、多选、菜单等基础控件不一致时，先查项目是否已有对应自定义组件；已有则优先复用或扩展，不要继续手写原生控件样式。
+- 如果项目没有对应自定义控件，但原生控件明显破坏当前视觉体系，优先封装最小可复用控件或共享样式，让核心筛选、编辑、批量操作沿用同一套交互和视觉规则。
 
 ### Accessibility
 
@@ -144,6 +146,7 @@
 ### Forms / Modals / Navigation
 
 - 表单修复要形成闭环：label、help、error、disabled、loading、success。
+- 选择类控件修复要覆盖 trigger、menu/popup、option、selected、disabled、empty、error、focus-visible、键盘路径和长选项。
 - 弹窗先保证关闭、滚动、focus、destructive confirmation。
 - 导航先保证桌面和移动端都有可用路径，再做视觉 polish。
 
@@ -180,6 +183,7 @@
 
 - 修 overflow：复检相关视口，尤其 375px、768px、1280px。
 - 修按钮/表单：复检 hover、active、focus-visible、disabled、loading、error。
+- 修选择/下拉/多选/菜单：复检打开、关闭、选中、清空、键盘路径、长选项、空状态和移动端。
 - 修弹窗：复检打开、关闭、遮罩、滚动、focus、移动端。
 - 修导航：复检桌面、移动端、当前状态、键盘路径。
 - 修 token：复检同类组件是否一致，是否产生新冲突。
@@ -210,6 +214,7 @@
 
 - 复检 hover、active、focus-visible、disabled、loading、error。
 - 修弹窗、菜单、表单、导航时，必须复检打开、关闭、键盘路径和移动端。
+- 修原生控件替换或自定义控件封装时，必须复检同类页面是否仍有原生控件混用，以及新控件是否符合现有 token。
 - 没有浏览器时，基于代码说明无法验证的交互风险。
 
 ## 12. 输出格式

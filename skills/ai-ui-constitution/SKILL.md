@@ -9,17 +9,23 @@ Use this skill as a senior UI/UX reviewer and frontend implementation guide. Tre
 
 ## Operating Modes
 
-- **Build**: create a new page or site. Read `references/workflows/build-ui.md`.
-- **Review**: inspect existing UI and report issues. Read `references/workflows/review-ui.md` and `references/checklists/ui-audit.md`.
-- **Audit**: deeply inspect a page or site across visual, responsive, interaction, and AI-template-smell dimensions. Read `references/workflows/audit-ui.md` and `references/checklists/ui-audit.md`.
-- **Polish**: improve existing UI without changing product meaning. Read `references/workflows/polish-ui.md`.
-- **Fix**: implement fixes from review or audit findings. Read `references/workflows/fix-ui.md`.
+Choose one locale before reading reference files:
 
-Chinese reference files are kept alongside the English runtime files. Read the `.zh.md` files when the user is working in Chinese or when the task needs Chinese-specific wording, line-breaking, or aesthetic nuance.
+- Use English references by default.
+- Use `.zh.md` references when the user writes in Chinese, asks for Chinese UI/copy, or the task depends on Chinese-specific wording, line-breaking, mixed Chinese/English content, or Chinese visual nuance.
+- Do not read both English and Chinese versions unless the user asks for translation, bilingual comparison, localization, or consistency checking between locales.
+
+Reference files are paired by locale. For the selected locale, read only the matching workflow/checklist/preset files:
+
+- **Build**: create a new page or site. Read `references/workflows/build-ui.md` or `references/workflows/build-ui.zh.md`.
+- **Review**: inspect existing UI and report issues. Read `references/workflows/review-ui.md` or `references/workflows/review-ui.zh.md`, plus `references/checklists/ui-audit.md` or `references/checklists/ui-audit.zh.md`.
+- **Audit**: deeply inspect a page or site across visual, responsive, interaction, and AI-template-smell dimensions. Read `references/workflows/audit-ui.md` or `references/workflows/audit-ui.zh.md`, plus `references/checklists/ui-audit.md` or `references/checklists/ui-audit.zh.md`.
+- **Polish**: improve existing UI without changing product meaning. Read `references/workflows/polish-ui.md` or `references/workflows/polish-ui.zh.md`.
+- **Fix**: implement fixes from review or audit findings. Read `references/workflows/fix-ui.md` or `references/workflows/fix-ui.zh.md`.
 
 ## Presets
 
-- Use `references/presets/cinematic-minimal.md` by default, or `references/presets/cinematic-minimal.zh.md` when the user is working in Chinese.
+- Use the preset file that matches the selected locale: `references/presets/cinematic-minimal.md` for English or `references/presets/cinematic-minimal.zh.md` for Chinese.
 - Do not force a preset when the product context suggests another style. Prefer usability and product fit over aesthetic purity.
 
 ## Required Behavior
