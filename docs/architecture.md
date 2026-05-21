@@ -16,7 +16,7 @@ Plugin metadata, marketplace files, and adapters are intentionally deferred. Add
 
 ## Layers
 
-- `core/`: platform-neutral source material: presets, checklists, workflows, and examples.
+- `core/`: platform-neutral source material: checklists, high-risk checklist modules, workflows, presets, and structured mode budgets.
 - `skills/`: installable skill packages. `skills/webcraft-skills` is the canonical production skill.
 - `commands/`: Claude Code command prompt files for users who prefer stable invocation over automatic triggering.
 - `scripts/`: installation and validation helpers.
@@ -39,6 +39,13 @@ Edit `core/` as the source of truth for platform-neutral references. Run `npm ru
 
 Do not put maintainer-only paths, sync instructions, or repository architecture notes inside runtime reference files. Runtime files should speak only to the agent executing the skill.
 
+Checklist modules and structured budgets are intentionally small:
+
+- `core/checklists/ui-audit*.md` remains the main rubric.
+- `core/checklists/modules/` contains focused high-risk checks for layout relationships, component states, responsive stability, forms/controls, visual-system consistency, accessibility, and AI-template smell.
+- `core/modes/audit-modes.json` contains hard budgets for Quick, Standard, and Deep Audit.
+- Markdown explains judgment and context; JSON is reserved for counts, switches, viewport lists, and other values that should be script-checkable.
+
 Reference files are maintained as locale pairs:
 
 - Files without a language suffix, such as `ui-audit.md`, are the English/default references.
@@ -58,3 +65,14 @@ Installed skills should check for project-level configuration before major UI wo
 These files let a project override the default preset, visual tokens, audit viewports, and local anti-patterns without forking the skill.
 
 Templates live in `examples/project-config/`.
+
+## Regression Examples
+
+`examples/test-cases/` stores regression assets for audit, review, polish, build, and fix workflows. Each test case should include:
+
+- `before.html`
+- `index.html`
+- `expected-findings.md`
+- `test.json`
+
+Run `npm run validate:examples` or `npm run validate` to confirm the test-case README and required files remain in sync.

@@ -1,0 +1,7 @@
+{
+  "id": "hero-layout-balance",
+  "type": "audit-fix",
+  "workflows": ["audit-ui", "fix-ui"],
+  "covers": ["layout", "first-viewport", "hero-balance", "search-overlap", "visual-container"],
+  "hasScreenshots": false
+}

@@ -1,27 +1,27 @@
 # Command Prompts
 
-Webcraft Skills is designed for explicit CLI-style use. Automatic skill triggering is useful, but explicit invocation is the recommended workflow when many skills are installed.
+Webcraft Skills is designed for explicit prompt-style use. Automatic skill triggering is useful, but explicit invocation is the recommended workflow when many skills are installed.
 
 For Codex, use `/skills`, `$webcraft-skills`, or natural-language invocation such as `Use webcraft-skills to audit the current website.` Codex does not currently load this package's `commands/*.md` files as custom slash commands.
 
-For Claude Code, this package installs command prompt files. Current stable Claude Code command prompts are `/ui-audit` and `/ui-fix`. Other command prompts are included for iteration and are not yet fully tested.
+For Claude Code, this package installs command prompt files. Current stable Claude Code command prompts are `/ui-audit` and `/ui-fix`. Text after the command is a prompt convention for the agent, not a separate CLI parser. Other command prompts are included for iteration and are not yet fully tested.
 
 ## `/ui-audit`
 
 Strictly inspect a page, app, screenshot, or whole site.
 
 ```text
-/ui-audit --scope whole-site --strict --viewports 375,768,1280
-/ui-audit --scope homepage --focus layout,typography,radius,states
+/ui-audit Standard Audit for the whole site
+/ui-audit Quick Audit for the homepage, only report obvious issues
+/ui-audit Deep Audit for all admin pages before launch
 ```
 
-Options:
+Prompt details to include:
 
-- `--scope`: `current-page`, `homepage`, `whole-site`, `component`, `screenshot`, or a custom path.
-- `--strict`: report more minor visual and interaction issues.
-- `--viewports`: comma-separated viewport widths to check.
-- `--focus`: comma-separated audit areas: `layout`, `typography`, `color`, `radius`, `border`, `shadow`, `states`, `modal`, `responsive`, `a11y`, `ai-smell`.
-- `--report`: `summary`, `detailed`, or `fix-plan`.
+- Scope: current page, homepage, whole site, component, screenshot, feature, or module.
+- Depth: `Quick Audit`, `Standard Audit`, or `Deep Audit`.
+- Focus areas: layout, typography, color, radius, border, shadow, states, modal, responsive, accessibility, or AI-template smell.
+- Viewports or devices when important, such as mobile only, 375px, tablet, or desktop.
 
 ## `/ui-review`
 

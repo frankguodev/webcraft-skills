@@ -1,0 +1,7 @@
+{
+  "id": "existing-style-plus-design-ref",
+  "type": "build-polish",
+  "workflows": ["build-ui", "polish-ui"],
+  "covers": ["theme-preservation", "reference-layout", "visual-system"],
+  "hasScreenshots": false
+}

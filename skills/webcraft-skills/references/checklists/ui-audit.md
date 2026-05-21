@@ -7,6 +7,7 @@ Report issues by `Critical`, `Major`, and `Minor`. Each issue should include loc
 ## Contents
 
 - Usage
+- High-Risk Modules
 - Page Context
 - Audit Boundaries
 - Deduplication And Priority
@@ -34,11 +35,24 @@ Report issues by `Critical`, `Major`, and `Minor`. Each issue should include loc
 
 ## Usage
 
-1. Confirm whether the target is a page, component, screenshot, whole site, or codebase.
+1. Confirm whether the target is a page, component, screenshot, whole site, or codebase. The rubric is a judging library, not a checklist to fully execute every time; actual inspection depth is controlled by `Quick / Standard / Deep Audit`.
 2. Check usability and structure before visual consistency; check polish last.
 3. Do not reject an existing product direction based on personal taste.
 4. If no browser is available, audit statically from code and state which viewports/interactions were not verified.
-5. Lead with issues, then fix order. Avoid long summaries before findings.
+5. Audit the visible user outcome first, then use the project's implementation style for evidence. Evidence can come from components, CSS classes, design tokens, DOM structure, breakpoint config, screenshots, or browser interaction; layout, hover, cursor, focus, and overlay issues should be verified in a browser when possible.
+6. Lead with issues, then fix order. Avoid long summaries before findings.
+
+## High-Risk Modules
+
+This file remains the full rubric. When these high-risk issues are relevant, read the matching module as a focused inspection path. Modules strengthen this rubric; they do not replace it, and they should not cause duplicate reporting of the same root issue.
+
+- `modules/layout.md`: first-viewport relationships, hero/search/chip/next-section layout breaks, misalignment, hollow regions, overlap, and layering issues.
+- `modules/components-states.md`: cursor, hover, active, focus-visible, loading, disabled, click affordance, and custom clickable regions.
+- `modules/responsive.md`: `375px` / `768px` / `1280px` viewport stability, horizontal scrolling, fixed widths, media ratios, sticky/fixed overlap, and intermediate breakpoints.
+- `modules/forms-controls.md`: forms, search/filter UI, selection controls, bulk actions, error recovery, mixed native controls, and mobile form usability.
+- `modules/visual-system.md`: type hierarchy, color roles, spacing, radius, border, shadow, decorative restraint, and theme preservation.
+- `modules/accessibility.md`: keyboard paths, focus-visible, accessible names, semantic structure, target size, state expression, and high-contrast risks.
+- `modules/ai-template-smell.md`: first-viewport product clarity, fabricated content, template collage, excessive decoration, vague copy, and information credibility.
 
 ## Page Context
 
@@ -50,7 +64,7 @@ Identify:
 - Core task: read, sign up, buy, search, filter, manage, create, contact, download, book, etc.
 - Audience: general users, developers, enterprise buyers, creators, internal operators, managers, etc.
 - Content density: low-density brand expression, medium-density product explanation, high-density data operation.
-- Technical constraints: component library, Tailwind, shadcn, custom CSS, design tokens, breakpoints.
+- Technical constraints: component library, utility CSS, CSS Modules, custom CSS, design tokens, breakpoints, framework, and rendering model.
 - Design tone: tool, content, product, brand, editorial, admin.
 
 Do not audit every page with the same taste standard. A dashboard should not be treated like a cinematic marketing site; a portfolio should not be treated like enterprise SaaS; a form should not be treated like a poster.
@@ -184,6 +198,7 @@ Does not completely block use, but significantly reduces professionalism, trust,
 Typical cases:
 
 - Missing key states such as hover, focus-visible, disabled, loading, or error.
+- Clickable elements lack clear mouse affordance, such as buttons, search buttons, links, chips, card actions, or custom clickable regions not showing pointer or hover feedback.
 - Spacing, type hierarchy, radius, borders, or color system is visibly inconsistent.
 - Mobile or small desktop is usable but cramped, awkwardly wrapped, or hard to tap.
 - Too many cards, bento grids, badges, or stats create template collage.
@@ -235,6 +250,7 @@ Score each dimension from 0 to 5:
 
 - Is density appropriate for repeated work rather than marketing-style display?
 - Are table, filters, search, pagination, sorting, and bulk actions usable?
+- Do table column widths, table-layout, border-collapse, border-spacing, captions, sticky headers, and horizontal scrolling support real data volume?
 - Are loading, empty, error, permission, and offline states covered?
 - Is data hierarchy clear, or do all metrics have equal weight?
 - Is large-screen scanning efficient, and is small-screen degradation reasonable?
@@ -274,13 +290,19 @@ Score each dimension from 0 to 5:
 - Horizontal scrolling on common 375px mobile width.
 - Primary content, CTA, navigation, dialog, or table is clipped.
 - Overlap makes text unreadable or controls unclickable.
+- Sticky, fixed, absolute, or z-index layering errors cause nav, toast, menus, and dialogs to cover each other with no recovery path.
 - First viewport lacks clear priority because title, visual, background, and buttons all compete.
 
 ### Major
 
 - Section spacing jumps between cramped and empty.
+- First-viewport relationships feel broken: hero visuals, search areas, chip groups, or the next section overlap, disconnect, misalign, feel too hollow, or look like unfinished placeholders.
+- Images, mockups, illustrations, charts, or decorative containers have too little content for their occupied space, unbalancing the page or suggesting an asset failed to load.
 - Max width is uncontrolled on large screens or side padding is too tight on small screens.
 - Grid, flex, or cards shrink on mobile instead of collapsing appropriately.
+- Basic layout rules such as display, position, overflow, and min/max size are scattered, so similar regions behave differently across pages.
+- Columns, multi-column content, print/page breaks, or break-before/after/inside rules split cards, table rows, code blocks, or content sections awkwardly.
+- Visibility, isolation, float/clear, or box-sizing is misused, causing invisible elements to occupy space, floats to affect later content, stacking contexts to become unpredictable, or size calculations to drift.
 - Excessive cards, nested cards, floating panels, or uncontrolled information density.
 
 ### Minor
@@ -291,7 +313,7 @@ Score each dimension from 0 to 5:
 ### Fix Strategy
 
 - Fix overflow, clipping, overlap, and unclickable elements first.
-- Then normalize container width, section spacing, and grid collapse rules.
+- Then normalize container width, section spacing, first-viewport relationships, grid/flex collapse rules, layering rules, and scroll regions.
 - Remove unnecessary cards and floating panels.
 
 ## Typography
@@ -308,16 +330,20 @@ Score each dimension from 0 to 5:
 - Long words, mixed-language text, dates, emails, filenames, or long labels lack a wrapping strategy.
 - Line-height is tight, paragraphs are too wide or too narrow, or weights jump randomly.
 - Oversized or ultra-bold type is used to fake premium quality.
+- Numbers, prices, dates, table columns, or dashboard metrics lack stable numeric rules, making data jump visually or decimals hard to compare.
+- Lists, quotes, code snippets, tab indentation, super/subscript, image baselines, or inline icons are roughly aligned and hurt reading rhythm.
 
 ### Minor
 
 - Labels, captions, or helper text are slightly too small or faint.
 - Button text centering or heading/body spacing is slightly off.
+- Underlines, strikethroughs, link decoration, text transforms, letter spacing, or hyphenation are slightly inconsistent.
 
 ### Fix Strategy
 
 - Use a small stable hierarchy: H1, H2, body, caption, button.
 - Add natural wrapping and width constraints for long text and labels.
+- In data-dense UI, use stable numeric width, alignment, and decimal rules to improve scanning.
 - Prefer line-height, max-width, and font-weight fixes before changing fonts.
 
 ## Color
@@ -334,6 +360,8 @@ Score each dimension from 0 to 5:
 - The page is dominated by one hue family in a cheap or template-like way.
 - Saturated blue-purple, neon, rainbow gradients, or fake tech colors hurt trust.
 - Surfaces, borders, backgrounds, and text lack clear hierarchy.
+- Background images, background position, repeat, clipping, fixed backgrounds, or background-size rules are unstable across viewports.
+- Blend modes, opacity, masks, filters, or backdrop filters are too heavy and hurt text contrast, performance, or product realism.
 
 ### Minor
 
@@ -356,6 +384,7 @@ Score each dimension from 0 to 5:
 
 - Cards, buttons, inputs, and dialogs use conflicting radius systems.
 - Border weight or color is inconsistent.
+- Outline / focus ring styling conflicts with the border system, or is hidden for visual cleanliness and hurts keyboard use.
 - Strong shadows make the page feel like stacked floating panels.
 - Glassmorphism, heavy outlines, or glow effects feel cheap.
 
@@ -374,6 +403,7 @@ Score each dimension from 0 to 5:
 ### Critical
 
 - Main buttons, navigation, forms, or menus lack usable interaction feedback.
+- Core clickable elements lack pointer, hover, active, or focus-visible feedback, so users cannot confirm whether they are clickable.
 - Form errors are invisible or do not explain recovery.
 - Async actions lack loading/disabled feedback and can be double-submitted.
 - Icon buttons lack labels, tooltips, or accessible names.
@@ -384,6 +414,9 @@ Score each dimension from 0 to 5:
 - Primary, secondary, and destructive actions are not clearly ranked.
 - Lists, tables, and cards only handle fixed counts or short text.
 - Components shift size on hover or content changes.
+- Icons, SVGs, avatars, or media controls are inconsistent in size, stroke, color inheritance, alignment, or accessible names.
+- Cursor, pointer-events, touch-action, or selection behavior does not match control semantics, so users cannot tell what is clickable, draggable, or selectable; custom buttons, chips, tags, cards, icon buttons, and clickable divs need special attention.
+- Appearance, accent-color, caret-color, color-scheme, field-sizing, and resize behavior are not folded into the visual system, so native inputs, selects, switches, textareas, and system controls feel disconnected.
 
 ### Minor
 
@@ -393,8 +426,8 @@ Score each dimension from 0 to 5:
 ### Fix Strategy
 
 - Add focus-visible, disabled, loading, and error states first.
-- Stabilize sizes, borders, radius, and state feedback.
-- Hover and active states must not alter layout dimensions.
+- Stabilize sizes, borders, radius, cursor, and state feedback.
+- Hover, active, and selected states must not alter layout dimensions; icons and SVGs should adapt correctly to text color, state, and size.
 
 ## Navigation
 
@@ -481,6 +514,7 @@ Score each dimension from 0 to 5:
 - 375px, 768px, or 1280px breaks a core flow.
 - Images, mockups, tables, or code blocks cause horizontal scrolling.
 - CTA, navigation, forms, or dialogs are inoperable on mobile.
+- Images, video, iframes, charts, or product screenshots lack stable ratios, causing layout shift, stretching, bad cropping, or clipped key content.
 
 ### Major
 
@@ -488,6 +522,8 @@ Score each dimension from 0 to 5:
 - Large screens are too wide or too sparse.
 - Tablet breakpoint is ignored and creates awkward intermediate layouts.
 - Fixed/sticky elements hide content.
+- Tables, code blocks, rich text, charts, or long lists lack small-screen scrolling, collapse, or reflow behavior.
+- Scroll behavior, scroll margin, scroll padding, scrollbar gutter, scroll snap, or scrollbar styling is mishandled, causing anchors to land under sticky headers, snap points to feel stuck, or layout to jump when scrollbars appear.
 
 ### Minor
 
@@ -498,6 +534,7 @@ Score each dimension from 0 to 5:
 - Check at least 375px, 768px, and 1280px.
 - Fix horizontal scrolling and inoperable controls first.
 - Use aspect-ratio, min/max width, and stable dimensions for fixed-format UI.
+- For media, check aspect ratio, object fit, focal crop, and loading placeholders.
 
 ## Motion
 
@@ -512,10 +549,13 @@ Score each dimension from 0 to 5:
 - Multiple areas animate at once and compete for attention.
 - Reduced motion is ignored.
 - Loading motion feels frantic or cheap.
+- Transform origin, perspective, backface, scale, translate, rotate, or zoom is misused, causing blur, clipping, layering issues, or a mismatch between visual position and hit target.
+- Will-change is overused or left active for long periods, adding performance cost without real interaction benefit.
 
 ### Minor
 
 - Transition duration or easing is inconsistent.
+- Transition delay, property, or behavior is inconsistent, so feedback feels sluggish or unpredictable.
 
 ### Fix Strategy
 
@@ -538,6 +578,7 @@ Score each dimension from 0 to 5:
 - Form labels, errors, and controls are not associated.
 - Dialog focus management is weak.
 - Interactive targets are too small.
+- High contrast / forced colors mode makes text, borders, focus, icons, or state feedback indistinguishable.
 
 ### Minor
 
@@ -561,7 +602,9 @@ AI-generated UI often only fits ideal short copy. Consider real content pressure
 - Lists with 0, 1, 3, 10, or 20 items.
 - Long form error messages.
 - Varied image ratios, missing avatars, different screenshot sizes.
+- Video, iframes, charts, code blocks, rich text, tables, and long lists across different widths.
 - Very long user, organization, or project names.
+- Multi-column content, print/page-break cases, anchor jumps, scroll snap, sticky headers, and long content in combination.
 
 ### Critical
 

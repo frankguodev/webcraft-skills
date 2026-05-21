@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Click Affordance - Fixed</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+        background: #f8fafc;
+        color: #172033;
+      }
+      .wrap {
+        max-width: 980px;
+        margin: 56px auto;
+        padding: 0 24px;
+      }
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 24px 0;
+      }
+      .chip {
+        border: 1px solid #dbe4ef;
+        border-radius: 999px;
+        padding: 10px 16px;
+        background: #fff;
+        color: #172033;
+        cursor: pointer;
+        transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+      }
+      .chip:hover {
+        border-color: #0f766e;
+        background: #e9f7f1;
+        color: #0f766e;
+      }
+      .quick-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
+        padding: 14px 18px;
+        border: 0;
+        border-radius: 10px;
+        background: #e9f7f1;
+        color: #0f766e;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background-color 160ms ease, color 160ms ease;
+      }
+      .quick-link:hover {
+        background: #d7f0e8;
+        color: #0b5f58;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 28px;
+      }
+      .card {
+        min-height: 180px;
+        padding: 22px;
+        border: 1px solid #dbe4ef;
+        border-radius: 14px;
+        background: #fff;
+      }
+      .card-action {
+        display: inline-block;
+        margin-top: 24px;
+        padding: 10px 14px;
+        border-radius: 8px;
+        background: #172033;
+        color: #fff;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 160ms ease;
+      }
+      .card-action:hover {
+        background: #0f766e;
+      }
+      .icon-button {
+        width: 42px;
+        height: 42px;
+        border: 1px solid #dbe4ef;
+        border-radius: 50%;
+        background: #fff;
+        color: #172033;
+        cursor: pointer;
+        transition: background-color 160ms ease, border-color 160ms ease;
+      }
+      .icon-button:hover {
+        border-color: #0f766e;
+        background: #e9f7f1;
+      }
+      .chip:focus-visible,
+      .quick-link:focus-visible,
+      .card-action:focus-visible,
+      .icon-button:focus-visible {
+        outline: 3px solid rgba(15, 118, 110, 0.35);
+        outline-offset: 3px;
+      }
+      @media (max-width: 640px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <h1>Project command center</h1>
+      <p>Review active work, open decisions, and delivery risks from one shared space.</p>
+
+      <div class="toolbar" aria-label="Project filters">
+        <button class="chip">Active</button>
+        <button class="chip">Blocked</button>
+        <button class="chip">Due this week</button>
+        <button class="chip">Needs review</button>
+        <button class="icon-button" aria-label="Open settings">⚙</button>
+      </div>
+
+      <button class="quick-link" type="button">
+        Open sprint board
+      </button>
+
+      <section class="grid" aria-label="Project cards">
+        <article class="card">
+          <h2>Launch checklist</h2>
+          <p>23 tasks need final ownership and approval before release.</p>
+          <a class="card-action" href="#">Review tasks</a>
+        </article>
+        <article class="card">
+          <h2>Design feedback</h2>
+          <p>Three screens need acceptance from product and support.</p>
+          <a class="card-action" href="#">Open feedback</a>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "id": "missing-states",
+  "type": "review-fix",
+  "workflows": ["review-ui", "fix-ui"],
+  "covers": ["forms-controls", "focus-visible", "loading-disabled", "error-empty-states"],
+  "hasScreenshots": false
+}

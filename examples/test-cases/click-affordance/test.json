@@ -1,0 +1,7 @@
+{
+  "id": "click-affordance",
+  "type": "audit-fix",
+  "workflows": ["audit-ui", "fix-ui"],
+  "covers": ["components-states", "cursor", "hover", "focus-visible", "clickable-div"],
+  "hasScreenshots": false
+}

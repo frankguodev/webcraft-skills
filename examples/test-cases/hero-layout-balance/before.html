@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hero Layout Balance - Before</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+        background:
+          linear-gradient(rgba(14, 116, 144, 0.07) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(14, 116, 144, 0.07) 1px, transparent 1px),
+          #f5fbf9;
+        background-size: 36px 36px;
+        color: #12201d;
+      }
+      .hero {
+        max-width: 1440px;
+        min-height: 590px;
+        margin: 0 auto;
+        padding: 56px 48px 0;
+        display: grid;
+        grid-template-columns: 0.72fr 1.28fr;
+        gap: 18px;
+        position: relative;
+      }
+      .eyebrow {
+        color: #0f766e;
+        font-weight: 800;
+      }
+      h1 {
+        max-width: 520px;
+        margin: 28px 0 20px;
+        font-size: 72px;
+        line-height: 0.98;
+      }
+      p {
+        max-width: 540px;
+        color: #51615d;
+        font-size: 20px;
+        line-height: 1.7;
+      }
+      .visual {
+        height: 360px;
+        margin-top: 28px;
+        border: 1px solid #cfe2dc;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #ffffff 0%, #dcefeb 100%);
+        box-shadow: 0 24px 90px rgba(15, 118, 110, 0.16);
+        position: relative;
+      }
+      .mock-line {
+        position: absolute;
+        right: 150px;
+        width: 160px;
+        height: 16px;
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.85);
+      }
+      .line-a { top: 170px; }
+      .line-b { top: 198px; width: 230px; }
+      .line-c { top: 226px; width: 130px; }
+      .scroll-mark {
+        position: absolute;
+        right: 86px;
+        top: 175px;
+        width: 8px;
+        height: 72px;
+        border-radius: 999px;
+        background: #0f766e;
+        opacity: 0.7;
+      }
+      .search {
+        position: absolute;
+        left: 48px;
+        right: 120px;
+        bottom: -46px;
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        height: 70px;
+        padding: 0 18px 0 24px;
+        border: 1px solid #cfe2dc;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.85);
+      }
+      .search input {
+        flex: 1;
+        border: 0;
+        background: transparent;
+        font-size: 18px;
+      }
+      .search button {
+        border: 0;
+        border-radius: 8px;
+        padding: 14px 20px;
+        background: #0f766e;
+        color: #fff;
+        font-weight: 800;
+      }
+      .chips {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 0 48px 70px;
+      }
+      .chips h2 {
+        margin: 0 0 14px;
+        font-size: 18px;
+      }
+      .chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .chip {
+        padding: 10px 16px;
+        border: 1px solid #cfe2dc;
+        border-radius: 8px;
+        background: #fff;
+        font-weight: 700;
+      }
+      .trends {
+        border-top: 1px solid #d7e7e2;
+        background: #fbfefd;
+        padding: 44px 48px;
+      }
+      .trends-inner {
+        max-width: 1320px;
+        margin: 0 auto;
+      }
+      @media (max-width: 760px) {
+        .hero {
+          grid-template-columns: 1fr;
+          min-height: auto;
+          padding: 40px 20px 0;
+        }
+        h1 {
+          font-size: 48px;
+        }
+        .visual {
+          height: 260px;
+        }
+        .search {
+          position: relative;
+          left: auto;
+          right: auto;
+          bottom: auto;
+          margin-top: 16px;
+        }
+        .chips {
+          padding: 28px 20px 44px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Knowledge Map</div>
+        <h1>Understand everyday AI language</h1>
+        <p>Turn confusing AI terms, tools, and new concepts into a calm map anyone can read.</p>
+      </div>
+      <div class="visual" aria-label="AI term preview mockup">
+        <span class="mock-line line-a"></span>
+        <span class="mock-line line-b"></span>
+        <span class="mock-line line-c"></span>
+        <span class="scroll-mark"></span>
+      </div>
+      <form class="search">
+        <input aria-label="Search terms" placeholder="Search AI terms, concepts, tools..." />
+        <button type="submit">Search terms</button>
+      </form>
+    </section>
+
+    <section class="chips" aria-label="Popular searches">
+      <h2>Popular searches</h2>
+      <div class="chip-row">
+        <span class="chip">MCP</span>
+        <span class="chip">Agent</span>
+        <span class="chip">RAG</span>
+        <span class="chip">Vibe Coding</span>
+        <span class="chip">Context Engineering</span>
+        <span class="chip">Tool Calling</span>
+        <span class="chip">LoRA</span>
+      </div>
+    </section>
+
+    <section class="trends">
+      <div class="trends-inner">
+        <h2>Trending terms</h2>
+        <p>Cards begin here, but the previous search region visually pushes into this content.</p>
+      </div>
+    </section>
+  </body>
+</html>

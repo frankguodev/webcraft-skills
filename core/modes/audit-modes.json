@@ -1,0 +1,87 @@
+{
+  "quick": {
+    "label": "Quick Audit",
+    "intent": "Fast risk scan for obvious Critical and Major UI issues.",
+    "maxFindings": 5,
+    "severity": ["Critical", "Major"],
+    "includeMinor": false,
+    "score": false,
+    "fullCategoryReport": false,
+    "contentStressTest": false,
+    "browserRequiredWhenRunnable": false,
+    "requiredViewports": ["current-or-one-key-viewport"],
+    "optionalViewports": [],
+    "checks": {
+      "criticalUsability": true,
+      "responsiveSmoke": true,
+      "firstViewportLayout": "smoke",
+      "pointerHoverSmoke": "core-clickables",
+      "componentStates": "core-only"
+    },
+    "output": {
+      "topFindings": false,
+      "fixOrder": "brief",
+      "passNotes": false
+    }
+  },
+  "standard": {
+    "label": "Standard Audit",
+    "intent": "Default practical audit for main page or feature UI risks.",
+    "maxFindings": 12,
+    "recommendedFindings": [8, 12],
+    "severity": ["Critical", "Major", "Minor"],
+    "includeMinor": "high-value-only",
+    "score": false,
+    "fullCategoryReport": false,
+    "contentStressTest": "targeted-only",
+    "browserRequiredWhenRunnable": true,
+    "requiredViewports": ["375px", "1280px"],
+    "optionalViewports": ["768px"],
+    "checks": {
+      "criticalUsability": true,
+      "responsiveSmoke": true,
+      "firstViewportLayout": true,
+      "pointerHoverSmoke": true,
+      "componentStates": "core-and-visible",
+      "visualSystem": "systemic-only"
+    },
+    "output": {
+      "topFindings": true,
+      "fixOrder": true,
+      "passNotes": "short",
+      "score": "only-if-requested"
+    }
+  },
+  "deep": {
+    "label": "Deep Audit",
+    "intent": "Full audit for launch readiness, strict review, or systemic UI quality work.",
+    "maxFindings": 24,
+    "severity": ["Critical", "Major", "Minor"],
+    "includeMinor": true,
+    "score": true,
+    "fullCategoryReport": true,
+    "contentStressTest": true,
+    "browserRequiredWhenRunnable": true,
+    "requiredViewports": ["360px", "375px", "390px-or-430px", "768px", "834px", "1280px", "1440px", "1920px"],
+    "optionalViewports": [],
+    "checks": {
+      "criticalUsability": true,
+      "responsiveSmoke": true,
+      "firstViewportLayout": true,
+      "pointerHoverSmoke": true,
+      "componentStates": "full",
+      "visualSystem": "full",
+      "mediaRichContent": true,
+      "scrollBehavior": true,
+      "nativeControls": true,
+      "forcedColors": true,
+      "reducedMotion": true
+    },
+    "output": {
+      "topFindings": true,
+      "fixOrder": true,
+      "passNotes": "short",
+      "score": true
+    }
+  }
+}

@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>UploadOps AI - Rough Audit Fixture</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-width: 1180px;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #f8f6ff;
+        background:
+          radial-gradient(circle at 8% 10%, rgba(162, 75, 255, 0.75), transparent 28%),
+          radial-gradient(circle at 90% 15%, rgba(0, 214, 255, 0.7), transparent 30%),
+          linear-gradient(135deg, #21104d, #07122d 54%, #2c0f4a);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .page {
+        width: 1180px;
+        margin: 0 auto;
+        padding: 28px 18px 64px;
+      }
+
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 22px;
+        border: 3px solid rgba(255, 255, 255, 0.32);
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 22px 60px rgba(0, 0, 0, 0.4);
+      }
+
+      .brand {
+        font-size: 22px;
+        font-weight: 900;
+        letter-spacing: -1px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 30px;
+        font-size: 13px;
+        text-transform: uppercase;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 560px 540px;
+        gap: 44px;
+        align-items: center;
+        padding: 60px 0 40px;
+      }
+
+      .badges {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+
+      .badge {
+        padding: 11px 18px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #ff3be7, #6b7cff);
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 76px;
+        line-height: 0.89;
+        letter-spacing: -5px;
+      }
+
+      .hero p {
+        width: 620px;
+        color: #c9c0ff;
+        font-size: 20px;
+        line-height: 1.35;
+      }
+
+      .cta-row {
+        display: flex;
+        gap: 14px;
+      }
+
+      .button {
+        min-width: 220px;
+        padding: 19px 26px;
+        border: 0;
+        border-radius: 999px;
+        color: white;
+        background: #7c3aed;
+        box-shadow: 0 14px 44px rgba(124, 58, 237, 0.65);
+        font-weight: 900;
+      }
+
+      .button.secondary {
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .mockup {
+        width: 620px;
+        height: 360px;
+        overflow: hidden;
+        border: 4px solid rgba(255, 255, 255, 0.34);
+        border-radius: 36px;
+        background: rgba(255, 255, 255, 0.12);
+        box-shadow: 0 30px 90px rgba(0, 0, 0, 0.5);
+      }
+
+      .mockup img {
+        width: 780px;
+        height: 270px;
+        object-fit: fill;
+        display: block;
+        margin: 28px 0 0 36px;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+      }
+
+      .stat-card {
+        min-height: 170px;
+        padding: 22px;
+        border-radius: 30px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.25);
+      }
+
+      .stat-card strong {
+        display: block;
+        margin-bottom: 12px;
+        font-size: 36px;
+      }
+
+      .workspace {
+        display: grid;
+        grid-template-columns: 280px 840px;
+        gap: 18px;
+        margin-top: 22px;
+      }
+
+      .panel {
+        padding: 20px;
+        border-radius: 26px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .field {
+        display: grid;
+        gap: 9px;
+        margin-bottom: 18px;
+      }
+
+      label {
+        color: #ddd6ff;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      select,
+      input[type="file"] {
+        width: 100%;
+        min-height: 42px;
+      }
+
+      .fake-table {
+        width: 960px;
+        border-collapse: collapse;
+        overflow: hidden;
+        border-radius: 22px;
+      }
+
+      .fake-table th,
+      .fake-table td {
+        padding: 18px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+        text-align: left;
+        white-space: nowrap;
+      }
+
+      .fake-table th {
+        background: rgba(255, 255, 255, 0.14);
+      }
+
+      .floating-modal {
+        position: fixed;
+        right: 28px;
+        bottom: 18px;
+        z-index: 2;
+        width: 420px;
+        padding: 22px;
+        border-radius: 30px;
+        background: rgba(75, 22, 130, 0.92);
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+      }
+
+      .floating-modal button {
+        float: right;
+        padding: 8px 10px;
+        border: 0;
+        color: white;
+        background: transparent;
+      }
+
+      .danger {
+        margin-top: 16px;
+        color: #ffd1d1;
+        font-size: 12px;
+      }
+
+      button:focus,
+      select:focus,
+      input:focus {
+        outline: none;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <nav class="nav">
+        <div class="brand">UploadOps AI</div>
+        <div class="nav-links">
+          <a href="#pipeline">Pipeline</a>
+          <a href="#review">Review</a>
+          <a href="#settings">Settings</a>
+        </div>
+      </nav>
+
+      <section class="hero">
+        <div>
+          <div class="badges">
+            <span class="badge">Next-gen</span>
+            <span class="badge">AI powered</span>
+            <span class="badge">10x magic</span>
+          </div>
+          <h1>Upload anything and unlock your operational potential instantly</h1>
+          <p>
+            A noisy workspace for teams that need to upload, validate, approve,
+            transform, route, observe, optimize, and celebrate every file in one
+            beautifully overpowered place.
+          </p>
+          <div class="cta-row">
+            <button class="button">Start bulk upload</button>
+            <button class="button secondary">See all enterprise automation proof points</button>
+          </div>
+        </div>
+        <div class="mockup">
+          <img
+            alt="Warped upload dashboard screenshot"
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='320'%3E%3Crect width='900' height='320' fill='%23f8fafc'/%3E%3Crect x='24' y='24' width='180' height='272' rx='18' fill='%237c3aed'/%3E%3Crect x='230' y='34' width='620' height='58' rx='16' fill='%23dbeafe'/%3E%3Crect x='230' y='116' width='260' height='150' rx='16' fill='%23c4b5fd'/%3E%3Crect x='514' y='116' width='336' height='150' rx='16' fill='%2393c5fd'/%3E%3C/svg%3E"
+          />
+        </div>
+      </section>
+
+      <section class="stats" aria-label="Metrics">
+        <div class="stat-card"><strong>99.999%</strong> Magical upload certainty</div>
+        <div class="stat-card"><strong>400K</strong> Files routed through the cosmic queue</div>
+        <div class="stat-card"><strong>17</strong> AI badges per page</div>
+        <div class="stat-card"><strong>0</strong> Empty states documented</div>
+      </section>
+
+      <section class="workspace" id="pipeline">
+        <aside class="panel" id="settings">
+          <h2>Upload controls</h2>
+          <div class="field">
+            <label for="team">Team</label>
+            <select id="team">
+              <option>Operations team with a very long regional approval name</option>
+              <option>Finance</option>
+              <option>Support</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="file">File batch</label>
+            <input id="file" type="file" />
+          </div>
+          <button class="button">Upload now</button>
+          <p class="danger">No disabled, loading, error, or success state is defined.</p>
+        </aside>
+
+        <section class="panel" id="review">
+          <h2>Recent upload reviews</h2>
+          <table class="fake-table">
+            <thead>
+              <tr>
+                <th>File name</th>
+                <th>Owner</th>
+                <th>Status</th>
+                <th>Policy</th>
+                <th>Review action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>north-america-enterprise-batch-with-extra-long-filename.csv</td>
+                <td>alexandra.longlastname@example.com</td>
+                <td>Needs attention</td>
+                <td>PII validation and executive approval</td>
+                <td><button class="button secondary">Open review</button></td>
+              </tr>
+              <tr>
+                <td>q4-global-expansion-forecast-final-final-v7.xlsx</td>
+                <td>ops-admin@example.com</td>
+                <td>Queued</td>
+                <td>Revenue model</td>
+                <td><button class="button secondary">Open review</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </section>
+    </main>
+
+    <aside class="floating-modal" role="dialog" aria-label="Upload approval reminder">
+      <button aria-label="Close reminder">x</button>
+      <h2>Approve this batch?</h2>
+      <p>This floating dialog competes with the table, has weak hierarchy, and can cover content on smaller screens.</p>
+      <button class="button">Approve everything</button>
+    </aside>
+  </body>
+</html>
+

@@ -7,6 +7,34 @@ const requiredFiles = [
   "skills/webcraft-skills/agents/openai.yaml",
   "skills/webcraft-skills/references/checklists/ui-audit.md",
   "skills/webcraft-skills/references/checklists/ui-audit.zh.md",
+  "core/checklists/modules/layout.md",
+  "core/checklists/modules/layout.zh.md",
+  "core/checklists/modules/components-states.md",
+  "core/checklists/modules/components-states.zh.md",
+  "core/checklists/modules/responsive.md",
+  "core/checklists/modules/responsive.zh.md",
+  "core/checklists/modules/forms-controls.md",
+  "core/checklists/modules/forms-controls.zh.md",
+  "core/checklists/modules/visual-system.md",
+  "core/checklists/modules/visual-system.zh.md",
+  "core/checklists/modules/accessibility.md",
+  "core/checklists/modules/accessibility.zh.md",
+  "core/checklists/modules/ai-template-smell.md",
+  "core/checklists/modules/ai-template-smell.zh.md",
+  "skills/webcraft-skills/references/checklists/modules/layout.md",
+  "skills/webcraft-skills/references/checklists/modules/layout.zh.md",
+  "skills/webcraft-skills/references/checklists/modules/components-states.md",
+  "skills/webcraft-skills/references/checklists/modules/components-states.zh.md",
+  "skills/webcraft-skills/references/checklists/modules/responsive.md",
+  "skills/webcraft-skills/references/checklists/modules/responsive.zh.md",
+  "skills/webcraft-skills/references/checklists/modules/forms-controls.md",
+  "skills/webcraft-skills/references/checklists/modules/forms-controls.zh.md",
+  "skills/webcraft-skills/references/checklists/modules/visual-system.md",
+  "skills/webcraft-skills/references/checklists/modules/visual-system.zh.md",
+  "skills/webcraft-skills/references/checklists/modules/accessibility.md",
+  "skills/webcraft-skills/references/checklists/modules/accessibility.zh.md",
+  "skills/webcraft-skills/references/checklists/modules/ai-template-smell.md",
+  "skills/webcraft-skills/references/checklists/modules/ai-template-smell.zh.md",
   "skills/webcraft-skills/references/workflows/audit-ui.md",
   "skills/webcraft-skills/references/workflows/audit-ui.zh.md",
   "skills/webcraft-skills/references/workflows/build-ui.md",
@@ -17,12 +45,14 @@ const requiredFiles = [
   "skills/webcraft-skills/references/workflows/polish-ui.zh.md",
   "skills/webcraft-skills/references/workflows/fix-ui.md",
   "skills/webcraft-skills/references/workflows/fix-ui.zh.md",
+  "skills/webcraft-skills/references/modes/audit-modes.json",
   "skills/webcraft-skills/references/presets/cinematic-minimal.md",
   "skills/webcraft-skills/references/presets/cinematic-minimal.zh.md",
   "commands/ui-audit.md",
   "docs/commands.md",
   "docs/configuration.md",
   "scripts/sync-runtime.mjs",
+  "scripts/validate-examples.mjs",
   "examples/project-config/EXTEND.md",
   "examples/project-config/config.json",
   "examples/test-cases/README.md",
@@ -32,6 +62,14 @@ const requiredFiles = [
   "examples/test-cases/broken-mobile/expected-findings.md",
   "examples/test-cases/missing-states/index.html",
   "examples/test-cases/missing-states/expected-findings.md",
+  "examples/test-cases/click-affordance/before.html",
+  "examples/test-cases/click-affordance/index.html",
+  "examples/test-cases/click-affordance/expected-findings.md",
+  "examples/test-cases/click-affordance/test.json",
+  "examples/test-cases/hero-layout-balance/before.html",
+  "examples/test-cases/hero-layout-balance/index.html",
+  "examples/test-cases/hero-layout-balance/expected-findings.md",
+  "examples/test-cases/hero-layout-balance/test.json",
   "examples/test-cases/existing-style-plus-design-ref/index.html",
   "examples/test-cases/existing-style-plus-design-ref/reference-layout.txt",
   "examples/reports/rough-landing-audit.md",
@@ -140,7 +178,12 @@ if (existsSync(skillPath)) {
   }
 }
 
-for (const file of ["examples/project-config/config.json", "package.json"]) {
+for (const file of [
+  "examples/project-config/config.json",
+  "package.json",
+  "core/modes/audit-modes.json",
+  "skills/webcraft-skills/references/modes/audit-modes.json"
+]) {
   const path = join(root, file);
   if (!existsSync(path)) continue;
   try {
@@ -149,6 +192,84 @@ for (const file of ["examples/project-config/config.json", "package.json"]) {
     errors.push(`Invalid JSON in ${file}: ${error.message}`);
   }
 }
+
+function validateAuditModes(file) {
+  const path = join(root, file);
+  if (!existsSync(path)) {
+    errors.push(`Missing ${file}`);
+    return;
+  }
+
+  let modes;
+  try {
+    modes = JSON.parse(readFileSync(path, "utf8"));
+  } catch (error) {
+    errors.push(`Invalid JSON in ${file}: ${error.message}`);
+    return;
+  }
+
+  const requiredModes = ["quick", "standard", "deep"];
+  const requiredFields = [
+    "label",
+    "intent",
+    "maxFindings",
+    "severity",
+    "includeMinor",
+    "score",
+    "fullCategoryReport",
+    "contentStressTest",
+    "browserRequiredWhenRunnable",
+    "requiredViewports",
+    "optionalViewports",
+    "checks",
+    "output"
+  ];
+
+  for (const mode of requiredModes) {
+    if (!modes[mode]) {
+      errors.push(`Missing ${mode} mode in ${file}`);
+      continue;
+    }
+
+    for (const field of requiredFields) {
+      if (!(field in modes[mode])) {
+        errors.push(`Missing ${mode}.${field} in ${file}`);
+      }
+    }
+
+    if (!Array.isArray(modes[mode].severity) || modes[mode].severity.length === 0) {
+      errors.push(`${mode}.severity must be a non-empty array in ${file}`);
+    }
+
+    if (!Array.isArray(modes[mode].requiredViewports)) {
+      errors.push(`${mode}.requiredViewports must be an array in ${file}`);
+    }
+
+    if (!Number.isInteger(modes[mode].maxFindings) || modes[mode].maxFindings < 1) {
+      errors.push(`${mode}.maxFindings must be a positive integer in ${file}`);
+    }
+  }
+
+  if (
+    modes.quick &&
+    modes.standard &&
+    modes.deep &&
+    !(modes.quick.maxFindings < modes.standard.maxFindings && modes.standard.maxFindings <= modes.deep.maxFindings)
+  ) {
+    errors.push(`Audit mode maxFindings should increase from quick to standard to deep in ${file}`);
+  }
+
+  if (modes.quick?.includeMinor !== false) {
+    errors.push(`quick.includeMinor must be false in ${file}`);
+  }
+
+  if (modes.deep?.score !== true) {
+    errors.push(`deep.score must be true in ${file}`);
+  }
+}
+
+validateAuditModes("core/modes/audit-modes.json");
+validateAuditModes("skills/webcraft-skills/references/modes/audit-modes.json");
 
 if (errors.length > 0) {
   console.error(errors.join("\n"));

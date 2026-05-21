@@ -18,7 +18,8 @@
     "LICENSE"
   ],
   "scripts": {
-    "validate": "node scripts/validate.mjs",
+    "validate": "node scripts/validate.mjs && npm run validate:examples",
+    "validate:examples": "node scripts/validate-examples.mjs",
     "sync:runtime": "node scripts/sync-runtime.mjs"
   },
   "keywords": [

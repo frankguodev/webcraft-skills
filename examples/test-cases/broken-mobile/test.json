@@ -1,0 +1,7 @@
+{
+  "id": "broken-mobile",
+  "type": "audit-fix",
+  "workflows": ["audit-ui", "fix-ui"],
+  "covers": ["responsive", "horizontal-overflow", "fixed-width-layout", "sticky-overlap"],
+  "hasScreenshots": false
+}

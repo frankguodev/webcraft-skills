@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>UploadOps AI - Theme-Preserving Fix Fixture</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg-1: #21104d;
+        --bg-2: #07122d;
+        --bg-3: #2c0f4a;
+        --surface: rgba(255, 255, 255, 0.11);
+        --surface-strong: rgba(255, 255, 255, 0.16);
+        --line: rgba(255, 255, 255, 0.24);
+        --text: #f8f6ff;
+        --muted: #d9d1ff;
+        --brand: #a855f7;
+        --brand-2: #06b6d4;
+        --danger: #ffd1d1;
+        --radius: 26px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 8% 10%, rgba(162, 75, 255, 0.55), transparent 30%),
+          radial-gradient(circle at 90% 15%, rgba(0, 214, 255, 0.48), transparent 32%),
+          linear-gradient(135deg, var(--bg-1), var(--bg-2) 54%, var(--bg-3));
+      }
+
+      a {
+        color: inherit;
+      }
+
+      a:focus-visible,
+      button:focus-visible,
+      select:focus-visible,
+      input:focus-visible {
+        outline: 3px solid rgba(6, 214, 255, 0.9);
+        outline-offset: 3px;
+      }
+
+      .page {
+        width: min(100% - 32px, 1180px);
+        margin: 0 auto;
+        padding: 22px 0 56px;
+      }
+
+      .nav {
+        position: sticky;
+        top: 12px;
+        z-index: 30;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 16px 20px;
+        border: 2px solid var(--line);
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 18px 54px rgba(0, 0, 0, 0.32);
+        backdrop-filter: blur(16px);
+      }
+
+      .brand {
+        font-size: 22px;
+        font-weight: 900;
+      }
+
+      .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        font-size: 13px;
+        text-transform: uppercase;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(320px, 520px);
+        gap: 36px;
+        align-items: center;
+        padding: 52px 0 36px;
+      }
+
+      .badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .badge {
+        padding: 9px 14px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #ff3be7, #6b7cff);
+        box-shadow: 0 10px 30px rgba(124, 58, 237, 0.28);
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      h1,
+      h2 {
+        margin: 0;
+      }
+
+      h1 {
+        max-width: 720px;
+        font-size: clamp(40px, 7vw, 72px);
+        line-height: 0.96;
+        letter-spacing: -0.04em;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+
+      .hero p,
+      .help,
+      .dialog p {
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .hero p {
+        max-width: 660px;
+        font-size: 19px;
+      }
+
+      .cta-row,
+      .dialog-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .button {
+        min-height: 46px;
+        max-width: 100%;
+        padding: 0 20px;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        color: white;
+        background: linear-gradient(90deg, #8b5cf6, #06b6d4);
+        box-shadow: 0 12px 34px rgba(124, 58, 237, 0.42);
+        font-weight: 900;
+        cursor: pointer;
+      }
+
+      .button.secondary {
+        border-color: var(--line);
+        background: rgba(255, 255, 255, 0.13);
+        box-shadow: none;
+      }
+
+      .button[disabled] {
+        cursor: not-allowed;
+        opacity: 0.55;
+      }
+
+      .mockup {
+        overflow: hidden;
+        border: 3px solid rgba(255, 255, 255, 0.28);
+        border-radius: 32px;
+        background: var(--surface);
+        box-shadow: 0 26px 78px rgba(0, 0, 0, 0.42);
+        aspect-ratio: 16 / 10;
+      }
+
+      .mockup img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .stat-card,
+      .panel,
+      .dialog {
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: var(--radius);
+        background: var(--surface);
+        box-shadow: 0 20px 58px rgba(0, 0, 0, 0.28);
+        backdrop-filter: blur(12px);
+      }
+
+      .stat-card {
+        min-height: 140px;
+        padding: 20px;
+        color: var(--muted);
+      }
+
+      .stat-card strong {
+        display: block;
+        margin-bottom: 10px;
+        color: var(--text);
+        font-size: 34px;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .workspace {
+        display: grid;
+        grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+        gap: 18px;
+        margin-top: 22px;
+      }
+
+      .panel,
+      .dialog {
+        min-width: 0;
+        padding: 20px;
+      }
+
+      .field {
+        display: grid;
+        gap: 8px;
+        margin: 18px 0;
+      }
+
+      label {
+        color: #eee6ff;
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      select,
+      input[type="file"] {
+        width: 100%;
+        min-height: 44px;
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        color: var(--text);
+        background: rgba(21, 12, 52, 0.78);
+        accent-color: var(--brand-2);
+      }
+
+      .table-wrap {
+        margin-top: 16px;
+        overflow-x: auto;
+        scrollbar-gutter: stable;
+      }
+
+      table {
+        width: 100%;
+        min-width: 760px;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        color: #eee6ff;
+        background: rgba(255, 255, 255, 0.12);
+        font-size: 13px;
+      }
+
+      td {
+        color: #eeeaff;
+        overflow-wrap: anywhere;
+      }
+
+      .dialog {
+        width: min(100%, 560px);
+        margin: 22px auto 0;
+      }
+
+      .dialog-header {
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .danger {
+        color: var(--danger);
+      }
+
+      @media (max-width: 900px) {
+        .hero,
+        .workspace {
+          grid-template-columns: 1fr;
+        }
+
+        .stats {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 560px) {
+        .page {
+          width: min(100% - 24px, 1180px);
+        }
+
+        .nav {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .stats {
+          grid-template-columns: 1fr;
+        }
+
+        .button {
+          width: 100%;
+          white-space: normal;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <nav class="nav">
+        <div class="brand">UploadOps AI</div>
+        <div class="nav-links">
+          <a href="#pipeline">Pipeline</a>
+          <a href="#review">Review</a>
+          <a href="#settings">Settings</a>
+        </div>
+      </nav>
+
+      <section class="hero">
+        <div>
+          <div class="badges">
+            <span class="badge">Next-gen</span>
+            <span class="badge">AI powered</span>
+            <span class="badge">10x magic</span>
+          </div>
+          <h1>Upload anything and unlock your operational potential instantly</h1>
+          <p>
+            A vivid workspace for teams that need to upload, validate, approve,
+            transform, route, and observe every file in one operational place.
+          </p>
+          <div class="cta-row">
+            <button class="button">Start bulk upload</button>
+            <button class="button secondary">See automation proof points</button>
+          </div>
+        </div>
+        <div class="mockup">
+          <img
+            alt="Upload dashboard screenshot"
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='560'%3E%3Crect width='900' height='560' fill='%23150c34'/%3E%3Crect x='36' y='36' width='190' height='488' rx='26' fill='%237c3aed'/%3E%3Crect x='260' y='54' width='560' height='68' rx='24' fill='%2322d3ee' opacity='.45'/%3E%3Crect x='260' y='158' width='250' height='210' rx='26' fill='%23c084fc'/%3E%3Crect x='540' y='158' width='280' height='210' rx='26' fill='%2367e8f9'/%3E%3Crect x='260' y='400' width='560' height='84' rx='24' fill='%23ffffff' opacity='.16'/%3E%3C/svg%3E"
+          />
+        </div>
+      </section>
+
+      <section class="stats" aria-label="Metrics">
+        <div class="stat-card"><strong>99.999%</strong> Upload validation certainty</div>
+        <div class="stat-card"><strong>400K</strong> Files routed through the queue</div>
+        <div class="stat-card"><strong>17</strong> Active review policies</div>
+        <div class="stat-card"><strong>0</strong> Critical queues blocked today</div>
+      </section>
+
+      <section class="workspace" id="pipeline">
+        <aside class="panel" id="settings">
+          <h2>Upload controls</h2>
+          <p class="help">Choose a team, attach a batch, then start validation. Errors and loading states stay in this panel.</p>
+          <div class="field">
+            <label for="team">Team</label>
+            <select id="team">
+              <option>Operations team with a very long regional approval name</option>
+              <option>Finance</option>
+              <option>Support</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="file">File batch</label>
+            <input id="file" type="file" />
+          </div>
+          <button class="button">Upload now</button>
+          <p class="help danger">Validation errors appear here with recovery steps.</p>
+        </aside>
+
+        <section class="panel" id="review">
+          <h2>Recent upload reviews</h2>
+          <div class="table-wrap" aria-label="Recent upload reviews table">
+            <table>
+              <thead>
+                <tr>
+                  <th>File name</th>
+                  <th>Owner</th>
+                  <th>Status</th>
+                  <th>Policy</th>
+                  <th>Review action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>north-america-enterprise-batch-with-extra-long-filename.csv</td>
+                  <td>alexandra.longlastname@example.com</td>
+                  <td>Needs attention</td>
+                  <td>PII validation and executive approval</td>
+                  <td><button class="button secondary">Open review</button></td>
+                </tr>
+                <tr>
+                  <td>q4-global-expansion-forecast-final-final-v7.xlsx</td>
+                  <td>ops-admin@example.com</td>
+                  <td>Queued</td>
+                  <td>Revenue model</td>
+                  <td><button class="button secondary">Open review</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section class="dialog" role="dialog" aria-label="Upload approval reminder">
+        <div class="dialog-header">
+          <div>
+            <h2>Approve this batch?</h2>
+            <p>The reminder keeps the same glassy theme but no longer covers the table on smaller screens.</p>
+          </div>
+          <button class="button secondary" aria-label="Close reminder">Close</button>
+        </div>
+        <div class="dialog-actions">
+          <button class="button">Approve batch</button>
+          <button class="button secondary">Review details</button>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -8,10 +8,10 @@ npx webcraft-skills install --agent claude
 
 This installs the skill to `~/.claude/skills/webcraft-skills` and command prompts to `~/.claude/commands`.
 
-Then use the installed slash command prompts or explicit CLI-style requests:
+Then use the installed slash command prompts or explicit prompt-style requests:
 
 ```text
-/ui-audit current website
+/ui-audit Standard Audit for the current website
 /ui-fix Critical and Major issues from the last audit
 Use webcraft-skills to audit this UI.
 ```

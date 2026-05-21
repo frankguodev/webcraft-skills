@@ -6,19 +6,32 @@ const root = process.cwd();
 const mappings = [
   {
     source: "core/checklists",
-    target: "skills/webcraft-skills/references/checklists"
+    target: "skills/webcraft-skills/references/checklists",
+    extensions: [".md"]
+  },
+  {
+    source: "core/checklists/modules",
+    target: "skills/webcraft-skills/references/checklists/modules",
+    extensions: [".md"]
   },
   {
     source: "core/workflows",
-    target: "skills/webcraft-skills/references/workflows"
+    target: "skills/webcraft-skills/references/workflows",
+    extensions: [".md"]
   },
   {
     source: "core/presets",
-    target: "skills/webcraft-skills/references/presets"
+    target: "skills/webcraft-skills/references/presets",
+    extensions: [".md"]
+  },
+  {
+    source: "core/modes",
+    target: "skills/webcraft-skills/references/modes",
+    extensions: [".json"]
   }
 ];
 
-for (const { source, target } of mappings) {
+for (const { source, target, extensions = [".md"] } of mappings) {
   const sourceDir = join(root, source);
   const targetDir = join(root, target);
 
@@ -29,7 +42,7 @@ for (const { source, target } of mappings) {
   mkdirSync(targetDir, { recursive: true });
 
   for (const entry of readdirSync(sourceDir, { withFileTypes: true })) {
-    if (!entry.isFile() || !entry.name.endsWith(".md")) continue;
+    if (!entry.isFile() || !extensions.some((extension) => entry.name.endsWith(extension))) continue;
     copyFileSync(join(sourceDir, entry.name), join(targetDir, entry.name));
   }
 }

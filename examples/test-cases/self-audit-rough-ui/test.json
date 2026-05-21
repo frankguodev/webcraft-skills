@@ -1,0 +1,7 @@
+{
+  "id": "self-audit-rough-ui",
+  "type": "end-to-end",
+  "workflows": ["audit-ui", "fix-ui"],
+  "covers": ["responsive", "forms-controls", "visual-system", "media-ratio", "table-overflow"],
+  "hasScreenshots": true
+}
