@@ -2,7 +2,7 @@
 
 [English](./README.md) | 中文
 
-适合 Codex 和 Claude Code 的 UI audit / fix skill，提供 slash commands，用于排查和修复粗糙的 AI 生成网页 UI。
+适合 Codex 和 Claude Code 的 UI audit / fix skill，用于排查和修复粗糙的 AI 生成网页 UI。
 
 AI Coding 工具已经很会写代码，但生成的 UI 经常会显得太拥挤、太花哨、层级混乱，或者有很强的“AI 模板感”。
 
@@ -24,7 +24,7 @@ Webcraft Skills 是一个面向 AI Agent 的网页 UI 质量系统。
 - 先打磨可复用的核心 Skill，再逐步扩展 Codex / Claude / Cursor 等平台适配
 - 让 AI 不只会生成 UI，也会像资深 UI/UX + 前端 reviewer 一样修 UI
 
-当前已测试命令是 `/ui-audit` 和 `/ui-fix`。其它 command prompt 会保留用于迭代，但暂时不作为稳定公开能力承诺。
+当前已测试工作流是 audit 和 fix。Claude Code 会安装 slash command prompts；Codex 中请使用 `/skills`、`$webcraft-skills` 或明确的自然语言调用。
 
 ---
 
@@ -32,7 +32,7 @@ Webcraft Skills 是一个面向 AI Agent 的网页 UI 质量系统。
 
 ## 当前推荐安装
 
-使用 npx 安装 skill 和 slash commands：
+使用 npx 安装 skill：
 
 ```bash
 npx webcraft-skills install --agent codex
@@ -53,35 +53,33 @@ npx webcraft-skills install --agent all
 这会安装到：
 
 ```text
+~/.agents/skills/webcraft-skills
 ~/.codex/skills/webcraft-skills
-~/.codex/commands/*.md
 ```
 
-或：
+第一个路径对应当前 Codex skills 文档；第二个路径用于兼容已有 Codex 和 VS Code 客户端。
+
+Claude Code 会安装到：
 
 ```text
 ~/.claude/skills/webcraft-skills
 ~/.claude/commands/*.md
 ```
 
-然后在项目中使用：
+然后在 Codex 中使用：
 
 ```text
-/ui-audit current website
-/ui-fix Critical and Major issues from the last audit
+Use webcraft-skills to audit the current website.
+Use webcraft-skills to fix Critical and Major issues from the last audit.
 ```
 
-更完整的参数式调用：
+也可以在 Codex 中运行 `/skills`，或输入 `$` 来选择已安装的 `webcraft-skills` skill。
+
+在 Claude Code 中，可使用已安装的 slash command prompts：
 
 ```text
 /ui-audit --scope whole-site --strict --viewports 375,768,1280
 /ui-fix --severity critical,major --yes
-```
-
-如果当前客户端没有从 `~/.codex/commands` 加载命令，可以直接显式调用：
-
-```text
-Use webcraft-skills to audit the current website.
 ```
 
 ## Cursor
@@ -102,15 +100,15 @@ Plain Prompt 暂时不属于稳定发布能力。
 
 稳定能力：
 
-- `/ui-audit`：严格排查整页或整站 UI 质量
-- `/ui-fix`：根据 audit 结果直接修复代码
+- 审查 UI 质量
+- 根据明确的 audit findings 修复问题
 
 实验性能力，尚未完整测试：
 
-- `/ui-review`：审查页面、组件或截图
-- `/ui-polish`：保留业务含义的前提下润色页面
-- `/ui-build`：生成网页或站点
-- `/ui-preset`：查看和应用视觉 preset
+- 审查页面、组件或截图
+- 保留业务含义的前提下润色页面
+- 生成网页或站点
+- 查看和应用视觉 preset
 
 ---
 

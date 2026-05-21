@@ -11,9 +11,10 @@
 ### 变更
 
 - 项目名和包名从偏 UI 的旧名称调整为 `webcraft-skills`，为后续扩展成更完整的网站 skill pack 预留空间。
-- 更新公开 README 和 usage 文档，只承诺当前已验证的稳定命令：`/ui-audit` 和 `/ui-fix`。
+- 更新公开 README 和 usage 文档，只承诺当前已验证的稳定工作流：audit 和 fix。
 - 从面向用户的文档中移除维护者内部实现和同步运行层说明。
 - 统一安装器帮助、package metadata 和 skill 路径，使其全部指向新的包名。
+- 修正 Codex 安装和使用说明：Codex 同时安装到 `~/.agents/skills` 和 `~/.codex/skills` 以提升兼容性，并通过 `/skills`、`$webcraft-skills` 或明确自然语言调用，而不是依赖本包自定义 slash commands。
 
 ### Audit
 
@@ -36,9 +37,9 @@ Skill 化基础版本。
 ### 稳定能力
 
 - 安装时会同时安装 skill package 和 slash command prompts。
-- 当前稳定命令：
-  - `/ui-audit`：严格排查 UI 质量问题。
-  - `/ui-fix`：根据明确的 audit findings 修复问题。
+- 当前稳定工作流：
+  - Audit：严格排查 UI 质量问题。
+  - Fix：根据明确的 audit findings 修复问题。
 - 补齐 audit / fix 的中英文运行时 reference。
 - 增加语言路由：中文用户读取 `.zh.md` reference，英文用户读取英文 reference。
 
@@ -58,7 +59,7 @@ Skill 化基础版本。
 ### 文档
 
 - 重写 README，使其更适合外部用户阅读。
-- 明确 `/ui-audit` 和 `/ui-fix` 是当前稳定能力。
+- 明确 audit 和 fix 是当前稳定能力。
 - 标注 `/ui-review`、`/ui-polish`、`/ui-build`、`/ui-preset` 为实验性能力，尚未完整测试。
 - 从公开 README 中移除维护者使用的同步运行层说明。
 

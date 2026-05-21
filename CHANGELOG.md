@@ -11,9 +11,10 @@ Public release preparation for `webcraft-skills`.
 ### Changed
 
 - Renamed the project and package from the UI-specific name to `webcraft-skills`, leaving room for a broader website skill pack.
-- Updated the public README and usage docs to present only the currently verified stable commands: `/ui-audit` and `/ui-fix`.
+- Updated the public README and usage docs to present only the currently verified stable workflows: audit and fix.
 - Removed maintainer-only implementation details from public-facing documentation.
 - Aligned installer help, package metadata, and skill paths with the new package name.
+- Corrected Codex installation and usage guidance: Codex installs the skill under both `~/.agents/skills` and `~/.codex/skills` for compatibility, and uses `/skills`, `$webcraft-skills`, or explicit natural-language invocation instead of package-defined custom slash commands.
 
 ### Audit
 
@@ -36,9 +37,9 @@ Skill-focused foundation release.
 ### Stable
 
 - Installs both the skill package and slash command prompts.
-- Stable commands:
-  - `/ui-audit`: run a strict UI quality audit.
-  - `/ui-fix`: fix confirmed audit findings.
+- Stable workflows:
+  - Audit: run a strict UI quality audit.
+  - Fix: fix confirmed audit findings.
 - Added bilingual runtime references for audit and fix workflows.
 - Added locale routing so Chinese users read `.zh.md` references and English users read English references.
 
@@ -58,7 +59,7 @@ Skill-focused foundation release.
 ### Docs
 
 - Reworked README for public users.
-- Clearly marks `/ui-audit` and `/ui-fix` as stable.
+- Clearly marks audit and fix as stable.
 - Marks `/ui-review`, `/ui-polish`, `/ui-build`, and `/ui-preset` as experimental and not yet fully tested.
 - Removed maintainer-only sync/runtime details from public README.
 

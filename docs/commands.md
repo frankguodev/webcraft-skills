@@ -1,8 +1,10 @@
-# Commands
+# Command Prompts
 
-Webcraft Skills is designed for explicit CLI-style use. Automatic skill triggering is useful, but explicit commands are the recommended workflow when many skills are installed.
+Webcraft Skills is designed for explicit CLI-style use. Automatic skill triggering is useful, but explicit invocation is the recommended workflow when many skills are installed.
 
-Current stable commands are `/ui-audit` and `/ui-fix`. Other command prompts are included for iteration and are not yet fully tested.
+For Codex, use `/skills`, `$webcraft-skills`, or natural-language invocation such as `Use webcraft-skills to audit the current website.` Codex does not currently load this package's `commands/*.md` files as custom slash commands.
+
+For Claude Code, this package installs command prompt files. Current stable Claude Code command prompts are `/ui-audit` and `/ui-fix`. Other command prompts are included for iteration and are not yet fully tested.
 
 ## `/ui-audit`
 

@@ -2,7 +2,7 @@
 
 English | [中文](./README_zh_CN.md)
 
-UI audit and fix skill for Codex and Claude Code, with slash commands for inspecting and repairing rough AI-generated web UI.
+UI audit and fix skill for Codex and Claude Code, for inspecting and repairing rough AI-generated web UI.
 
 AI coding tools can generate code quickly, but their UI often feels too crowded, flashy, inconsistent, or obviously AI-generated.
 
@@ -24,7 +24,7 @@ The broader goal is:
 - refine the core reusable skill first, then gradually expand Codex, Claude, Cursor, and plain prompt adapters
 - help AI act more like a senior UI/UX and frontend reviewer
 
-The currently tested commands are `/ui-audit` and `/ui-fix`. Other command prompts are present for iteration, but are not yet part of the stable public surface.
+The currently tested workflows are audit and fix. Claude Code slash command prompts are included; in Codex, use `/skills`, `$webcraft-skills`, or explicit natural-language invocation.
 
 ---
 
@@ -32,7 +32,7 @@ The currently tested commands are `/ui-audit` and `/ui-fix`. Other command promp
 
 ## Current Recommended Install
 
-Install the skill and slash commands with npx:
+Install the skill with npx:
 
 ```bash
 npx webcraft-skills install --agent codex
@@ -53,35 +53,33 @@ npx webcraft-skills install --agent all
 This installs:
 
 ```text
+~/.agents/skills/webcraft-skills
 ~/.codex/skills/webcraft-skills
-~/.codex/commands/*.md
 ```
 
-or:
+The first path follows the current Codex skills documentation. The second path is written for compatibility with existing Codex and VS Code clients.
+
+For Claude Code, it installs:
 
 ```text
 ~/.claude/skills/webcraft-skills
 ~/.claude/commands/*.md
 ```
 
-Then use it in a project:
+Then use it in Codex:
 
 ```text
-/ui-audit current website
-/ui-fix Critical and Major issues from the last audit
+Use webcraft-skills to audit the current website.
+Use webcraft-skills to fix Critical and Major issues from the last audit.
 ```
 
-Full parameter-style usage:
+You can also run `/skills` or type `$` in Codex to mention the installed `webcraft-skills` skill.
+
+In Claude Code, use the installed slash command prompts:
 
 ```text
 /ui-audit --scope whole-site --strict --viewports 375,768,1280
 /ui-fix --severity critical,major --yes
-```
-
-If a client does not load commands from `~/.codex/commands`, use explicit natural invocation:
-
-```text
-Use webcraft-skills to audit the current website.
 ```
 
 ## Cursor
@@ -102,15 +100,15 @@ Create `.webcraft-skills/EXTEND.md` and `.webcraft-skills/config.json` in the ta
 
 Stable:
 
-- `/ui-audit`: run a strict UI quality audit
-- `/ui-fix`: implement fixes from audit results
+- audit UI quality
+- fix confirmed audit findings
 
 Experimental / not yet fully tested:
 
-- `/ui-review`: review a page, component, or screenshot
-- `/ui-polish`: refine existing UI without changing product meaning
-- `/ui-build`: build a page or site
-- `/ui-preset`: list and apply visual presets
+- review a page, component, or screenshot
+- refine existing UI without changing product meaning
+- build a page or site
+- list and apply visual presets
 
 ---
 

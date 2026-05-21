@@ -18,7 +18,7 @@ Plugin metadata, marketplace files, and adapters are intentionally deferred. Add
 
 - `core/`: platform-neutral source material: presets, checklists, workflows, and examples.
 - `skills/`: installable skill packages. `skills/webcraft-skills` is the canonical production skill.
-- `commands/`: explicit CLI command prompts for users who prefer stable invocation over automatic triggering.
+- `commands/`: Claude Code command prompt files for users who prefer stable invocation over automatic triggering.
 - `scripts/`: installation and validation helpers.
 - `examples/project-config/`: template project-level extension configuration.
 

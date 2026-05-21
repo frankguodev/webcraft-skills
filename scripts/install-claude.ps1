@@ -28,6 +28,6 @@ if (Test-Path $commandSource) {
   Get-ChildItem -LiteralPath $commandSource -Filter "*.md" -File | ForEach-Object {
     Copy-Item -LiteralPath $_.FullName -Destination (Join-Path $commandTargetRoot $_.Name) -Force
   }
-  Write-Host "Installed UI slash commands to $commandTargetRoot"
+  Write-Host "Installed Claude Code slash command prompts to $commandTargetRoot"
 }
 

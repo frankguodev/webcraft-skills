@@ -59,12 +59,16 @@ if (!existsSync(commandSource)) {
 
 const agentConfig = {
   codex: {
-    skillRoot: join(homedir(), ".codex", "skills"),
-    commandRoot: join(homedir(), ".codex", "commands")
+    skillRoots: [
+      join(homedir(), ".agents", "skills"),
+      join(homedir(), ".codex", "skills")
+    ],
+    supportsCommands: false
   },
   claude: {
-    skillRoot: join(homedir(), ".claude", "skills"),
-    commandRoot: join(homedir(), ".claude", "commands")
+    skillRoots: [join(homedir(), ".claude", "skills")],
+    commandRoot: join(homedir(), ".claude", "commands"),
+    supportsCommands: true
   }
 };
 
@@ -75,27 +79,34 @@ for (const target of targets) {
     process.exit(1);
   }
 
-  const skillTarget = join(config.skillRoot, skillName);
-  mkdirSync(config.skillRoot, { recursive: true });
-  mkdirSync(config.commandRoot, { recursive: true });
+  const skillTargets = config.skillRoots.map((skillRoot) => join(skillRoot, skillName));
 
-  if (existsSync(skillTarget)) {
-    rmSync(skillTarget, { recursive: true, force: true });
+  for (const skillTarget of skillTargets) {
+    mkdirSync(dirname(skillTarget), { recursive: true });
+
+    if (existsSync(skillTarget)) {
+      rmSync(skillTarget, { recursive: true, force: true });
+    }
+
+    cpSync(skillSource, skillTarget, { recursive: true });
+    console.log(`Installed ${skillName} skill to ${skillTarget}`);
   }
 
-  cpSync(skillSource, skillTarget, { recursive: true });
-
-  for (const entry of readdirSync(commandSource, { withFileTypes: true })) {
-    if (!entry.isFile() || !entry.name.endsWith(".md")) continue;
-    cpSync(join(commandSource, entry.name), join(config.commandRoot, entry.name));
+  if (config.supportsCommands) {
+    mkdirSync(config.commandRoot, { recursive: true });
+    for (const entry of readdirSync(commandSource, { withFileTypes: true })) {
+      if (!entry.isFile() || !entry.name.endsWith(".md")) continue;
+      cpSync(join(commandSource, entry.name), join(config.commandRoot, entry.name));
+    }
   }
 
-  console.log(`Installed ${skillName} skill to ${skillTarget}`);
-  console.log(`Installed UI slash commands to ${config.commandRoot}`);
+  if (config.supportsCommands) {
+    console.log(`Installed Claude Code slash command prompts to ${config.commandRoot}`);
+  }
 }
 
 console.log("\nTry:");
-console.log("  /ui-audit current website");
-console.log("  /ui-fix Critical and Major issues from the last audit");
-console.log("\nStable commands: /ui-audit, /ui-fix");
-console.log("Experimental commands are installed for iteration: /ui-review, /ui-polish, /ui-build, /ui-preset");
+console.log("  Use webcraft-skills to audit the current website.");
+console.log("  Use webcraft-skills to fix Critical and Major issues from the last audit.");
+console.log("\nCodex: run /skills or type $ to mention the webcraft-skills skill.");
+console.log("Claude Code: slash command prompts are installed when using --agent claude or --agent all.");
