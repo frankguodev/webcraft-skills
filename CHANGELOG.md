@@ -3,6 +3,9 @@
 English | [中文](./CHANGELOG_zh_CN.md)
 
 ---
+## v0.1.2 - 2026-05-22
+ - Optimize audit and fix functions
+
 
 ## v0.1.1 - 2026-05-21
 
