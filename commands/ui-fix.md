@@ -17,5 +17,5 @@ Examples:
 
 ## Agent Instructions
 
-Use the `webcraft-skills` skill in Fix mode. Read the selected-locale fix workflow before editing. Keep edits scoped to confirmed findings. Fix Critical issues first, then Major, then Minor. Verify with the project's existing checks.
+Use the `webcraft-ui` skill in Fix mode. First apply the skill's Locale Contract: choose exactly one locale from the user's request and target UI context, then read only that locale's fix workflow and any directly needed references in the same locale. Do not read both English and Chinese references unless the user explicitly asks for translation, bilingual comparison, localization, or locale consistency. Keep edits scoped to confirmed findings. Fix Critical issues first, then Major, then Minor. Follow the fix safety loop: keep the page runnable, run existing checks when available, repair any new build/runtime/page-load error introduced by the fix before finishing, and clearly report anything not verified.
 

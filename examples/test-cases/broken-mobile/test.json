@@ -3,5 +3,9 @@
   "type": "audit-fix",
   "workflows": ["audit-ui", "fix-ui"],
   "covers": ["responsive", "horizontal-overflow", "fixed-width-layout", "sticky-overlap"],
+  "mode": "standard",
+  "primaryModules": ["layout", "responsive", "components-states"],
+  "expectedSeverities": ["Critical", "Major"],
+  "recommendedViewports": ["375px", "768px", "1280px"],
   "hasScreenshots": false
 }

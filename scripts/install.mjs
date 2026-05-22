@@ -43,7 +43,8 @@ const targets =
     ? ["codex", "claude"]
     : [agent];
 
-const skillName = "webcraft-skills";
+const skillName = "webcraft-ui";
+const legacySkillNames = ["webcraft-skills"];
 const skillSource = join(root, "skills", skillName);
 const commandSource = join(root, "commands");
 
@@ -84,6 +85,14 @@ for (const target of targets) {
   for (const skillTarget of skillTargets) {
     mkdirSync(dirname(skillTarget), { recursive: true });
 
+    for (const legacySkillName of legacySkillNames) {
+      const legacySkillTarget = join(dirname(skillTarget), legacySkillName);
+      if (existsSync(legacySkillTarget)) {
+        rmSync(legacySkillTarget, { recursive: true, force: true });
+        console.log(`Removed legacy ${legacySkillName} skill from ${legacySkillTarget}`);
+      }
+    }
+
     if (existsSync(skillTarget)) {
       rmSync(skillTarget, { recursive: true, force: true });
     }
@@ -106,7 +115,7 @@ for (const target of targets) {
 }
 
 console.log("\nTry:");
-console.log("  Use webcraft-skills to audit the current website.");
-console.log("  Use webcraft-skills to fix Critical and Major issues from the last audit.");
-console.log("\nCodex: run /skills or type $ to mention the webcraft-skills skill.");
+console.log("  Use webcraft-ui to audit the current website.");
+console.log("  Use webcraft-ui to fix Critical and Major issues from the last audit.");
+console.log("\nCodex: run /skills or type $ to mention the webcraft-ui skill.");
 console.log("Claude Code: slash command prompts are installed when using --agent claude or --agent all.");

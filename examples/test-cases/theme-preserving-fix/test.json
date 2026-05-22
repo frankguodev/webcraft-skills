@@ -1,0 +1,11 @@
+{
+  "id": "theme-preserving-fix",
+  "type": "fix-regression",
+  "workflows": ["audit-ui", "fix-ui"],
+  "covers": ["theme-preservation", "layout", "responsive", "forms-controls", "component-states"],
+  "mode": "standard",
+  "primaryModules": ["layout", "responsive", "forms-controls", "components-states", "visual-system"],
+  "expectedSeverities": ["Major", "Minor"],
+  "recommendedViewports": ["375px", "768px", "1280px"],
+  "hasScreenshots": false
+}

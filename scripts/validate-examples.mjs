@@ -5,6 +5,17 @@ const root = process.cwd();
 const examplesRoot = join(root, "examples/test-cases");
 const readmePath = join(examplesRoot, "README.md");
 const requiredCaseFiles = ["before.html", "index.html", "expected-findings.md", "test.json"];
+const allowedModes = new Set(["quick", "standard", "deep"]);
+const allowedSeverities = new Set(["Critical", "Major", "Minor"]);
+const allowedModules = new Set([
+  "accessibility",
+  "ai-template-smell",
+  "components-states",
+  "forms-controls",
+  "layout",
+  "responsive",
+  "visual-system"
+]);
 const errors = [];
 
 if (!existsSync(examplesRoot)) {
@@ -95,5 +106,50 @@ function validateMetadata(directory, metadataPath) {
 
   if (typeof metadata.hasScreenshots !== "boolean") {
     errors.push(`examples/test-cases/${directory}/test.json hasScreenshots must be a boolean`);
+  }
+
+  if (!allowedModes.has(metadata.mode)) {
+    errors.push(`examples/test-cases/${directory}/test.json mode must be quick, standard, or deep`);
+  }
+
+  validateStringArray(directory, metadata, "primaryModules");
+  validateStringArray(directory, metadata, "expectedSeverities");
+  validateStringArray(directory, metadata, "recommendedViewports");
+
+  if (Array.isArray(metadata.primaryModules)) {
+    for (const module of metadata.primaryModules) {
+      if (!allowedModules.has(module)) {
+        errors.push(`examples/test-cases/${directory}/test.json primaryModules contains unknown module: ${module}`);
+      }
+    }
+  }
+
+  if (Array.isArray(metadata.expectedSeverities)) {
+    for (const severity of metadata.expectedSeverities) {
+      if (!allowedSeverities.has(severity)) {
+        errors.push(`examples/test-cases/${directory}/test.json expectedSeverities contains unknown severity: ${severity}`);
+      }
+    }
+  }
+
+  if (Array.isArray(metadata.recommendedViewports)) {
+    for (const viewport of metadata.recommendedViewports) {
+      if (!/^\d+px$/.test(viewport)) {
+        errors.push(`examples/test-cases/${directory}/test.json recommendedViewports must use px strings: ${viewport}`);
+      }
+    }
+  }
+}
+
+function validateStringArray(directory, metadata, field) {
+  if (!Array.isArray(metadata[field]) || metadata[field].length === 0) {
+    errors.push(`examples/test-cases/${directory}/test.json ${field} must be a non-empty array`);
+    return;
+  }
+
+  for (const value of metadata[field]) {
+    if (typeof value !== "string" || value.length === 0) {
+      errors.push(`examples/test-cases/${directory}/test.json ${field} must contain non-empty strings`);
+    }
   }
 }

@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Solace Desk - Fixed</title>
+    <style>
+      :root {
+        --paper: #f7f0df;
+        --ink: #26342c;
+        --muted: #6f6657;
+        --sage: #6f8068;
+        --clay: #b8734f;
+        --line: #dfd1b8;
+        --surface: #fff9ee;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+        color: var(--ink);
+        background:
+          linear-gradient(rgba(111, 128, 104, .08) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(111, 128, 104, .08) 1px, transparent 1px),
+          var(--paper);
+        background-size: 34px 34px;
+      }
+
+      .shell {
+        width: min(100% - 32px, 1180px);
+        margin: 0 auto;
+        padding: 24px 0 112px;
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 16px 18px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 251, 242, .78);
+      }
+
+      nav div {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 20px;
+        justify-content: flex-end;
+      }
+
+      nav a {
+        color: var(--muted);
+        text-decoration: none;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, .9fr) minmax(360px, 1.1fr);
+        gap: 44px;
+        align-items: center;
+        padding: 64px 0 38px;
+      }
+
+      h1 {
+        max-width: 620px;
+        margin: 0 0 20px;
+        font-size: clamp(42px, 6vw, 64px);
+        line-height: 1.02;
+      }
+
+      p {
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.65;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 28px;
+      }
+
+      button, .button {
+        min-height: 44px;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        padding: 13px 20px;
+        background: var(--ink);
+        color: white;
+        font-weight: 800;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      button:hover, .button:hover {
+        background: #1c2922;
+      }
+
+      button:focus-visible,
+      .button:focus-visible,
+      select:focus-visible,
+      input:focus-visible {
+        outline: 3px solid rgba(184, 115, 79, .42);
+        outline-offset: 3px;
+      }
+
+      .secondary {
+        color: white;
+        background: var(--sage);
+      }
+
+      .secondary:hover {
+        background: #5f7158;
+      }
+
+      .panel {
+        min-width: 0;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: rgba(255, 251, 242, .82);
+        box-shadow: 0 26px 80px rgba(80, 61, 38, .12);
+        padding: 24px;
+      }
+
+      .task-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto auto;
+        gap: 12px;
+        align-items: center;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .task-row strong {
+        overflow-wrap: anywhere;
+      }
+
+      .filters {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin: 28px 0;
+      }
+
+      .control {
+        position: relative;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      .control select {
+        appearance: none;
+        padding-right: 42px;
+      }
+
+      .control::after {
+        content: "";
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        width: 8px;
+        height: 8px;
+        border-right: 2px solid var(--sage);
+        border-bottom: 2px solid var(--sage);
+        transform: translateY(-62%) rotate(45deg);
+        pointer-events: none;
+      }
+
+      input, select {
+        width: 100%;
+        min-height: 46px;
+        padding: 12px 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 249, 238, .95);
+        color: var(--ink);
+        font: inherit;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .card {
+        min-height: 180px;
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+      }
+
+      .sticky-actions {
+        position: sticky;
+        bottom: 16px;
+        margin: 28px auto 0;
+        width: min(100%, 720px);
+        padding: 12px;
+        border: 1px solid rgba(255, 249, 238, .18);
+        border-radius: 999px;
+        background: rgba(38, 52, 44, .95);
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        box-shadow: 0 18px 54px rgba(80, 61, 38, .18);
+      }
+
+      @media (max-width: 820px) {
+        .hero,
+        .filters,
+        .cards {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          padding-top: 44px;
+        }
+
+        .task-row {
+          grid-template-columns: 1fr;
+          align-items: start;
+        }
+
+        .sticky-actions {
+          border-radius: 12px;
+          flex-wrap: wrap;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <nav>
+        <strong>Solace Desk</strong>
+        <div>
+          <a href="#">Queue</a>
+          <a href="#">Rules</a>
+          <a href="#">Insights</a>
+        </div>
+      </nav>
+
+      <section class="hero">
+        <div>
+          <p>Slow support operations for careful teams</p>
+          <h1>A calmer way to triage client work.</h1>
+          <p>Solace Desk keeps intake, owner handoff, and status notes in one quiet workspace.</p>
+          <div class="actions">
+            <a class="button" href="#">Review queue</a>
+            <button class="secondary">Create rule</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="task-row"><strong>Harbor contract renewal</strong><span>High</span><button>Open</button></div>
+          <div class="task-row"><strong>Finance export mismatch</strong><span>Medium</span><button>Open</button></div>
+          <div class="task-row"><strong>Legal note pending review with very long owner label</strong><span>Low</span><button>Open</button></div>
+        </div>
+      </section>
+
+      <section class="filters" aria-label="Queue filters">
+        <input aria-label="Search requests" placeholder="Search requests" />
+        <label class="control">
+          <span class="sr-only">Status</span>
+          <select aria-label="Status">
+            <option>Needs owner assignment</option>
+            <option>Waiting on client</option>
+            <option>Ready to close</option>
+          </select>
+        </label>
+        <label class="control">
+          <span class="sr-only">Priority</span>
+          <select aria-label="Priority">
+            <option>All priority levels including urgent escalations</option>
+            <option>High</option>
+            <option>Medium</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="cards">
+        <article class="card"><strong>Client notes</strong><p>Long notes wrap inside the same warm paper card system.</p></article>
+        <article class="card"><strong>Assignment</strong><p>Actions keep visible hover and focus states without changing the product tone.</p></article>
+        <article class="card"><strong>Follow-up</strong><p>Select controls are styled to match the existing quiet operations theme.</p></article>
+      </section>
+
+      <div class="sticky-actions" aria-label="Bulk actions">
+        <button class="secondary">Save draft</button>
+        <button>Publish changes</button>
+      </div>
+    </main>
+  </body>
+</html>

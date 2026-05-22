@@ -1,8 +1,9 @@
 param(
-  [string]$SkillName = "webcraft-skills"
+  [string]$SkillName = "webcraft-ui"
 )
 
 $ErrorActionPreference = "Stop"
+$LegacySkillNames = @("webcraft-skills")
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $source = Join-Path $repoRoot "skills\$SkillName"
@@ -18,6 +19,13 @@ if (!(Test-Path $source)) {
 foreach ($targetRoot in $targetRoots) {
   $target = Join-Path $targetRoot $SkillName
   New-Item -ItemType Directory -Force -Path $targetRoot | Out-Null
+  foreach ($legacySkillName in $LegacySkillNames) {
+    $legacyTarget = Join-Path $targetRoot $legacySkillName
+    if (Test-Path $legacyTarget) {
+      Remove-Item -LiteralPath $legacyTarget -Recurse -Force
+      Write-Host "Removed legacy $legacySkillName from $legacyTarget"
+    }
+  }
   if (Test-Path $target) {
     Remove-Item -LiteralPath $target -Recurse -Force
   }

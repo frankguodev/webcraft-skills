@@ -11,10 +11,11 @@ Public release preparation for `webcraft-skills`.
 ### Changed
 
 - Renamed the project and package from the UI-specific name to `webcraft-skills`, leaving room for a broader website skill pack.
+- Renamed the installable UI skill to `webcraft-ui` while keeping `webcraft-skills` as the npm package and repository name.
 - Updated the public README and usage docs to present only the currently verified stable workflows: audit and fix.
 - Removed maintainer-only implementation details from public-facing documentation.
 - Aligned installer help, package metadata, and skill paths with the new package name.
-- Corrected Codex installation and usage guidance: Codex installs the skill under both `~/.agents/skills` and `~/.codex/skills` for compatibility, and uses `/skills`, `$webcraft-skills`, or explicit natural-language invocation instead of package-defined custom slash commands.
+- Corrected Codex installation and usage guidance: Codex installs the skill under both `~/.agents/skills` and `~/.codex/skills` for compatibility, and uses `/skills`, `$webcraft-ui`, or explicit natural-language invocation instead of package-defined custom slash commands.
 
 ### Audit
 

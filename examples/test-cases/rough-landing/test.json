@@ -3,5 +3,9 @@
   "type": "audit-polish",
   "workflows": ["audit-ui", "polish-ui"],
   "covers": ["ai-template-smell", "visual-system", "component-states", "mobile-risk"],
+  "mode": "standard",
+  "primaryModules": ["ai-template-smell", "visual-system", "components-states", "responsive"],
+  "expectedSeverities": ["Major", "Minor"],
+  "recommendedViewports": ["375px", "1280px"],
   "hasScreenshots": false
 }

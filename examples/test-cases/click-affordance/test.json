@@ -3,5 +3,9 @@
   "type": "audit-fix",
   "workflows": ["audit-ui", "fix-ui"],
   "covers": ["components-states", "cursor", "hover", "focus-visible", "clickable-div"],
+  "mode": "standard",
+  "primaryModules": ["components-states", "accessibility"],
+  "expectedSeverities": ["Major", "Minor"],
+  "recommendedViewports": ["375px", "1280px"],
   "hasScreenshots": false
 }

@@ -4,7 +4,7 @@ Webcraft Skills is designed as a UI quality skill first, with cross-agent adapte
 
 ## Current Focus
 
-The first production goal is to make `skills/webcraft-skills` excellent:
+The first production goal is to make `skills/webcraft-ui` excellent:
 
 - precise UI audit criteria
 - actionable review output
@@ -17,7 +17,7 @@ Plugin metadata, marketplace files, and adapters are intentionally deferred. Add
 ## Layers
 
 - `core/`: platform-neutral source material: checklists, high-risk checklist modules, workflows, presets, and structured mode budgets.
-- `skills/`: installable skill packages. `skills/webcraft-skills` is the canonical production skill.
+- `skills/`: installable skill packages. `skills/webcraft-ui` is the canonical production skill.
 - `commands/`: Claude Code command prompt files for users who prefer stable invocation over automatic triggering.
 - `scripts/`: installation and validation helpers.
 - `examples/project-config/`: template project-level extension configuration.
@@ -35,7 +35,7 @@ The project is not only a style preset library. It is a UI quality system for ag
 
 ## Source Of Truth
 
-Edit `core/` as the source of truth for platform-neutral references. Run `npm run sync:runtime` to copy those references into `skills/webcraft-skills/references/`, which is the canonical installable skill runtime. Edit `skills/webcraft-skills/SKILL.md` directly because it is runtime-specific and is not generated from `core/`.
+Edit `core/` as the source of truth for platform-neutral references. Run `npm run sync:runtime` to copy those references into `skills/webcraft-ui/references/`, which is the canonical installable skill runtime. Edit `skills/webcraft-ui/SKILL.md` directly because it is runtime-specific and is not generated from `core/`.
 
 Do not put maintainer-only paths, sync instructions, or repository architecture notes inside runtime reference files. Runtime files should speak only to the agent executing the skill.
 

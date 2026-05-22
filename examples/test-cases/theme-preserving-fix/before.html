@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Solace Desk - Before</title>
+    <style>
+      :root {
+        --paper: #f7f0df;
+        --ink: #26342c;
+        --muted: #7a6f5d;
+        --sage: #6f8068;
+        --clay: #b8734f;
+        --line: #dfd1b8;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+        color: var(--ink);
+        background:
+          linear-gradient(rgba(111, 128, 104, .08) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(111, 128, 104, .08) 1px, transparent 1px),
+          var(--paper);
+        background-size: 34px 34px;
+      }
+
+      .shell {
+        width: 1180px;
+        margin: 0 auto;
+        padding: 28px 0 120px;
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 22px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 251, 242, .72);
+      }
+
+      nav a {
+        margin-left: 28px;
+        color: var(--muted);
+        text-decoration: none;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 520px 620px;
+        gap: 48px;
+        align-items: center;
+        padding: 76px 0 42px;
+      }
+
+      h1 {
+        margin: 0 0 20px;
+        font-size: 64px;
+        line-height: .98;
+      }
+
+      p {
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.65;
+      }
+
+      .actions {
+        display: flex;
+        gap: 12px;
+        width: 520px;
+        margin-top: 28px;
+      }
+
+      button, .button {
+        border: 0;
+        border-radius: 999px;
+        padding: 15px 22px;
+        background: var(--ink);
+        color: white;
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      button:focus,
+      .button:focus,
+      select:focus,
+      input:focus {
+        outline: none;
+      }
+
+      .secondary {
+        color: #efe7d5;
+        background: var(--sage);
+      }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: rgba(255, 251, 242, .82);
+        box-shadow: 0 26px 80px rgba(80, 61, 38, .12);
+        padding: 24px;
+      }
+
+      .task-row {
+        display: grid;
+        grid-template-columns: 1fr 140px 120px;
+        gap: 12px;
+        align-items: center;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .filters {
+        display: grid;
+        grid-template-columns: 240px 240px 1fr;
+        gap: 14px;
+        margin: 28px 0;
+      }
+
+      input, select {
+        width: 100%;
+        padding: 13px 14px;
+        border: 1px solid var(--line);
+        border-radius: 3px;
+        background: white;
+        color: var(--ink);
+        font: inherit;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 360px);
+        gap: 18px;
+      }
+
+      .card {
+        min-height: 180px;
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        background: #fff9ee;
+      }
+
+      .sticky-actions {
+        position: fixed;
+        left: 50%;
+        bottom: 16px;
+        transform: translateX(-50%);
+        width: 1120px;
+        padding: 18px;
+        border-radius: 999px;
+        background: rgba(38, 52, 44, .95);
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+
+      @media (max-width: 760px) {
+        .shell { width: 1180px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <nav>
+        <strong>Solace Desk</strong>
+        <div>
+          <a href="#">Queue</a>
+          <a href="#">Rules</a>
+          <a href="#">Insights</a>
+        </div>
+      </nav>
+
+      <section class="hero">
+        <div>
+          <p>Slow support operations for careful teams</p>
+          <h1>A calmer way to triage client work.</h1>
+          <p>Solace Desk keeps intake, owner handoff, and status notes in one quiet workspace.</p>
+          <div class="actions">
+            <a class="button" href="#">Review queue</a>
+            <button class="secondary">Create rule</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="task-row"><strong>Harbor contract renewal</strong><span>High</span><button>Open</button></div>
+          <div class="task-row"><strong>Finance export mismatch</strong><span>Medium</span><button>Open</button></div>
+          <div class="task-row"><strong>Legal note pending review with very long owner label</strong><span>Low</span><button>Open</button></div>
+        </div>
+      </section>
+
+      <section class="filters" aria-label="Queue filters">
+        <input aria-label="Search requests" placeholder="Search requests" />
+        <select aria-label="Status">
+          <option>Needs owner assignment</option>
+          <option>Waiting on client</option>
+          <option>Ready to close</option>
+        </select>
+        <select aria-label="Priority">
+          <option>All priority levels including urgent escalations</option>
+          <option>High</option>
+          <option>Medium</option>
+        </select>
+      </section>
+
+      <section class="cards">
+        <article class="card"><strong>Client notes</strong><p>Long notes do not wrap well inside the fixed card grid on mobile.</p></article>
+        <article class="card"><strong>Assignment</strong><p>Actions are present, but hover, focus, and disabled states are not visible.</p></article>
+        <article class="card"><strong>Follow-up</strong><p>The native selects feel unrelated to the warm paper product style.</p></article>
+      </section>
+    </main>
+
+    <div class="sticky-actions" aria-label="Bulk actions">
+      <button class="secondary">Save draft</button>
+      <button>Publish changes</button>
+    </div>
+  </body>
+</html>

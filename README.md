@@ -24,7 +24,7 @@ The broader goal is:
 - refine the core reusable skill first, then gradually expand Codex, Claude, Cursor, and plain prompt adapters
 - help AI act more like a senior UI/UX and frontend reviewer
 
-The currently tested workflows are audit and fix. Claude Code command prompt files are included, with `/ui-audit` and `/ui-fix` as the recommended stable commands. In Codex, use `/skills`, `$webcraft-skills`, or explicit natural-language invocation.
+The currently tested workflows are audit and fix. Claude Code command prompt files are included, with `/ui-audit` and `/ui-fix` as the recommended stable commands. In Codex, use `/skills`, `$webcraft-ui`, or explicit natural-language invocation.
 
 ---
 
@@ -65,8 +65,8 @@ npx webcraft-skills install --agent all
 For Codex, this installs:
 
 ```text
-~/.agents/skills/webcraft-skills
-~/.codex/skills/webcraft-skills
+~/.agents/skills/webcraft-ui
+~/.codex/skills/webcraft-ui
 ```
 
 The installer writes both Codex-compatible paths to support different current clients.
@@ -74,22 +74,22 @@ The installer writes both Codex-compatible paths to support different current cl
 For Claude Code, it installs:
 
 ```text
-~/.claude/skills/webcraft-skills
+~/.claude/skills/webcraft-ui
 ~/.claude/commands/*.md
 ```
 
 ## Usage
 
-In Codex, invoke `webcraft-skills` with natural language. Include the audit depth, target scope, and areas of concern when possible:
+In Codex, invoke `webcraft-ui` with natural language. Include the audit depth, target scope, and areas of concern when possible:
 
 ```text
-Use webcraft-skills to run a Standard Audit on the current website.
-Use webcraft-skills to run a Quick Audit on the homepage and only report obvious issues.
-Use webcraft-skills to run a Standard Audit on the upload flow, focusing on forms, states, and mobile.
-Use webcraft-skills to run a Deep Audit on all admin pages before launch.
+Use webcraft-ui to run a Standard Audit on the current website.
+Use webcraft-ui to run a Quick Audit on the homepage and only report obvious issues.
+Use webcraft-ui to run a Standard Audit on the upload flow, focusing on forms, states, and mobile.
+Use webcraft-ui to run a Deep Audit on all admin pages before launch.
 ```
 
-You can also run `/skills` or type `$` in Codex to mention the installed `webcraft-skills` skill.
+You can also run `/skills` or type `$` in Codex to mention the installed `webcraft-ui` skill.
 
 In Claude Code, use the installed slash command prompts. Text after the command is a prompt convention for the agent, not a separate CLI parser:
 
@@ -108,7 +108,7 @@ Audit depth:
 
 - `Quick Audit`: fast pass for "take a quick look" requests. Reports only Critical and obvious Major issues, up to 5 findings.
 - `Standard Audit`: default mode. Reports Critical, Major, and a small number of high-value Minor issues, usually 8 to 12 findings.
-- `Deep Audit`: full pass for launch readiness or strict review. Uses the full rubric, scoring model, content stress tests, and more viewport checks.
+- `Deep Audit`: full pass for launch readiness or strict review. Uses the full audit system, scoring model, content stress tests, and more viewport checks.
 
 These three audit depths now use structured budgets for finding counts, severity scope, scoring expectations, and viewport coverage, so agents are less likely to make Quick Audit too heavy or Deep Audit too shallow.
 
@@ -130,11 +130,11 @@ Common audit targets:
 In Codex:
 
 ```text
-Use webcraft-skills to fix Critical and Major issues from the last audit.
-Use webcraft-skills to fix only the homepage mobile horizontal overflow.
-Use webcraft-skills to fix form states, error messages, and loading states in the upload flow.
-Use webcraft-skills to fix native select controls in admin pages so they match the existing component system.
-Use webcraft-skills to propose a fix plan first, without editing code yet.
+Use webcraft-ui to fix Critical and Major issues from the last audit.
+Use webcraft-ui to fix only the homepage mobile horizontal overflow.
+Use webcraft-ui to fix form states, error messages, and loading states in the upload flow.
+Use webcraft-ui to fix native select controls in admin pages so they match the existing component system.
+Use webcraft-ui to propose a fix plan first, without editing code yet.
 ```
 
 In Claude Code:

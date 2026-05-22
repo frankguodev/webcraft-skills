@@ -3,5 +3,9 @@
   "type": "build-polish",
   "workflows": ["build-ui", "polish-ui"],
   "covers": ["theme-preservation", "reference-layout", "visual-system"],
+  "mode": "standard",
+  "primaryModules": ["visual-system", "layout"],
+  "expectedSeverities": ["Major", "Minor"],
+  "recommendedViewports": ["375px", "1280px"],
   "hasScreenshots": false
 }

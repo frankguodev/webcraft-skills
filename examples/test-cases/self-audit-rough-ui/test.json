@@ -3,5 +3,9 @@
   "type": "end-to-end",
   "workflows": ["audit-ui", "fix-ui"],
   "covers": ["responsive", "forms-controls", "visual-system", "media-ratio", "table-overflow"],
+  "mode": "deep",
+  "primaryModules": ["layout", "responsive", "forms-controls", "visual-system"],
+  "expectedSeverities": ["Critical", "Major", "Minor"],
+  "recommendedViewports": ["375px", "768px", "1280px", "1440px"],
   "hasScreenshots": true
 }

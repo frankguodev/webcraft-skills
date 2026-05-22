@@ -5,7 +5,7 @@
 ## 工作原则
 
 - `core/` 是审查规则、工作流、preset 和结构化模式预算的源文件。
-- `skills/webcraft-skills/references/` 是安装时使用的 runtime 引用文件，由 `core/` 同步生成。
+- `skills/webcraft-ui/references/` 是安装时使用的 runtime 引用文件，由 `core/` 同步生成。
 - 修改 audit / fix / review / polish / build workflow、checklist、preset 时，优先只改 `core/` 下对应文件。
 - 改完 `core/` 后运行：
 
@@ -14,8 +14,8 @@ npm run sync:runtime
 npm run validate
 ```
 
-- 不要手动同时维护 `core/` 和 `skills/webcraft-skills/references/` 两份内容，除非正在修同步脚本本身。
-- 如果发现 `skills/webcraft-skills/references/` 与 `core/` 不一致，以 `core/` 为准，然后重新同步。
+- 不要手动同时维护 `core/` 和 `skills/webcraft-ui/references/` 两份内容，除非正在修同步脚本本身。
+- 如果发现 `skills/webcraft-ui/references/` 与 `core/` 不一致，以 `core/` 为准，然后重新同步。
 
 ## 文件职责
 
@@ -23,13 +23,13 @@ npm run validate
 - `core/workflows/`：audit、fix、review、polish、build 等工作流源文件。
 - `core/presets/`：视觉 preset 源文件。
 - `core/modes/`：结构化模式预算源文件，例如 audit 的 Quick / Standard / Deep 硬预算、开关和数量限制。
-- `skills/webcraft-skills/SKILL.md`：Skill 入口和模式路由，直接维护。
+- `skills/webcraft-ui/SKILL.md`：Skill 入口和模式路由，直接维护。
 - `commands/`：Claude Code slash command prompt 文件，直接维护。
 - `README.md` 和 `README_zh_CN.md`：公开说明文档，直接维护，并尽量保持中英文信息同步。
 - `docs/`：补充文档，直接维护。
 - `examples/test-cases/`：用于验证 workflow 能发现或修复典型 UI 问题的样例源文件。
 - `examples/reports/`：手工或 Agent 自测报告，以及 README 中引用的示例截图。
-- `scripts/sync-runtime.mjs`：把 `core/` 同步到 `skills/webcraft-skills/references/`。
+- `scripts/sync-runtime.mjs`：把 `core/` 同步到 `skills/webcraft-ui/references/`。
 - `scripts/validate.mjs`：校验必需文件、locale pair、JSON、结构化模式预算和 `SKILL.md` frontmatter。
 - `scripts/validate-examples.mjs`：校验 `examples/test-cases/` 回归用例三件套和 README 列表。
 

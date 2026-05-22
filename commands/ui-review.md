@@ -17,5 +17,5 @@ Examples:
 
 ## Agent Instructions
 
-Use the `webcraft-skills` skill in Review mode. Read `ui-audit.zh.md`. Lead with Critical, Major, Minor findings. Each finding must include location, problem, impact, and fix.
+Use the `webcraft-ui` skill in Review mode. First apply the skill's Locale Contract: choose exactly one locale from the user's request and target UI context, then read only that locale's review workflow and UI audit checklist. Do not read both English and Chinese references unless the user explicitly asks for translation, bilingual comparison, localization, or locale consistency. Lead with Critical, Major, Minor findings. Each finding must include location, problem, impact, and fix.
 

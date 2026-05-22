@@ -11,10 +11,11 @@
 ### 变更
 
 - 项目名和包名从偏 UI 的旧名称调整为 `webcraft-skills`，为后续扩展成更完整的网站 skill pack 预留空间。
+- 可安装的 UI skill 改名为 `webcraft-ui`，`webcraft-skills` 继续作为 npm 包名和仓库名。
 - 更新公开 README 和 usage 文档，只承诺当前已验证的稳定工作流：audit 和 fix。
 - 从面向用户的文档中移除维护者内部实现和同步运行层说明。
 - 统一安装器帮助、package metadata 和 skill 路径，使其全部指向新的包名。
-- 修正 Codex 安装和使用说明：Codex 同时安装到 `~/.agents/skills` 和 `~/.codex/skills` 以提升兼容性，并通过 `/skills`、`$webcraft-skills` 或明确自然语言调用，而不是依赖本包自定义 slash commands。
+- 修正 Codex 安装和使用说明：Codex 同时安装到 `~/.agents/skills` 和 `~/.codex/skills` 以提升兼容性，并通过 `/skills`、`$webcraft-ui` 或明确自然语言调用，而不是依赖本包自定义 slash commands。
 
 ### Audit
 

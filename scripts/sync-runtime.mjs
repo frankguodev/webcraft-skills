@@ -6,27 +6,27 @@ const root = process.cwd();
 const mappings = [
   {
     source: "core/checklists",
-    target: "skills/webcraft-skills/references/checklists",
+    target: "skills/webcraft-ui/references/checklists",
     extensions: [".md"]
   },
   {
     source: "core/checklists/modules",
-    target: "skills/webcraft-skills/references/checklists/modules",
+    target: "skills/webcraft-ui/references/checklists/modules",
     extensions: [".md"]
   },
   {
     source: "core/workflows",
-    target: "skills/webcraft-skills/references/workflows",
+    target: "skills/webcraft-ui/references/workflows",
     extensions: [".md"]
   },
   {
     source: "core/presets",
-    target: "skills/webcraft-skills/references/presets",
+    target: "skills/webcraft-ui/references/presets",
     extensions: [".md"]
   },
   {
     source: "core/modes",
-    target: "skills/webcraft-skills/references/modes",
+    target: "skills/webcraft-ui/references/modes",
     extensions: [".json"]
   }
 ];

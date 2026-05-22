@@ -3,10 +3,10 @@ import { extname, join, relative } from "node:path";
 
 const root = process.cwd();
 const requiredFiles = [
-  "skills/webcraft-skills/SKILL.md",
-  "skills/webcraft-skills/agents/openai.yaml",
-  "skills/webcraft-skills/references/checklists/ui-audit.md",
-  "skills/webcraft-skills/references/checklists/ui-audit.zh.md",
+  "skills/webcraft-ui/SKILL.md",
+  "skills/webcraft-ui/agents/openai.yaml",
+  "skills/webcraft-ui/references/checklists/ui-audit.md",
+  "skills/webcraft-ui/references/checklists/ui-audit.zh.md",
   "core/checklists/modules/layout.md",
   "core/checklists/modules/layout.zh.md",
   "core/checklists/modules/components-states.md",
@@ -21,38 +21,39 @@ const requiredFiles = [
   "core/checklists/modules/accessibility.zh.md",
   "core/checklists/modules/ai-template-smell.md",
   "core/checklists/modules/ai-template-smell.zh.md",
-  "skills/webcraft-skills/references/checklists/modules/layout.md",
-  "skills/webcraft-skills/references/checklists/modules/layout.zh.md",
-  "skills/webcraft-skills/references/checklists/modules/components-states.md",
-  "skills/webcraft-skills/references/checklists/modules/components-states.zh.md",
-  "skills/webcraft-skills/references/checklists/modules/responsive.md",
-  "skills/webcraft-skills/references/checklists/modules/responsive.zh.md",
-  "skills/webcraft-skills/references/checklists/modules/forms-controls.md",
-  "skills/webcraft-skills/references/checklists/modules/forms-controls.zh.md",
-  "skills/webcraft-skills/references/checklists/modules/visual-system.md",
-  "skills/webcraft-skills/references/checklists/modules/visual-system.zh.md",
-  "skills/webcraft-skills/references/checklists/modules/accessibility.md",
-  "skills/webcraft-skills/references/checklists/modules/accessibility.zh.md",
-  "skills/webcraft-skills/references/checklists/modules/ai-template-smell.md",
-  "skills/webcraft-skills/references/checklists/modules/ai-template-smell.zh.md",
-  "skills/webcraft-skills/references/workflows/audit-ui.md",
-  "skills/webcraft-skills/references/workflows/audit-ui.zh.md",
-  "skills/webcraft-skills/references/workflows/build-ui.md",
-  "skills/webcraft-skills/references/workflows/build-ui.zh.md",
-  "skills/webcraft-skills/references/workflows/review-ui.md",
-  "skills/webcraft-skills/references/workflows/review-ui.zh.md",
-  "skills/webcraft-skills/references/workflows/polish-ui.md",
-  "skills/webcraft-skills/references/workflows/polish-ui.zh.md",
-  "skills/webcraft-skills/references/workflows/fix-ui.md",
-  "skills/webcraft-skills/references/workflows/fix-ui.zh.md",
-  "skills/webcraft-skills/references/modes/audit-modes.json",
-  "skills/webcraft-skills/references/presets/cinematic-minimal.md",
-  "skills/webcraft-skills/references/presets/cinematic-minimal.zh.md",
+  "skills/webcraft-ui/references/checklists/modules/layout.md",
+  "skills/webcraft-ui/references/checklists/modules/layout.zh.md",
+  "skills/webcraft-ui/references/checklists/modules/components-states.md",
+  "skills/webcraft-ui/references/checklists/modules/components-states.zh.md",
+  "skills/webcraft-ui/references/checklists/modules/responsive.md",
+  "skills/webcraft-ui/references/checklists/modules/responsive.zh.md",
+  "skills/webcraft-ui/references/checklists/modules/forms-controls.md",
+  "skills/webcraft-ui/references/checklists/modules/forms-controls.zh.md",
+  "skills/webcraft-ui/references/checklists/modules/visual-system.md",
+  "skills/webcraft-ui/references/checklists/modules/visual-system.zh.md",
+  "skills/webcraft-ui/references/checklists/modules/accessibility.md",
+  "skills/webcraft-ui/references/checklists/modules/accessibility.zh.md",
+  "skills/webcraft-ui/references/checklists/modules/ai-template-smell.md",
+  "skills/webcraft-ui/references/checklists/modules/ai-template-smell.zh.md",
+  "skills/webcraft-ui/references/workflows/audit-ui.md",
+  "skills/webcraft-ui/references/workflows/audit-ui.zh.md",
+  "skills/webcraft-ui/references/workflows/build-ui.md",
+  "skills/webcraft-ui/references/workflows/build-ui.zh.md",
+  "skills/webcraft-ui/references/workflows/review-ui.md",
+  "skills/webcraft-ui/references/workflows/review-ui.zh.md",
+  "skills/webcraft-ui/references/workflows/polish-ui.md",
+  "skills/webcraft-ui/references/workflows/polish-ui.zh.md",
+  "skills/webcraft-ui/references/workflows/fix-ui.md",
+  "skills/webcraft-ui/references/workflows/fix-ui.zh.md",
+  "skills/webcraft-ui/references/modes/audit-modes.json",
+  "skills/webcraft-ui/references/presets/cinematic-minimal.md",
+  "skills/webcraft-ui/references/presets/cinematic-minimal.zh.md",
   "commands/ui-audit.md",
   "docs/commands.md",
   "docs/configuration.md",
   "scripts/sync-runtime.mjs",
   "scripts/validate-examples.mjs",
+  "scripts/capture-example-screenshots.mjs",
   "examples/project-config/EXTEND.md",
   "examples/project-config/config.json",
   "examples/test-cases/README.md",
@@ -109,7 +110,7 @@ function collectMarkdownFiles(directory) {
 
 for (const referenceRoot of [
   "core",
-  "skills/webcraft-skills/references"
+  "skills/webcraft-ui/references"
 ]) {
   const directory = join(root, referenceRoot);
   if (!existsSync(directory)) continue;
@@ -141,7 +142,7 @@ function countHeadings(content) {
 
 for (const referenceRoot of [
   "core",
-  "skills/webcraft-skills/references"
+  "skills/webcraft-ui/references"
 ]) {
   const directory = join(root, referenceRoot);
   if (!existsSync(directory)) continue;
@@ -170,11 +171,78 @@ for (const referenceRoot of [
   }
 }
 
-const skillPath = join(root, "skills/webcraft-skills/SKILL.md");
+const skillPath = join(root, "skills/webcraft-ui/SKILL.md");
 if (existsSync(skillPath)) {
   const skill = readFileSync(skillPath, "utf8");
-  if (!/^---\r?\nname: webcraft-skills\r?\ndescription: .+\r?\n---/s.test(skill)) {
+  if (!/^---\r?\nname: webcraft-ui\r?\ndescription: .+\r?\n---/s.test(skill)) {
     errors.push("Invalid SKILL.md frontmatter");
+  }
+  for (const phrase of [
+    "## Locale Contract",
+    "Choose exactly one runtime locale",
+    "Do not choose locale from the repository's available files",
+    "After choosing `zh`, read only `.zh.md`",
+    "After choosing `en`, read only non-`.zh.md`"
+  ]) {
+    if (!skill.includes(phrase)) {
+      errors.push(`Missing locale contract phrase in SKILL.md: ${phrase}`);
+    }
+  }
+}
+
+for (const file of [
+  "core/workflows/audit-ui.md",
+  "core/workflows/fix-ui.md",
+  "core/workflows/review-ui.md",
+  "core/workflows/polish-ui.md",
+  "core/workflows/build-ui.md",
+  "skills/webcraft-ui/references/workflows/audit-ui.md",
+  "skills/webcraft-ui/references/workflows/fix-ui.md",
+  "skills/webcraft-ui/references/workflows/review-ui.md",
+  "skills/webcraft-ui/references/workflows/polish-ui.md",
+  "skills/webcraft-ui/references/workflows/build-ui.md"
+]) {
+  const path = join(root, file);
+  if (!existsSync(path)) continue;
+  const text = readFileSync(path, "utf8");
+  if (!text.includes("## Locale Rule") || !text.includes("The skill's Locale Contract has already selected one runtime locale")) {
+    errors.push(`Missing Locale Rule in ${file}`);
+  }
+}
+
+for (const file of [
+  "core/workflows/audit-ui.zh.md",
+  "core/workflows/fix-ui.zh.md",
+  "core/workflows/review-ui.zh.md",
+  "core/workflows/polish-ui.zh.md",
+  "core/workflows/build-ui.zh.md",
+  "skills/webcraft-ui/references/workflows/audit-ui.zh.md",
+  "skills/webcraft-ui/references/workflows/fix-ui.zh.md",
+  "skills/webcraft-ui/references/workflows/review-ui.zh.md",
+  "skills/webcraft-ui/references/workflows/polish-ui.zh.md",
+  "skills/webcraft-ui/references/workflows/build-ui.zh.md"
+]) {
+  const path = join(root, file);
+  if (!existsSync(path)) continue;
+  const text = readFileSync(path, "utf8");
+  if (!text.includes("## 语言规则") || !text.includes("Locale Contract 已经选择了一个运行语言")) {
+    errors.push(`Missing 语言规则 in ${file}`);
+  }
+}
+
+for (const file of [
+  "commands/ui-audit.md",
+  "commands/ui-fix.md",
+  "commands/ui-review.md",
+  "commands/ui-polish.md",
+  "commands/ui-build.md",
+  "commands/ui-preset.md"
+]) {
+  const path = join(root, file);
+  if (!existsSync(path)) continue;
+  const text = readFileSync(path, "utf8");
+  if (!text.includes("Locale Contract") || !text.includes("choose exactly one locale")) {
+    errors.push(`Missing locale contract instruction in ${file}`);
   }
 }
 
@@ -182,7 +250,7 @@ for (const file of [
   "examples/project-config/config.json",
   "package.json",
   "core/modes/audit-modes.json",
-  "skills/webcraft-skills/references/modes/audit-modes.json"
+  "skills/webcraft-ui/references/modes/audit-modes.json"
 ]) {
   const path = join(root, file);
   if (!existsSync(path)) continue;
@@ -269,7 +337,7 @@ function validateAuditModes(file) {
 }
 
 validateAuditModes("core/modes/audit-modes.json");
-validateAuditModes("skills/webcraft-skills/references/modes/audit-modes.json");
+validateAuditModes("skills/webcraft-ui/references/modes/audit-modes.json");
 
 if (errors.length > 0) {
   console.error(errors.join("\n"));
