@@ -7,15 +7,10 @@
 - `core/` 是审查规则、工作流、preset 和结构化模式预算的源文件。
 - `skills/webcraft-ui/references/` 是安装时使用的 runtime 引用文件，由 `core/` 同步生成。
 - 修改 audit / fix / review / polish / build workflow、checklist、preset 时，优先只改 `core/` 下对应文件。
-- 改完 `core/` 后运行：
-
-```bash
-npm run sync:runtime
-npm run validate
-```
 
 - 不要手动同时维护 `core/` 和 `skills/webcraft-ui/references/` 两份内容，除非正在修同步脚本本身。
 - 如果发现 `skills/webcraft-ui/references/` 与 `core/` 不一致，以 `core/` 为准，然后重新同步。
+
 
 ## 文件职责
 
@@ -54,19 +49,13 @@ npm run validate
 
 ## 提交前检查
 
-在完成规则、文档或脚本改动后，至少运行：
-
-```bash
-npm run validate
-```
-
-如果改了 `core/`，必须先运行：
+只有用户要求同步 `core/`里面的内容到runtime，才运行：
 
 ```bash
 npm run sync:runtime
 ```
 
-再运行：
+在完成规则、文档或脚本改动后，至少运行：
 
 ```bash
 npm run validate

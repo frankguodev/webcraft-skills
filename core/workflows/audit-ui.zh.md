@@ -1,6 +1,6 @@
 # UI Audit 工作流
 
-用于严格、系统地排查网页、页面、组件、截图或整站 UI 质量。`audit-ui` 负责执行流程，`ui-audit` rubric 负责判断标准。
+用于严格、系统地排查页面、组件、截图或整站前端 UI 质量。`audit-ui` 负责执行流程，`ui-audit` rubric 负责判断标准。
 
 审查的目标是发现问题、给出证据和修复顺序，不是直接重写设计。只有当用户明确要求修复时，才进入修复流程。
 
@@ -10,7 +10,7 @@
 - 具体什么算问题、如何分级、评分、模块含义、报告归属和输出规则，读取 `references/checklists/ui-audit.zh.md`。
 - 本 workflow 负责决定本次 audit 要读哪些模块；不要把模块选择规则复制成报告内容。
 - `Quick / Standard / Deep Audit` 的硬预算读取 `references/modes/audit-modes.json`；本文件负责解释这些预算如何执行。
-- 不要把 rubric 逐条复制进报告；只输出有证据、有影响、有修复价值的问题。
+- 不要把 rubric 逐条复制进报告；只输出有证据、有影响、真实存在的问题。
 - 不要同时读取英文和中文 reference，除非任务是翻译、双语对齐或一致性检查。
 
 ## 语言规则
@@ -22,7 +22,7 @@
 根据用户请求选择审查深度：
 
 - `Quick Audit`：用户说“快速看看”“有没有大问题”。只报告 Critical 和明显 Major。
-- `Standard Audit`：默认模式。报告 Critical、Major 和少量有价值 Minor。
+- `Standard Audit`：默认模式。报告 Critical、Major 和少量有价值的 Minor。
 - `Deep Audit`：用户说“全面排查”“严格 audit”“准备上线”“找细节问题”。使用完整 audit 体系：主 rubric、相关 modules、评分模型、Content Stress Test、更多视口，并额外检查媒体比例、表格/富文本/代码块、滚动行为、原生控件、动效和高对比度风险。
 
 如果用户没有指定，使用 `Standard Audit`。
@@ -31,9 +31,9 @@
 
 完整 audit 体系是判断背景，不是每次都要完整执行的任务清单。硬预算以 `references/modes/audit-modes.json` 为准；下面是执行解释：
 
-- `Quick Audit`：只做主路径和当前可见界面的风险扫描。页面可运行时，最多检查当前视口或 1 个最关键视口；只做明显的布局/可点击/响应式 smoke check。最多 5 条 findings，只报告 Critical 和明显 Major，不做评分，不输出 Minor，不展开长尾细节。
-- `Standard Audit`：默认实用模式。覆盖主要页面/功能和 2 个关键视口：1280px 桌面 + 1 个移动端视口；做一次首屏布局关系检查和 pointer / hover smoke check。先找系统性 Critical / Major，再挑少量高价值 Minor。通常 8 到 12 条 findings，不输出完整分类报告，不做完整 Content Stress Test，不默认评分。
-- `Deep Audit`：才系统展开主 rubric、相关 modules、评分模型、Content Stress Test、更多视口和深度审查细项。适合上线前、严格排查或用户明确要求“全面”。即便是 Deep Audit，也先输出 Top Findings，再按分类展开，不要把所有通过项写进报告。
+- `Quick Audit`：只做主路径和当前可见界面的风险扫描。页面可运行时，最多检查当前视口或 1 个最关键视口；只做明显的布局/可点击/响应式 smoke check。最多 8 条 findings，只报告 Critical 和明显 Major，不做评分，不输出 Minor，不展开长尾细节。
+- `Standard Audit`：默认实用模式。覆盖主要页面/功能和 2 个关键视口：1280px 桌面 + 1 个移动端视口；做一次首屏布局关系检查和 pointer / hover smoke check。先找Critical / Major，再挑少量高价值的Minor。通常 8 到 16 条 findings，不输出完整分类报告，不做完整 Content Stress Test，不默认评分。
+- `Deep Audit`：系统展开主 rubric、相关 modules、评分模型、Content Stress Test、更多视口和深度审查细项。适合上线前、严格排查或用户明确要求“全面”。即便是 Deep Audit，也先输出 Top Findings，再按分类展开，不要把所有通过项写进报告。
 
 任何模式都不要为了“覆盖分类”而制造 finding。发现多个同源问题时，优先合并为一个系统性 finding。
 
@@ -43,8 +43,6 @@
 
 - Scope：单页、组件、截图、整站、代码目录或 localhost。
 - Page type：landing page、dashboard、app screen、portfolio、docs、form、checkout、admin 等。
-- Core task：阅读、注册、购买、搜索、筛选、管理、创作、联系、下载、预约等。
-- Audience：普通用户、开发者、企业客户、创作者、内部运营、管理者等。
 - Tech constraints：已有组件库、工具类 CSS、CSS Modules、自定义 CSS、设计 token、路由、断点、框架和渲染方式。
 - Verification level：已运行浏览器、代码静态审查、截图审查，或混合审查。
 
@@ -66,7 +64,7 @@
 - 交互层：dropdown、popover、modal、toast、drawer、loading overlay 的层级和互相遮挡关系。
 - 页面语气：营销型、工具型、内容型、后台型、个人品牌型等。
 
-除非用户明确要求重设风格，否则所有审查建议都必须在现有视觉体系内判断。不要把某个 preset 当作默认审美标准。Preset 只有在用户明确指定，或当前项目没有明确视觉方向时，才作为参考。
+除非用户明确要求重设风格，否则所有审查建议都必须在现有视觉体系内判断。
 
 ## 4. 读取审查标准
 
@@ -240,100 +238,7 @@ Deep Audit 还应尽量检查：
 11. AI template smell：空泛口号、过度 badge、bento grid、渐变光斑、虚假数据。
 12. Minor polish：对齐、节奏、动效、文案细节。
 
-## 10. Findings 数量控制
-
-- `Quick Audit`：最多 5 条，只报告 Critical 和明显 Major。
-- `Standard Audit`：建议 8 到 12 条，优先 Top Findings；除非用户要求，不展开完整分类报告。
-- `Deep Audit`：可以更多，但先输出 Top Findings，再按分类展开；每个分类只输出有证据、有影响、有修复价值的问题。
-- 如果 Critical/Major 已经足够说明主要风险，不继续挖低价值 Minor。
-- 对 Quick / Standard，不要报告只影响局部精致度、且不影响任务、响应式、状态或一致性的长尾细节。
-- 不要为了让报告看起来完整而凑数量。
-
-## 11. 输出报告
-
-使用这个结构：
-
-```markdown
-## Context / 上下文
-
-- Scope / 范围:
-- Audit mode / 审查模式:
-- Page type / 页面类型:
-- Core task / 核心任务:
-- Viewports checked / 已检查视口:
-- Verification level / 验证方式:
-- Constraints / 约束:
-
-## Top Findings / 主要问题
-
-- 最重要的 3 到 5 个问题，按风险排序。
-
-## Critical
-
-### 1. 问题标题
-Location / 位置:
-Evidence / 证据:
-Impact / 影响:
-Fix / 修复建议:
-
-## Major
-
-...
-
-## Minor
-
-...
-
-## Open Questions / 待确认问题
-
-- 需要用户确认或需要运行页面才能判断的问题。
-
-## Pass Notes / 通过说明
-
-- 简短说明没有发现明显问题的关键方面。
-
-## Fix Order / 修复顺序
-
-1.
-2.
-3.
-
-## Score / 评分
-
-- Usability:
-- Clarity:
-- Consistency:
-- Responsiveness:
-- Interaction States:
-- Control System Fit:
-- Visual Maturity:
-- AI Template Smell:
-- Overall:
-```
-
-规则：
-
-- `Quick Audit` 可以省略 Score 和 Minor。
-- `Standard Audit` 可省略 Score，除非用户要求。
-- `Deep Audit` 建议保留 Score。
-- `Top Findings` 用于让用户先看到最重要风险；如果问题很少，可以省略。
-- 每个 finding 必须有具体证据。
-- 布局类 finding 优先给出浏览器证据：Viewport、区域、可见现象、可能根因和修复方向。
-- Critical 和 Major 必须可定位、可修复。
-- 没有发现的问题分类不要输出。
-- `Open Questions` 只放需要确认的问题，不放建议。
-- `Pass Notes` 不要逐项列通过，只保留 1 到 3 条高价值说明。
-- 不要输出“检查了 X 项均通过”这类清单式通过项；只记录对用户决策有帮助的通过信息。
-
-## 12. 去重与分组
-
-- 同一根因只报告一次。
-- 阻断使用的问题单独列为 Critical，不要合并进系统性问题。
-- 系统性视觉问题可以合并，例如 radius、border、shadow 混乱可以作为一个 Major。
-- 不要为了覆盖所有分类而凑问题。
-- 如果问题需要产品决策，放到 `Open Questions`，不要假装是确定缺陷。
-
-## 13. 修复衔接
+## 10. 修复衔接
 
 如果用户要求继续修复，进入 `fix-ui` workflow。
 
@@ -361,21 +266,23 @@ Fix / 修复建议:
 - 修弹窗的，复检关闭、滚动和 focus。
 - 修视觉 token 的，复检同类组件是否一致。
 
-## 14. 停止条件
+## 11. 输出规则
+
+报告结构和省略规则，以 `references/checklists/ui-audit.zh.md` 中的输出规则为准。
+
+## 12. 停止条件
 
 - 已经找到会阻断使用的 Critical 时，先停止深挖 Minor，优先输出风险和修复顺序。
-- Quick Audit 中，找到 Critical 或 3 到 5 个明显 Major 后即可停止，直接给修复顺序。
+- Quick Audit 中，找到 Critical 或 5 到 8 个明显 Major 后即可停止，直接给修复顺序。
 - Standard Audit 中，如果 Top Findings 已覆盖主要风险，不继续列低价值 polish 或深度细项。
 - Deep Audit 中，可以继续展开，但要把系统性问题优先于零散细节；同类 Minor 应合并，不逐点堆叠。
 - 如果证据不足，不继续推断；把问题放入 `Open Questions` 或标注需要验证。
 
-## 15. 禁止事项
+## 13. 禁止事项
 
 - 不要虚构浏览器验证结果。
 - 不要输出没有位置、没有证据、没有修复建议的问题。
 - 不要把纯审美偏好包装成缺陷。
-- 不要建议无关技术重构。
-- 不要把所有页面都改成同一种风格。
 - 不要在用户未指定 preset 时强行套用 preset 风格。
 - 不要因为统一视觉而删除必要业务信息。
 - 不要把没有验证的问题写成确定事实。
