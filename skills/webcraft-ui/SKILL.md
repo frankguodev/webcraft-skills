@@ -46,6 +46,6 @@ Reference files are paired by locale. For the selected locale, read only the mat
 
 ## Output Standards
 
-- Review/audit output: severity, location, problem, impact, fix.
+- Review/audit output: severity, location, evidence/problem, impact, fix. For `zh` locale, use the field labels defined in the Chinese workflow/checklist, such as `Location(位置)`, `Evidence(证据)`, `Impact(影响)`, and `Fix(修复建议)`, instead of collapsing them to English-only labels.
 - Build/polish/fix output: changed files, design decisions, verification result.
 - Keep language direct and actionable.

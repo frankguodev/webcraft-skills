@@ -2,7 +2,7 @@
   "quick": {
     "label": "Quick Audit",
     "intent": "Fast risk scan for obvious Critical and Major UI issues.",
-    "maxFindings": 5,
+    "maxFindings": 8,
     "severity": ["Critical", "Major"],
     "includeMinor": false,
     "score": false,
@@ -27,8 +27,8 @@
   "standard": {
     "label": "Standard Audit",
     "intent": "Default practical audit for main page or feature UI risks.",
-    "maxFindings": 12,
-    "recommendedFindings": [8, 12],
+    "maxFindings": 16,
+    "recommendedFindings": [8, 16],
     "severity": ["Critical", "Major", "Minor"],
     "includeMinor": "high-value-only",
     "score": false,
@@ -55,7 +55,7 @@
   "deep": {
     "label": "Deep Audit",
     "intent": "Full audit for launch readiness, strict review, or systemic UI quality work.",
-    "maxFindings": 24,
+    "maxFindings": 32,
     "severity": ["Critical", "Major", "Minor"],
     "includeMinor": true,
     "score": true,

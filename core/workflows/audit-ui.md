@@ -1,6 +1,6 @@
 # UI Audit Workflow
 
-Use this workflow to inspect the UI quality of a page, component, screenshot, local app, or whole site. `audit-ui` defines the execution process; the `ui-audit` rubric defines the judging criteria.
+Use this workflow to inspect frontend UI quality for a page, component, screenshot, local app, or whole site. `audit-ui` defines the execution process; the `ui-audit` rubric defines the judging criteria.
 
 The goal is to find issues, collect evidence, and recommend fix order. Do not redesign or edit code during audit unless the user explicitly asks to audit and fix.
 
@@ -10,7 +10,7 @@ The goal is to find issues, collect evidence, and recommend fix order. Do not re
 - For what counts as an issue, severity definitions, scoring, module meaning, reporting ownership, and output rules, read `references/checklists/ui-audit.md`.
 - This workflow decides which modules to read for the current audit; do not copy module-selection rules into the report.
 - For hard budgets for `Quick / Standard / Deep Audit`, read `references/modes/audit-modes.json`; this file explains how to apply those budgets.
-- Do not mechanically dump every rubric category into the report. Report only issues with evidence, impact, and a worthwhile fix.
+- Do not mechanically dump every rubric category into the report. Report only issues that are real, evidence-backed, and have clear impact.
 - Do not read both English and Chinese references unless the task is translation, bilingual comparison, localization, or consistency checking.
 
 ## Locale Rule
@@ -31,9 +31,9 @@ Use `Standard Audit` when the user does not specify.
 
 The full audit system is judging context, not a task list to fully execute every time. Hard budgets come from `references/modes/audit-modes.json`; the notes below explain how to apply them:
 
-- `Quick Audit`: scan the main path and currently visible UI for risk. When the page can run, check the current viewport or 1 most important viewport; run only obvious layout/clickability/responsive smoke checks. Up to 5 findings, Critical and obvious Major only, no score, no Minor, no long-tail detail.
-- `Standard Audit`: default practical mode. Cover main pages/features and 2 key viewports: 1280px desktop + 1 mobile viewport; run one first-viewport layout relationship check and one pointer / hover smoke check. Find systemic Critical / Major issues first, then include a few high-value Minor findings. Usually 8 to 12 findings, no full category report, no full Content Stress Test, no default score.
-- `Deep Audit`: this is the mode for the main rubric, relevant modules, scoring model, Content Stress Test, extra viewports, and deep-audit details. Use it for pre-launch, strict review, or when the user explicitly asks for thorough coverage. Even in Deep Audit, lead with Top Findings before category detail, and do not list passing checks.
+- `Quick Audit`: scan the main path and currently visible UI for risk. When the page can run, check the current viewport or 1 most important viewport; run only obvious layout/clickability/responsive smoke checks. Up to 8 findings, Critical and obvious Major only, no score, no Minor, no long-tail detail.
+- `Standard Audit`: default practical mode. Cover main pages/features and 2 key viewports: 1280px desktop + 1 mobile viewport; run one first-viewport layout relationship check and one pointer / hover smoke check. Find Critical / Major issues first, then include a few high-value Minor findings. Usually 8 to 16 findings, no full category report, no full Content Stress Test, no default score.
+- `Deep Audit`: systematically use the main rubric, relevant modules, scoring model, Content Stress Test, extra viewports, and deep-audit details. Use it for pre-launch, strict review, or when the user explicitly asks for thorough coverage. Even in Deep Audit, lead with Top Findings before category detail, and do not list passing checks.
 
 In every mode, do not create findings just to cover categories. When multiple issues share one root cause, prefer one systemic finding.
 
@@ -43,8 +43,6 @@ Before judging, confirm or infer:
 
 - Scope: single page, component, screenshot, whole site, code directory, or localhost.
 - Page type: landing page, dashboard, app screen, portfolio, docs, form, checkout, admin, etc.
-- Core task: read, sign up, buy, search, filter, manage, create, contact, download, book, etc.
-- Audience: general users, developers, enterprise buyers, creators, internal operators, managers, etc.
 - Tech constraints: component library, utility CSS, CSS Modules, custom CSS, design tokens, routes, breakpoints, framework, and rendering model.
 - Verification level: browser-tested, static code review, screenshot review, or mixed.
 
@@ -64,7 +62,7 @@ First identify the product's current visual system:
 - Interaction layers: dropdowns, popovers, modals, toasts, drawers, and loading overlays.
 - Product tone: marketing, tool, content, admin, personal brand, etc.
 
-Unless the user asks for a new direction, judge recommendations within the existing visual system. Do not impose a preset as the default taste standard.
+Unless the user asks for a new direction, judge recommendations within the existing visual system.
 
 ## 4. Read Audit Rubric
 
@@ -234,99 +232,7 @@ Check in this order:
 11. AI template smell: vague slogans, excessive badges, bento grids, gradient glows, fake data.
 12. Minor polish: alignment, rhythm, motion, copy details.
 
-## 10. Control Finding Count
-
-- `Quick Audit`: up to 5 findings, only Critical and obvious Major.
-- `Standard Audit`: usually 8 to 12 findings, prioritized as Top Findings; do not expand a full category report unless requested.
-- `Deep Audit`: may include more, but start with Top Findings before category detail; each category should include only issues with evidence, impact, and worthwhile fixes.
-- If Critical/Major findings already explain the main risk, do not keep digging for low-value Minor items.
-- For Quick / Standard, do not report long-tail details that only affect local polish and do not affect task completion, responsiveness, state coverage, or consistency.
-- Do not pad the report to look complete.
-
-## 11. Report Format
-
-Use this structure:
-
-```markdown
-## Context
-
-- Scope:
-- Audit mode:
-- Page type:
-- Core task:
-- Viewports checked:
-- Verification level:
-- Constraints:
-
-## Top Findings
-
-- The 3 to 5 highest-risk issues, sorted by impact.
-
-## Critical
-
-### 1. Finding title
-Location:
-Evidence:
-Impact:
-Fix:
-
-## Major
-
-...
-
-## Minor
-
-...
-
-## Open Questions
-
-- Questions that need user confirmation or runtime verification.
-
-## Pass Notes
-
-- 1 to 3 high-value notes about areas with no obvious issue.
-
-## Fix Order
-
-1.
-2.
-3.
-
-## Score
-
-- Usability:
-- Clarity:
-- Consistency:
-- Responsiveness:
-- Interaction States:
-- Control System Fit:
-- Visual Maturity:
-- AI Template Smell:
-- Overall:
-```
-
-Rules:
-
-- `Quick Audit` may omit Score and Minor.
-- `Standard Audit` may omit Score unless requested.
-- `Deep Audit` should usually include Score.
-- Every finding needs concrete evidence.
-- Layout findings should prefer browser evidence: viewport, region, visible symptom, likely cause, and fix direction.
-- Critical and Major findings must be locatable and fixable.
-- Omit categories with no findings.
-- `Open Questions` is only for questions, not advice.
-- `Pass Notes` should be short and high-value.
-- Do not output checklist-style "X items checked and passed" notes. Include only pass notes that help the user decide what to do next.
-
-## 12. Deduplicate And Group
-
-- Report one root cause once.
-- Keep blocking usability issues as separate Critical findings.
-- Group systemic visual issues, such as mixed radius/border/shadow systems, into one Major finding.
-- Do not force coverage of every rubric category.
-- If a question needs product judgment, put it under `Open Questions`.
-
-## 13. Handoff To Fix
+## 10. Handoff To Fix
 
 If the user asks to continue fixing, enter the `fix-ui` workflow.
 
@@ -347,21 +253,23 @@ Fix order:
 
 Do not make broad code changes during audit unless the user explicitly asks to audit and fix.
 
-## 14. Stop Conditions
+## 11. Output Rules
+
+Use the report structure and omission rules from `references/checklists/ui-audit.md`.
+
+## 12. Stop Conditions
 
 - If you find a blocking Critical issue, stop digging for Minor polish and report risk plus fix order.
-- In Quick Audit, stop after finding a Critical issue or 3 to 5 obvious Major issues, then give fix order.
+- In Quick Audit, stop after finding a Critical issue or 5 to 8 obvious Major issues, then give fix order.
 - In Standard Audit, stop when Top Findings cover the meaningful risks; do not continue into low-value polish or deep details.
 - In Deep Audit, prioritize systemic issues over scattered details; merge similar Minor issues instead of piling them up.
 - If evidence is insufficient, stop inferring and mark it as `Open Questions` or needs verification.
 
-## 15. Prohibited
+## 13. Prohibited
 
 - Do not fabricate browser verification.
 - Do not report issues without location, evidence, and fix direction.
 - Do not package personal taste as a defect.
-- Do not recommend unrelated technical refactors.
-- Do not turn every page into the same style.
 - Do not force a preset when the user did not choose one.
 - Do not remove necessary business information for the sake of visual consistency.
 - Do not state unverified issues as fact.

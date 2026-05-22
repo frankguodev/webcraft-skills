@@ -1,6 +1,6 @@
 # UI Audit Rubric
 
-Use this rubric to inspect AI-generated web pages, landing pages, application screens, or whole sites. The goal is not to express taste preferences; it is to identify issues that make the UI feel rough, unusable, untrustworthy, inconsistent, or unlike a mature product.
+Use this rubric to inspect frontend UI quality for web pages, application screens, screenshots, or whole sites. The goal is not to express taste preferences; it is to identify frontend UI issues that make the product feel rough, unusable, untrustworthy, inconsistent, or unlike a mature product.
 
 This file is the main index and judgment framework. Detailed inspection paths live in `modules/*.md`; choose modules by page signals instead of running every module on every audit.
 
@@ -10,24 +10,21 @@ This file is the main index and judgment framework. Detailed inspection paths li
 - Severity
 - Scoring Model
 - Module Index
-- Output Format
+- Output Rules
 - Deduplication Priority
 
 ## General Principles
 
-1. Confirm the target first: page, component, screenshot, whole site, or code. The rubric is a judgment library, not a task list to fully execute every time; depth is controlled by `Quick / Standard / Deep Audit`.
-2. Check whether the core task can be completed first, then whether information is clear, then visual system, responsiveness, states, and polish.
-3. Do not reject an existing product direction based on personal taste. Report only issues that affect usability, clarity, consistency, realism, trust, or maintainability.
-4. Do not audit every page into the same "premium" style. Dashboards should support repeated operation, landing pages should support understanding and conversion, docs should support reading, and portfolios should support work and identity.
-5. Fix suggestions preserve the existing theme, brand character, content structure, and visual direction by default. Recommend a new direction only when the user asks for redesign or the current direction itself blocks understanding or use.
-6. Prefer browser verification when available. If not verified in a browser, say so and explain which risks are inferred from code or structure.
-7. Evidence should start from visible user outcomes, then use components, CSS, design tokens, DOM structure, breakpoints, screenshots, or interaction checks.
-8. Lead with findings, then fix order. Avoid long summaries before issues, and do not invent findings just to cover categories.
+1. Confirm the target first: page, component, feature module, or whole site. The rubric is a judgment library, not a task list to fully execute every time; depth is controlled by `Quick / Standard / Deep Audit`.
+2. Check whether the core function can be completed first, then whether information is clear, then visual system, responsiveness, states, and polish.
+3. Fix suggestions preserve the existing theme by default. Recommend redesign only when the user asks for redesign or the current direction itself blocks understanding or use.
+4. Prefer browser verification when available. If not verified in a browser, say so and explain which risks are inferred from code or structure.
+5. Evidence should start from visible user outcomes, then use components, CSS, design tokens, DOM structure, breakpoints, screenshots, or interaction checks.
+6. Lead with findings, then fix order. Avoid long summaries before issues, and do not invent findings just to cover categories.
 
 ### Context To Identify First
 
 - Page type: landing page, dashboard, app screen, portfolio, docs, form, checkout, admin, marketing site, etc.
-- Core task: read, sign up, buy, search, filter, manage, create, contact, download, book, etc.
 - Audience: general users, developers, enterprise buyers, creators, internal operators, managers, etc.
 - Content density: low-density brand expression, medium-density product explanation, high-density data operation.
 - Technical constraints: component library, utility CSS, CSS Modules, custom CSS, design tokens, breakpoints, framework, and rendering model.
@@ -83,12 +80,13 @@ Does not materially affect use, but lowers refinement, rhythm, or completeness.
 Typical cases:
 
 - Local alignment, spacing, border opacity, or shadow intensity is slightly unstable.
+- Within the same visual system, an element that should share the established radius treatment lacks radius and feels visually harsh.
 - Copy is somewhat vague, or labels, icons, and decoration are slightly excessive.
 - Motion exists but is not restrained, or transition timing is inconsistent.
 - Hover, focus, loading, or empty states exist but are not consistent in strength, rhythm, or copy.
 - Some headings, buttons, labels, or helper text wrap awkwardly but remain readable and operable.
 - A few viewports have imperfect section spacing, image crop, or card height without affecting the core flow.
-- Similar components differ slightly in size, padding, icon stroke, or copy tone.
+- Similar components differ slightly in size, padding, icon stroke, radius, or copy tone.
 - Non-core inputs, selects, dropdowns, or multiselects still use clashing native styles; if this appears in core filtering, editing, or bulk operation flows, escalate to `Major`.
 
 ## Scoring Model
@@ -186,79 +184,94 @@ Use first when:
 - Dialogs, drawers, popovers, and toasts: overlap, scroll, and layering belong to `Layout / Responsive`; open/close/loading/empty/error states belong to `Components And States`; focus management and Escape behavior belong to `Accessibility`.
 - Motion: state-feedback motion belongs to `Components And States`; decorative motion and visual rhythm belong to `Visual System`; reduced-motion or vestibular risk belongs to `Accessibility`.
 
-## Output Format
+## Output Rules
 
-Default output should be concise and evidence-led. List findings first, then fix order.
+Use this structure:
 
-### Recommended Structure
+### Output Structure
 
 ```markdown
-Context
+### Context
+
 - Scope:
 - Audit mode:
 - Page type:
-- Core task:
 - Viewports checked:
+- Verification level:
 - Constraints:
 
-Top Findings
+### Coverage
+
+- Checked:
+- Partially checked:
+- Not checked:
+
+### Top Findings
+
 - ...
 
-Critical
-### 1. Finding title
+### Critical
 Location:
 Evidence:
 Impact:
 Fix:
 
-Major
-### 1. Finding title
-Location:
-Evidence:
-Impact:
-Fix:
+### Major
 
-Minor
-### 1. Finding title
-Location:
-Evidence:
-Impact:
-Fix:
+...
 
-Open Questions
-- ...
+### Minor
 
-Fix Order
-1. ...
-2. ...
-3. ...
+...
+
+### Open Questions
+
+- Questions that need user confirmation or runtime verification.
+
+### Pass Notes
+
+- A short note about key areas with no obvious issue.
+
+### Fix Order
+
+1.
+2.
+3.
+
+### Score
+
+- Usability:
+- Clarity:
+- Consistency:
+- Responsiveness:
+- Interaction States:
+- Control System Fit:
+- Visual Maturity:
+- AI Template Smell:
+- Overall:
+
+### Artifacts
+
+- Screenshots:
+- Tools:
+- Changed files:
 ```
 
-### Evidence Standard
+Rules:
 
-Do not write:
-
-```text
-Mobile layout is bad.
-```
-
-Write:
-
-```text
-At 375px, the hero CTA group remains horizontal and the secondary button likely overflows the container, leaving the tap target partially inaccessible.
-```
-
-Do not write:
-
-```text
-The colors are not premium.
-```
-
-Write:
-
-```text
-Badges, primary buttons, data highlights, and links all use the same saturated purple in the same viewport, so users cannot identify the true primary action.
-```
+- `Quick Audit` may omit `Coverage`, `Artifacts`, `Score`, and `Minor`.
+- `Standard Audit` may omit `Score` and `Artifacts` unless requested or screenshots/report files were produced.
+- `Deep Audit` keeps `Coverage`, `Open Questions`, `Pass Notes`, `Fix Order`, and `Score`; if screenshots, browser artifacts, or files were produced, keep `Artifacts`.
+- Use `Top Findings` to put the most important risks first; omit it when there are very few issues.
+- Every finding needs concrete evidence.
+- Layout findings should prefer browser evidence: viewport, region, visible symptom, likely cause, and fix direction.
+- Critical and Major findings must be locatable and fixable.
+- In Deep Audit, keep Critical and write `None found` when no Critical issue is found; other empty categories may be omitted.
+- `Open Questions` is only for questions, not advice.
+- `Pass Notes` should be short and high-value, usually 1 to 3 items.
+- For any `Score` item below 4, add a short reason for the deduction.
+- Audit does not write files by default. Write files only when the user explicitly asks to record findings, generate a report, or update an issue log. If files are written, list them under `Artifacts` > `Changed files`.
+- Do not output checklist-style "X items checked and passed" notes. Include only pass notes that help the user decide what to do next.
 
 ### Viewport Record
 
@@ -277,6 +290,6 @@ If the page cannot run, still infer risk from CSS, layout code, and breakpoints,
 5. For navigation, dialogs, drawers, popovers, and toasts, assign by primary impact: overlap/layering to `Layout` or `Responsive`, state feedback to `Components And States`, and focus/keyboard to `Accessibility`.
 6. If token confusion creates many symptoms, such as radius, border, and shadow inconsistency, report one systemic `Major` instead of many `Minor` findings.
 7. Do not merge `Critical` issues into broad systemic findings; blocking issues must stand alone.
-8. Do not create findings just to cover every module. Skip modules with no meaningful issues.
+8. If an issue needs product judgment, put it under `Open Questions` instead of pretending it is a confirmed defect.
 9. Fix order is always: usable first, then clear, then consistent, then refined.
-10. Do not start by rewriting the visual style. Unless the user asks for redesign, preserve the theme and fix blockers, confusion, and inconsistency.
+10. Unless the user asks for redesign, preserve the theme and fix blockers, confusion, and inconsistency.

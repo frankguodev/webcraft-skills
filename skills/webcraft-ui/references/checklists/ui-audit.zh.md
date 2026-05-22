@@ -1,6 +1,6 @@
 # UI Audit 审查标准
 
-用于审查 AI 生成网页、落地页、应用界面或整站 UI 质量。目标不是表达审美偏好，而是识别会让页面显得粗糙、不可用、不真实、不像成熟产品的问题。
+审查网页、应用界面、截图或整站的前端 UI 质量。目标不是表达审美偏好，而是识别会让页面显得粗糙、不可用、不真实、不像成熟产品的前端 UI问题。
 
 本文件是主索引和判定总纲。具体检查路径已经拆到 `modules/*.zh.md`，审查时按页面信号选择模块，不要把所有模块都完整跑一遍。
 
@@ -15,19 +15,16 @@
 
 ## 总原则
 
-1. 先确认审查对象：单页、组件、截图、整站还是代码。Rubric 是判断库，不是每次 audit 都要完整执行的任务清单；实际深度由 `Quick / Standard / Deep Audit` 决定。
-2. 先看核心任务能否完成，再看信息是否清楚，然后看视觉体系、响应式、状态和精致度。
-3. 不要因为个人审美否定产品定位。只报告会影响可用性、清晰度、一致性、真实感、可信度或可维护性的 UI 问题。
-4. 不要把所有页面都审成同一种“高级感”。dashboard 要服务重复操作，landing page 要服务理解和转化，docs 要服务阅读，portfolio 要服务作品和个人定位。
-5. 修复建议默认保留原主题、品牌性格、内容结构和视觉方向。只有用户明确要求 redesign，或当前视觉方向本身阻断理解/使用时，才建议重做方向。
-6. 有浏览器环境时优先实测；没有实测时必须说明“未实测”，并把基于代码/结构推断的风险写清楚。
-7. 证据优先来自用户可见结果，其次来自组件、CSS、设计 token、DOM 结构、断点、截图或交互实测。
-8. 输出时先列问题，再给修复顺序；不要先写长篇总结，也不要为了覆盖分类强行制造问题。
+1. 先确认审查对象：单页、组件、功能模块还是整站。Rubric 是判断库，不是每次 audit 都要完整执行的任务清单；实际深度由 `Quick / Standard / Deep Audit` 决定。
+2. 先看核心功能能否完成，再看信息是否清楚，然后看视觉体系、响应式、状态和精致度。
+3. 修复建议默认保留原主题风格。只有用户明确要求 redesign，或当前视觉方向本身阻断理解/使用时，才建议重做方向。
+4. 有浏览器环境时优先实测；没有实测时必须说明“未实测”，并把基于代码/结构推断的风险写清楚。
+5. 证据优先来自用户可见结果，其次来自组件、CSS、设计 token、DOM 结构、断点、截图或交互实测。
+6. 输出时先列问题，再给修复顺序；不要先写长篇总结，也不要为了覆盖分类强行制造问题。
 
 ### 必须先识别的语境
 
 - 页面类型：landing page、dashboard、app screen、portfolio、docs、form、checkout、admin、marketing site 等。
-- 核心任务：阅读、注册、购买、搜索、筛选、管理、创作、联系、下载、预约等。
 - 目标用户：普通用户、开发者、企业客户、创作者、内部运营、管理者等。
 - 内容密度：低密度品牌表达、中密度产品介绍、高密度数据操作。
 - 技术约束：已有组件库、工具类 CSS、CSS Modules、自定义 CSS、设计 token、响应式断点、框架和渲染方式。
@@ -83,28 +80,29 @@
 典型情况：
 
 - 局部对齐、间距、边框透明度、阴影强度略不稳定。
+- 同一视觉体系内，该有圆角的地方没有圆角，导致视觉不协调，棱角感很强
 - 文案略空泛，标签、图标或装饰略多。
 - 动效存在但不够克制，或 transition 节奏不够统一。
 - hover、focus、loading、empty 等状态存在，但反馈强度、节奏或文案不够统一。
 - 个别标题、按钮、标签或辅助文字换行不够自然，但仍可阅读和操作。
 - 个别视口下 section spacing、图片裁切或卡片高度略不理想，但不影响核心流程。
-- 同类组件在尺寸、内边距、图标线宽或文案语气上有轻微差异。
+- 同类组件在尺寸、内边距、图标线宽、圆角或文案语气上有轻微差异。
 - 非核心输入框、选择框、下拉框、多选框仍使用突兀原生样式；如果出现在核心筛选、编辑或批量操作流程，应升为 `Major`。
 
 ## 评分模型
 
 Deep Audit 或用户要求评分时使用。每项 0 到 5 分：
 
-- `Usability`：核心任务是否能顺利完成。
-- `Clarity`：信息层级、页面主题、下一步动作是否清楚。
-- `Consistency`：spacing、typography、颜色、圆角、边框、组件体系是否统一。
-- `Responsiveness`：移动端、平板、桌面是否稳定。
-- `Interaction States`：hover、active、focus-visible、disabled、loading、empty、error、success 是否完整。
-- `Control System Fit`：输入、选择、下拉、多选、菜单、批量操作等基础控件是否沿用项目已有组件体系。
-- `Visual Maturity`：是否像成熟产品，而不是粗糙 demo。
-- `AI Template Smell`：分数越高表示 AI 模板味越低。
+- `Usability(可用性)`：核心功能是否能顺利完成。
+- `Clarity(清晰度)`：信息层级、页面主题、下一步动作是否清楚。
+- `Consistency(一致性)`：spacing、typography、颜色、圆角、边框、组件体系是否统一。
+- `Responsiveness(响应式稳定性)`：移动端、平板、桌面是否稳定。
+- `Interaction States(交互状态)`：hover、active、focus-visible、disabled、loading、empty、error、success 是否完整。
+- `Control System Fit(控件体系匹配度)`：输入、选择、下拉、多选、菜单、批量操作等基础控件是否沿用项目已有组件体系。
+- `Visual Maturity(视觉成熟度)`：是否像成熟产品，而不是粗糙 demo。
+- `AI Template Smell(AI 模板感)`：分数越高表示 AI 模板味越低。
 
-`Overall` 不要简单平均。`Critical` 问题会显著拉低总分；如果核心流程不可用，总分最高不应超过 2.5。
+`Overall(总体评分)` 不要简单平均。`Critical` 问题会显著拉低总分；如果核心流程不可用，总分最高不应超过 2.5。
 
 ## 模块索引
 
@@ -186,79 +184,95 @@ Deep Audit 或用户要求评分时使用。每项 0 到 5 分：
 - 弹窗、drawer、popover、toast：遮挡、滚动和层级归 `Layout / Responsive`，打开/关闭/loading/empty/error 状态归 `Components And States`，焦点管理和 Escape 归 `Accessibility`。
 - 动效：状态反馈动效归 `Components And States`，装饰性动效和视觉节奏归 `Visual System`，reduced motion 或眩晕风险归 `Accessibility`。
 
-## 输出格式
+## 输出规则
 
-默认输出要短而有证据。先列问题，再给修复顺序。
+使用这个结构。中文语境下保留字段英文名是为了稳定识别，但必须同时给出中文含义：
 
-### 推荐结构
+### 输出结构
 
 ```markdown
-Context / 上下文
-- Scope / 范围:
-- Audit mode / 审查模式:
-- Page type / 页面类型:
-- Core task / 核心任务:
-- Viewports checked / 已检查视口:
-- Constraints / 约束:
+### Context(上下文)
 
-Top Findings / 主要问题
+- Scope(范围):
+- Audit mode(审查模式):
+- Page type(页面类型):
+- Viewports checked(已检查视口):
+- Verification level(验证方式):
+- Constraints(约束):
+
+### Coverage(覆盖范围)
+
+- Checked(已检查):
+- Partially checked(部分检查):
+- Not checked(未检查):
+
+### Top Findings(主要问题)
+
 - ...
 
-Critical
-### 1. 问题标题
-Location / 位置:
-Evidence / 证据:
-Impact / 影响:
-Fix / 修复建议:
+### Critical
+Location(位置):
+Evidence(证据):
+Impact(影响):
+Fix(修复建议):
 
-Major
-### 1. 问题标题
-Location / 位置:
-Evidence / 证据:
-Impact / 影响:
-Fix / 修复建议:
+### Major
 
-Minor
-### 1. 问题标题
-Location / 位置:
-Evidence / 证据:
-Impact / 影响:
-Fix / 修复建议:
+...
 
-Open Questions / 待确认问题
-- ...
+### Minor
 
-Fix Order / 修复顺序
-1. ...
-2. ...
-3. ...
+...
+
+### Open Questions(待确认问题)
+
+- 需要用户确认或需要运行页面才能判断的问题。
+
+### Pass Notes(通过说明)
+
+- 简短说明没有发现明显问题的关键方面。
+
+### Fix Order(修复顺序)
+
+1.
+2.
+3.
+
+### Score(评分)
+
+- Usability(可用性):
+- Clarity(清晰度):
+- Consistency(一致性):
+- Responsiveness(响应式稳定性):
+- Interaction States(交互状态):
+- Control System Fit(控件体系匹配度):
+- Visual Maturity(视觉成熟度):
+- AI Template Smell(AI 模板感):
+- Overall(总体评分):
+
+### Artifacts(证据产物)
+
+- Screenshots(截图):
+- Tools(工具):
+- Changed files(已改文件):
 ```
 
-### 证据标准
+规则：
 
-不要写：
-
-```text
-移动端布局不好。
-```
-
-要写：
-
-```text
-在 375px 宽度下，hero CTA group 仍保持横向排列，secondary button 右侧可能超出容器，导致触控区域不完整。
-```
-
-不要写：
-
-```text
-颜色不高级。
-```
-
-要写：
-
-```text
-同一屏内 badge、主按钮、数据高亮和链接都使用同一高饱和紫色，导致用户无法判断真正的主操作。
-```
+- 中文报告使用模板中的双语字段标签，例如 `Location(位置):`、`Evidence(证据):`、`Impact(影响):`、`Fix(修复建议):`，不要简化成英文-only 字段。
+- `Quick Audit` 可以省略 `Coverage(覆盖范围)`、`Artifacts(证据产物)`、`Score(评分)` 和 `Minor`。
+- `Standard Audit` 可省略 `Score(评分)` 和 `Artifacts(证据产物)`，除非用户要求或已经生成截图、报告文件等证据产物。
+- `Deep Audit` 保留 `Coverage(覆盖范围)`、`Open Questions(待确认问题)`、`Pass Notes(通过说明)`、`Fix Order(修复顺序)` 和 `Score(评分)`；如果使用了截图、浏览器或写入文件，保留 `Artifacts(证据产物)`。
+- `Top Findings` 用于让用户先看到最重要风险；如果问题很少，可以省略。
+- 每个 finding 必须有具体证据。
+- 布局类 finding 优先给出浏览器证据：Viewport、区域、可见现象、可能根因和修复方向。
+- Critical 和 Major 必须可定位、可修复。
+- Deep Audit 中 Critical 如无发现也保留并写 `None found`；其他无发现分类可省略。
+- `Open Questions` 只放需要确认的问题，不放建议。
+- `Pass Notes` 不要逐项列通过，只保留 1 到 3 条高价值说明。
+- `Score(评分)` 低于 4 分的项目要给一句扣分依据，避免只有数字没有判断。
+- Audit 默认不写文件；只有用户明确要求记录、生成报告或写入 issue log 时才写入。若写入，列到 `Artifacts(证据产物)` 的 `Changed files(已改文件)`。
+- 不要输出“检查了 X 项均通过”这类清单式通过项；只记录对用户决策有帮助的通过信息。
 
 ### 设备记录
 
@@ -277,6 +291,6 @@ Fix Order / 修复顺序
 5. 导航、弹窗、drawer、popover、toast 等交互层问题，按主要影响归属：遮挡/层级归 `Layout` 或 `Responsive`，状态反馈归 `Components And States`，焦点和键盘归 `Accessibility`。
 6. 如果一个问题由 token 混乱导致，例如 radius、border、shadow 全部不一致，归为一个系统性 `Major`，不要拆成十几个 `Minor`。
 7. `Critical` 不要被合并进大而泛的系统问题；阻断使用的问题必须单独列出。
-8. 不要为了覆盖所有模块而强行输出问题。没有发现就跳过。
+8. 如果问题需要产品决策，放到 `Open Questions`，不要假装是确定缺陷。
 9. 修复顺序永远是：先可用，再清晰，再一致，最后精致。
-10. 不要一开始就重写视觉风格。除非用户要求 redesign，否则默认保留主题，只修阻断、混乱和不一致。
+10. 除非用户要求 redesign，否则默认保留主题，只修阻断、混乱和不一致。
