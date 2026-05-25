@@ -4,6 +4,15 @@
 
 ---
 
+## v0.1.25 - 2026-05-25
+
+### 架构
+
+- 将 npm 安装器从单一 `webcraft-ui` 硬编码调整为 skills collection 安装器，可自动发现 `skills/*/SKILL.md`，并支持 `--skill <name|all>` 和 `list`。
+- README 和 README_zh_CN 增加标准 `npx skills add frankguodev/webcraft-skills --skill webcraft-ui` 安装入口，同时保留自带安装器用于安装 Claude Code slash command prompts。
+- package 描述调整为 Webcraft skills collection，并将版本更新为 `0.1.25`。
+- validate 增加 skills collection 目录校验，确保未来新增 skill 时 `SKILL.md` frontmatter 名称与目录一致。
+
 ## v0.1.24 - 2026-05-25
 
 ### Review
