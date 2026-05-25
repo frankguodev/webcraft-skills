@@ -13,6 +13,7 @@ The skill's Locale Contract has already selected one runtime locale before this 
 - `review-ui`: PR / diff / single file / single component / screenshot / local page area / specified change.
 - `Quick Audit`: "quickly check this page or site for obvious UI problems."
 - `Standard Audit`: main UI risk review for a page, feature, or module.
+- `Focused Audit`: serious but cost-controlled review of main systemic risks in a page, feature, or module.
 - `Deep Audit`: full site, pre-launch, strict review, multi-viewport, and systemic issues.
 
 The difference is not only depth; it is the target:
@@ -23,6 +24,8 @@ The difference is not only depth; it is the target:
 Use `review-ui` when the user says "review this PR / diff / component / screenshot / area."
 
 Use `Quick Audit` when the user asks to quickly check a homepage, current page, or site for obvious issues. Do not use Review as a smaller Audit.
+
+Use `Focused Audit` when the user asks to seriously check a page or module while keeping the work practical. Do not stretch local Review into a disguised Deep Audit.
 
 Review does not score, does not run a full viewport matrix, does not run a full Content Stress Test, and does not output a full Fix Order by default. Report only issues within the current scope that have evidence, impact, and repair value.
 
@@ -37,7 +40,7 @@ Confirm or infer:
 - Change type: new UI, component refactor, style adjustment, interaction state, responsive fix, copy change.
 - Page type: landing page, dashboard, app screen, form, docs, portfolio, etc.
 - Existing visual system: current color, type, spacing, radius, border, component style, and page tone.
-- Verification level: code review, screenshot review, browser verification, or mixed review.
+- Verification level: code review, screenshot review, static inference, or mixed review.
 
 If the scope looks like a page or site health check, decide whether it should be `audit-ui` instead. Do not compress an Audit request into Review for convenience.
 
@@ -94,7 +97,8 @@ If the scope looks like a page or site health check, decide whether it should be
 ### Static Code Review
 
 - Infer risk from structure, CSS, component states, and breakpoints.
-- Mark unrun issues as "code-based inference" or "needs browser verification."
+- Mark unrun issues as "code-based inference" or "needs runtime verification."
+- If an issue depends on the real page, multiple viewports, or interaction states, put it under `Open Questions` and suggest `audit-ui` or post-fix verification in `fix-ui`.
 
 ## 5. Review Focus
 
@@ -146,6 +150,7 @@ At 375px, the primary button label wraps to two lines and increases the CTA grou
 ```markdown
 ## Context
 
+- Source:
 - Scope:
 - Review mode:
 - Review target:
@@ -196,12 +201,14 @@ No Critical / Major UI issues found.
 
 ## Residual Risk
 
-- Browser was not run; mobile interaction states were not verified.
+- Page was not run; mobile interaction states were not verified.
 ```
 
 ## 9. After Review
 
 - If findings are clear, scoped, and repairable, suggest `fix-ui`.
+- For PR / diff review, `fix-ui` should repair only issues introduced or amplified by this change; do not mix historical issues into the repair scope unless they block this change.
+- If issues are mostly visual maturity, state completion, template noise, or a few non-blocking Minor items, suggest `polish-ui` instead of framing them as bug fixes.
 - If issues are systemic, affect multiple pages/components/viewports, or require scoring, suggest `audit-ui`.
 - If issues depend on product information, brand decisions, or real data, put them under `Open Questions`.
 - If no Critical/Major issues are found, report residual risk only; do not force a fix recommendation.

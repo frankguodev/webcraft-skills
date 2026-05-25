@@ -1,285 +1,80 @@
 # UI Fix Workflow
 
-Use this workflow to implement UI fixes from review findings, audit findings, user-reported issues, screenshots, or code observation. The goal is to make confirmed issues usable, clear, and consistent without turning a fix into a redesign.
+Use this workflow to directly fix UI code from review / audit results. The goal of `fix-ui` is to make confirmed issues usable, clear, and consistent without turning a fix into a full page redesign.
 
-By default, prioritize issues with evidence, impact, and a clear repair direction. It is allowed to also fix direct dependencies, new errors introduced by the current change, and adjacent issues that block the original fix; put unsupported or product-decision issues into `Open Questions` and do not pretend they are confirmed.
+By default, prioritize issues with evidence, impact, and a clear fix direction. It is allowed to also fix direct dependencies, new errors introduced by the current change, and adjacent issues that must be fixed to complete the original issue. Put unsupported or product-decision issues into `Open Questions`; do not pretend they are confirmed.
 
 ## Locale Rule
 
-The skill's Locale Contract has already selected one runtime locale before this workflow is read. Stay in this locale. Do not open the paired `.zh.md` or English workflow/checklist/module files unless the user explicitly asks for translation, bilingual comparison, localization, or locale consistency.
+The skill's Locale Contract has already selected one runtime locale before this workflow is read. Stay in this locale. Do not open the paired English or Chinese workflow/checklist/module files unless the user explicitly asks for translation, bilingual comparison, localization, or locale consistency checks.
 
 ## 1. Baseline Gate
 
-Before editing code, confirm the fix boundary and verification baseline. If full confirmation is not possible, establish the smallest baseline from available information; do not make broad edits with no understanding of entry points, verification path, or change boundary:
+Before editing code, confirm the fix boundary and verification baseline. If full confirmation is not possible, establish the smallest baseline from available information. Do not make broad changes before understanding the entry point, verification path, and change boundary:
 
-- Source: audit, review, user-specified issue, or current observation.
-- Audit mode: Quick / Standard / Deep Audit, or a user-specified single issue.
-- Scope: single page, component, whole site, viewport, or state category.
-- Severity: Critical only, or Critical / Major / Minor.
-- Whether visual tokens may change: color, radius, shadow, spacing, type hierarchy.
-- Whether shared components, base controls, layout rules, breakpoints, or scroll containers may change.
-- Whether the fix involves media ratios, tables/rich content/code blocks, scroll layers, native controls, motion, or high-contrast risk.
-- Whether existing style, copy, layout structure, and tech stack must be preserved.
-- Whether the user needs a fix plan before execution.
-- Existing verification commands: dev, lint, typecheck, test, build.
-- Whether affected pages or components can open, and where their entry points are.
-- Runtime path: existing dev server, preview command, localhost URL, or reusable running page.
+- Fix source and scope: audit, review, user issue, screenshot, or code observation; single page, component, whole site, viewport, or state.
+- Risk type: media, table / rich text / code block, scroll layer, native control, motion, high contrast, page entry, route, or data rendering.
+- Verification baseline: existing dev, lint, typecheck, test, build, preview commands; affected page entry, localhost URL, or reusable running page.
+- Adjacent navigation surfaces: navigation, menu, list, card, search result, or CTA that enters the page; sibling list/detail routes in the same feature area; return links, related links, or core actions that leave the page.
+- Preservation boundary: existing style, theme direction, business logic, real data, and tech stack.
 
-If the user says "fix it directly" or equivalent, proceed. If the scope may become broad, provide a short fix plan first.
+If the user says "fix it directly" or "just make it work", proceed. If the scope may become large, provide a short fix plan first.
 
-### Gate Order
+### Adjust Gate Depth By Risk
 
-The first goal of `fix-ui` is to keep the page runnable; visual improvement comes after that. Execute through these gates:
+The first goal of `fix-ui` is to fix the issue while keeping the system usable.
 
-1. Baseline Gate: identify verification commands, affected entries, existing visual system, and change boundary.
-2. Scope Gate: decide findings, direct dependencies, allowed adjacent issues, and out-of-scope items.
-3. Implementation Gate: make small changes without unrelated refactors or opportunistic redesign.
-4. Verification Gate: run existing checks; if the page can run and the environment allows it, actually open the affected page and confirm there is no page-level runtime error.
-5. Recovery Gate: if this change introduced build failure, runtime error, broken page load, or key route crash, repair that new issue first.
-6. Recheck Gate: recheck the original finding and scan for obvious UI regressions.
-7. Output Gate: report gate results, verified items, new errors, and unverified risk.
+- Small style fix: establish the minimum baseline, run available verification commands, and do page-and-path verification when needed.
+- Fixes affecting page entry, routing, component logic, data rendering, state, or interaction: page-and-path verification is required.
+- Fixes involving multiple files, shared components, layout breakpoints, forms, dialogs, navigation, or native-control replacement: run the corresponding UI recheck.
+- If the current change may affect runtime, open the affected page even when build passes.
+- Do not run every fix as a full path matrix. Full page-and-path verification is required only when the fix involves page entry, routing, navigation, list/detail flows, Next.js App Router, shared components, data rendering, or client state. Pure visual touch-ups usually need only light engineering verification and a direct route check.
 
-If verification fails and cannot be repaired in the current context, stop expanding the change, keep the smallest necessary edits, and report the failing command, symptom, attempted repair, and remaining blocker.
+If verification fails and cannot be repaired in the current context, stop expanding the change, keep only the smallest necessary edits, and report the failing command, symptom, attempted repair, and remaining blocker.
 
 ## 2. Preserve Existing Visual System
 
-Before fixing, identify and respect the parts of the current visual system relevant to this change:
+Before fixing, identify and respect the existing theme style, framework, components, style system, and naming habits related to this change. Unless the user explicitly requests it, do not turn the page into a different style to repair one issue.
 
-- Color: brand, background, text, state, and accent colors.
-- Typography: type scale, weight, line-height, heading/body rhythm.
-- Spacing: container width, section spacing, component padding, grid gap.
-- Radius, border, shadow: shared rules for buttons, cards, inputs, dialogs, menus.
-- Component style: buttons, forms, navigation, cards, tables, dialogs, toasts.
-- Layout and scroll: container width, grid/flex collapse, sticky/fixed layers, scroll regions, anchors, and table horizontal scrolling.
-- Media and rich content: images, video, iframes, charts, code blocks, rich text, and tables across ratios, cropping, placeholders, and small-screen behavior.
-- Control system: whether inputs, selects, dropdowns, multiselects, uploads, switches, checkboxes, and radios already have shared components or shared styles.
-- Interaction layers: dropdowns, popovers, modals, toasts, drawers, and loading overlays.
-- Page tone: marketing, tool, content, admin, personal brand, etc.
+Preserving the theme does not mean freezing defects. If a visual trait causes a confirmed usability, readability, responsive, state, interaction, or accessibility issue, fix it. The repair should happen inside the original theme by correcting, reducing, constraining, adding states, or adjusting local tokens instead of replacing the visual direction.
 
-Unless the user explicitly asks for a redesign, theme change, brand reset, or preset, fix within the existing visual system. Do not change the page into a different style to repair one issue.
-
-Theme direction is preserved by default, including light/dark mode, brand color character, radius/shadow language, illustration or background language, density, product tone, component shape, and overall visual direction.
-
-Preserving a theme does not mean freezing defects. If a visual trait causes a confirmed usability, readability, responsive, state, interaction, or accessibility issue, it must be fixed. The repair should happen inside the existing theme by correcting, reducing, constraining, adding missing states, or adjusting local tokens instead of replacing the theme.
-
-If a theme element itself causes a confirmed issue, such as a noisy background harming readability, a gradient reducing contrast, glassmorphism weakening hierarchy, or motion causing dizziness or layout shift, reduce its intensity, add overlays, adjust local tokens, add focus/state treatment, or constrain animation. Preserve the theme intent and explain in the output:
-
-- Which original style traits were preserved.
-- Which visual traits were adjusted.
-- Why those adjustments were required fixes rather than taste-based replacement.
-- Whether the original theme direction is still preserved.
-
-If a fix would fundamentally change light/dark mode, primary color direction, visual density, component shape, illustration/background language, or overall style direction, put it under `Open Questions` and ask the user to confirm.
+If the fix would fundamentally change the overall style direction, put it into `Open Questions` and ask the user to confirm.
 
 ## 3. Choose Strategy By Source
 
-### From Audit
+- `audit`: fix by Critical / Major / Minor and Fix Order. If the source is `Focused Audit`, prioritize Top Findings, systemic Major issues, and risk-viewport issues; do not expand into Deep-level refactoring.
+- `review`: prioritize risks explicitly identified by the reviewer; turn directional suggestions into executable issues first, without expanding into a redesign.
+- `user issue`: prioritize the named issue and direct dependencies. Fix adjacent issues only when they block the original issue, make the page fail to open, or were introduced by the current change, and explain why.
+- `screenshot`: fix visible layout, visual hierarchy, state, and copy. Behavior that cannot be confirmed from the screenshot must be checked by running the page before fixing.
+- `code observation`: state the inference source. When the page can run, verify first; when it cannot, stay conservative and report unverified risk.
 
-- Fix in Critical / Major / Minor and Fix Order priority.
-- Every change should map to a finding, direct dependency, verification-failure repair, or new error introduced by the current change.
-- If the source is Quick / Standard Audit, keep scope restrained: prioritize Top Findings, Fix Order, direct dependencies, and new blocking issues exposed during verification.
-- If the source is Deep Audit, systemic issues may be addressed, but still prioritize core-task and cross-page consistency issues first.
-- Do not opportunistically fix low-value issues with no evidence, no impact, and no blocking relationship to the current repair.
+## 4. User Decisions
 
-### From Review
+Do not decide the following silently. Put them into `Open Questions`:
 
-- Prioritize reviewer-identified risks.
-- If review feedback is directional, convert it into executable findings before fixing.
-- Do not expand an ordinary review into a full redesign.
-
-### From User-Specified Issue
-
-- Prioritize the named issue and direct dependencies.
-- Do not expand into unrelated scope. If an adjacent issue blocks the original repair, makes the page fail to open, or was introduced by the current change, fix it and explain why.
-- If you find an extra Critical issue, mention it, but do not broadly rewrite without user intent.
-
-### From Screenshot
-
-- Prioritize visible layout, visual hierarchy, copy, and obvious state issues.
-- Do not assert or fix behavior that cannot be confirmed from the screenshot.
-- Hover, focus, loading, dialog close behavior, and similar interactions need runtime verification.
-
-### From Code Observation
-
-- Label code-based inferences.
-- If the page can run, verify before fixing when practical.
-- If it cannot run, keep fixes conservative; if code clearly shows a build-breaking or page-breaking issue, repair it and report unverified risk.
-
-## 4. Scope Gate / Fix Plan
-
-For larger scopes, multiple files, or when the user needs a plan first, provide a short plan. The plan must make scope explicit; do not hide adjacent work under "also polish":
-
-```markdown
-## Fix Plan
-
-1. Fix mobile hero CTA overflow.
-   Finding: Mobile hero CTA overflows.
-   Scope: `src/app/page.tsx`
-
-2. Add button focus-visible / disabled / loading states.
-   Finding: Primary actions lack complete states.
-   Scope: `src/components/Button.tsx`
-
-3. Align card/button/input radius system.
-   Finding: Radius system is inconsistent.
-   Scope: shared component styles
-
-4. Repair runtime error introduced by the current fix.
-   Reason: Verification failure introduced by current fix.
-   Scope: affected route/component only
-```
-
-The plan must map to findings, direct dependencies, verification-failure repair, or new errors introduced by the current change. Do not include "also improve the whole UI" as hidden scope.
-
-## 5. Fix Priority
-
-Fix in this order:
-
-1. `Critical`: unusable, unreadable, unclickable, unclosable, horizontal scrolling, broken core flow.
-2. Responsive and layout stability: breakpoints, grid/flex collapse, sticky/fixed, z-index, scroll containers, table/code/rich-content overflow.
-3. Components, forms, and control system: states, focus-visible, disabled, loading, error, select-like controls, native-control mixing.
-4. Data and rich content: tables, charts, code blocks, rich text, long lists, numeric alignment, media ratio and cropping.
-5. Visual system: spacing, typography, color, radius, border, shadow, background, filter, outline.
-6. Interaction layers and motion: dropdowns, popovers, modals, toasts, drawers, scroll behavior, reduced motion.
-7. Content Stress: long copy, mixed-language content, real data counts, varied media ratios, multi-column/print/page-break cases.
-8. Accessibility: keyboard paths, accessible names, label/error associations, forced colors / high contrast.
-9. AI Template Smell: remove template noise and add real information structure.
-10. `Minor`: alignment, spacing, motion, copy, and visual polish.
-
-Do not fix Minor first. If Critical issues remain, do not spend time on local refinement.
-
-## 6. Implementation Gate / Fix Strategies
-
-Use the strategies below while keeping changes small: one change group should address one finding, direct dependency, adjacent blocker, or new error introduced by the current change. Do not mix unrelated visual issues into a single change.
-
-### Layout / Responsive
-
-- Find the root cause first: fixed width, container padding, grid/flex breakpoint, overflow, absolute/fixed positioning.
-- Prefer responsive constraints: `max-width`, `min-width: 0`, `min-height`, `flex-wrap`, reasonable breakpoints, single-column degradation, stable scroll containers.
-- When fixing first-viewport relationships, do not only check overflow. Address real rendered issues such as hero column proportion, search area spacing before the next section, hollow visual containers, oversized mockup/illustration/chart placeholders, or components that appear to press into the following section.
-- For fixed-format elements, use `aspect-ratio`, `object-fit`, min/max size, and loading placeholders to prevent stretching, bad cropping, and layout shift.
-- Put tables, code blocks, rich text, charts, and long lists into explicit scroll/collapse/reflow containers instead of forcing whole-page horizontal scrolling.
-- When fixing sticky/fixed/z-index issues, define layer order so navigation, menus, toasts, dialogs, overlays, and loading overlays do not cover each other incorrectly.
-- When fixing anchors, scroll snap, or scrollbar shifts, check `scroll-margin`, `scroll-padding`, `scrollbar-gutter`, scroll snap, and sticky header height.
-- Do not use `overflow: hidden` to mask layout problems unless the content is truly secondary on mobile and an alternate path remains.
-- Recheck the affected viewports after fixing.
-
-### Typography
-
-- Fix readability first: size, line-height, paragraph width, contrast, wrapping.
-- Break Chinese headings by meaning, not by decorative block shape.
-- Long English, emails, filenames, numbers, and IDs need wrapping or truncation strategies.
-- Data-dense UI needs numeric width, alignment, decimals, prices, dates, and table-column scanning rules; use tabular numeric or stable column widths when useful.
-- Long content may need `overflow-wrap`, `word-break`, `hyphens`, `line-clamp`, reasonable max-width, or a tooltip/details path.
-- Do not make headings huge to simulate premium quality.
-
-### Color
-
-- Ensure contrast and state recognition first.
-- Limit accent usage; avoid spreading the primary color everywhere.
-- Preserve existing brand colors unless the user asks for a new visual direction.
-- When fixing background images, gradients, filters, masks, blend modes, or backdrop filters, prioritize text readability, performance, and product realism.
-- When backgrounds, gradients, glassmorphism, or strong decorative treatments are part of the current theme, reduce interference, improve contrast, add constraints, or adjust local tokens first; do not remove the whole theme expression by default.
-- Do not repaint the whole page into a single style palette.
-
-### Border / Radius / Shadow
-
-- Prefer token convergence over per-component tweaks.
-- Extract the smallest useful scale, such as button/input, card, modal.
-- Focus rings / outlines must fit the border system and must not be hidden for visual cleanliness.
-- Use shadows only for real elevation such as popovers, modals, and dropdowns.
-- Avoid heavy outlines, glow effects, and excessive glassmorphism.
-
-### Components And States
-
-- Add usability states first: focus-visible, disabled, loading, error.
-- Then add experience states: hover, active, empty, success.
-- Real clickable elements should expose clear click affordance: buttons, links, search buttons, chips, card actions, icon buttons, and custom clickable regions should provide cursor, hover, active, focus-visible, or platform-equivalent feedback, without causing layout shift.
-- State feedback must not cause layout shift.
-- Icon buttons need visible text, tooltip, or `aria-label`.
-- Icons, SVGs, avatars, and media controls should share size, stroke, color inheritance, and alignment; SVGs should adapt correctly to text color or state.
-- Cursor, pointer-events, touch-action, and selection behavior should match control semantics.
-- When fixing inconsistent inputs, selects, dropdowns, multiselects, or menus, first check whether the project already has matching custom components. Reuse or extend them instead of continuing to hand-style native controls.
-- If the project has no matching custom control and native controls visibly break the visual system, create the smallest reusable control or shared style so core filtering, editing, and bulk actions use one interaction and visual pattern.
-- Native-control fixes should include appearance, accent-color, caret-color, color-scheme, field-sizing, resize, file input, and similar browser-control capabilities when relevant.
-
-### Data / Rich Content / Media
-
-- For tables, fix usability first: column widths, `table-layout`, horizontal scroll container, sticky header, long-cell wrapping, empty state, and bulk actions.
-- Code blocks, rich text, long lists, and charts need small-screen strategies: scroll, collapse, grouping, single-column layout, or summary/detail access.
-- Images, video, iframes, product screenshots, and charts need stable ratios, focal crop, loading placeholders, and max-size constraints.
-- Do not crop away essential information to fit one screenshot ratio; adjust container ratio, object-fit, or content layout instead.
-- Multi-column content, print/page-break cases, and long content combinations should avoid awkward splits in cards, table rows, and code blocks.
-
-### Accessibility
-
-- Fix keyboard path, focus-visible, accessible names, and label associations first.
-- Icon buttons, close buttons, and menu buttons need clear `aria-label` or visible text.
-- Do not rely on color as the only state indicator.
-- Form errors must be associated with their inputs.
-- Dialogs must handle focus entry, focus return, Escape, and close button paths.
-- Text, borders, focus, icons, and state feedback should remain distinguishable in forced colors / high contrast.
-
-### Forms / Modals / Navigation
-
-- Form fixes should close the loop: label, help, error, disabled, loading, success.
-- Select-like controls should cover trigger, menu/popup, option, selected, disabled, empty, error, focus-visible, keyboard path, and long options.
-- Dialogs should first guarantee close, scroll, focus, and destructive confirmation.
-- Overlay fixes should define layering: trigger, menu/popup, overlay, modal, toast, and loading overlay z-index plus close paths.
-- Navigation should first guarantee usable desktop and mobile paths, then visual polish.
-
-## 7. Local Vs Systemic Fix
-
-- If a problem appears once, prefer a local fix.
-- If the same problem appears in 3+ components or pages, consider a shared component, design token, or utility.
-- If related issues have different root causes, do not force abstraction.
-- Abstraction must reduce duplication or risk; do not abstract for architecture theater.
-- Before changing shared components, check that other usage scenarios will not break.
-
-## 8. Scope Control
-
-- Follow the existing framework, components, styling system, and naming habits.
-- Prefer local components and styles; avoid unrelated architecture refactors.
-- Do not change UI library, routes, or business logic.
-- Do not change theme, light/dark mode, brand character, component shape, or overall visual direction unless explicitly requested.
-- Do not remove necessary content for visual consistency.
-- If multiple pages share the same issue, prefer shared components or tokens.
-- If only one page has the issue, do not over-abstract.
-
-## 9. User Decisions
-
-Put these under `Open Questions`; do not decide silently:
-
-- Product positioning, target user, or core value is unclear.
+- Product positioning, target users, or core value proposition is unclear.
 - Real data, cases, customers, pricing, or metrics need confirmation.
-- Brand color, typeface, or visual direction requires tradeoff.
+- Brand color, typeface, or visual direction requires a tradeoff.
 - Removing business content may harm information completeness.
-- The fix requires a new dependency, UI library change, or design-system refactor.
-- The fix would change core information architecture, data model, real business flow, or remove important content.
+- The fix requires a new dependency, UI library replacement, or design-system refactor.
+- The fix requires changing core information architecture, data model, real business flow, or deleting important content.
 
-## 10. Recheck Gate
+## 5. Recheck Gate
 
-After each fix, recheck the affected dimension:
+After each fix, recheck the dimensions touched by the issue. Do not expand into an unrelated matrix:
 
-- Overflow: relevant viewports, especially 375px, 768px, 1280px.
-- First-viewport layout, search area, hero, mockup, or section spacing: when the page can run, recheck in a browser at least one desktop viewport and one mobile viewport, ensuring there is no overlap, misalignment, hollow placeholder, or new layout shift; when it cannot run, state that the check is code-inferred only.
-- Media ratio: aspect ratio, object fit, focal crop, loading placeholder, and varied image/video ratios.
-- Tables/rich text/code/long lists: small-screen scrolling, collapse, long content, sticky header, and horizontal scroll container.
-- Scroll and layering: sticky header, anchor jumps, scroll snap, scrollbar gutter, overlay conflicts, and close paths.
-- Buttons/forms: hover, active, focus-visible, disabled, loading, error.
-- Clickable elements: recheck pointer / hover feedback, visible keyboard focus, and whether hit targets match the visual region.
-- Select/dropdown/multiselect/menu: open, close, selected, clear, keyboard path, long options, empty state, mobile.
-- Dialogs: open, close, overlay, scroll, focus, mobile.
-- Navigation: desktop, mobile, current state, keyboard path.
-- Tokens: whether same-type components remain consistent and no new conflict appears.
-- Copy/headings: long copy and mixed Chinese/English content.
-- Accessibility: keyboard path, accessible names, label/error associations, forced colors / high contrast, and reduced motion.
+- If the fix source includes an audit mode, prioritize the viewports and risk viewports actually checked by that audit; do not automatically expand to a Deep-level matrix just because the source is an audit.
+- Layout / responsive: recheck relevant viewports, especially the width where the issue appeared. Confirm the first viewport, search area, hero, mockup, section spacing, overflow, sticky/fixed behavior, scrolling, and layering did not gain new overlap, clipping, or jump.
+- Media / rich content: recheck images, video, iframes, charts, tables, code blocks, rich text, and long lists for ratio, crop, scrolling, collapse, and long-content behavior.
+- Components / controls / interaction: recheck hover, active, focus-visible, disabled, loading, error, hit targets, and the open/close/keyboard path of select, dropdown, multiselect, menu, dialog, and navigation.
+- Visual / content / accessibility: recheck token consistency, theme direction, long copy and mixed-language text, accessible names, label/error association, forced colors / high contrast, and reduced motion.
+- Page / route: recheck at least one real entry path and the target route; if navigation, menus, list items, card links, or shared components changed, also recheck one adjacent exit, sibling route, or core action.
 
-If the page cannot run, state which rechecks are code-based only.
+If the page cannot run, state which rechecks are based only on code.
 
-## 11. Verification And Recovery Gate
+## 6. Verification And Recovery Gate
 
-Verification is not optional polish. Whenever fix changes code, first confirm the project still runs. If a new error comes from the current change, repair that error before continuing UI rechecks. A passing build does not prove the page is usable; when the page can run and the environment allows it, open the affected page or route and confirm there is no page-level runtime error, blank screen, error boundary, key asset failure, or obvious console error.
+Verification is not optional polish. Whenever `fix-ui` changes code, first confirm that the project still runs. If a new error comes from the current change, repair that error before continuing UI rechecks. A passing build does not prove the page is usable. HTTP 200 or returned SSR HTML also does not prove client navigation works. When the page can run and the environment allows it, open the affected page and, when possible, enter it through the user's real path. Confirm there is no page-level runtime error, blank screen, error boundary, key asset loading failure, or obvious console error.
 
 ### Engineering Verification
 
@@ -289,99 +84,84 @@ Prefer existing project commands:
 - typecheck
 - test
 - build
-- dev / preview (when needed for page-open verification)
+- dev / preview (when page-and-path verification is needed)
 
-Do not add new tools only for validation. Report anything not verified.
+If these commands do not exist, do not force new tools into the project. State what could not be verified.
+
+For plain HTML / static-file projects:
+
+- Do not force lint, typecheck, or build checks.
+- Open the entry HTML first, such as `index.html`, and check relevant links or entries into the affected area.
+- If direct browser opening affects relative paths, module scripts, or fetch behavior, start a simple static server before verifying.
+- Check console errors, asset 404s, blank screens, missing styles, script initialization failures, and key interactions.
+- After changing CSS / JS, recheck at least the affected page and related asset loading.
 
 If any verification command fails:
 
-- First decide whether the failure was introduced by the current change.
-- If it was introduced by the current change, continue fixing until the command passes or the blocker is explicit.
-- If it is pre-existing, state that and explain whether the current change introduced any new error.
+- First decide whether it was introduced by the current change.
+- If it was introduced by the current change, keep fixing until the command passes or the blocker is explicit.
+- If it is pre-existing, state that it is pre-existing and explain whether the current change introduced any new error.
 - Do not claim the fix is complete while build fails, the page cannot open, or a key route crashes.
 
-### Page-Open Verification
+### Page And Path Verification
 
-When the page can run and the environment allows it, start or reuse the dev server and open the affected page, route, or component preview:
+When the page can run and the environment allows it, open the affected page, route, or component preview, and prefer the user's real path. Follow this order:
 
-- Confirm at minimum that the page has no blank screen, error boundary, hydration/runtime error, key asset 404, or failed initialization of critical interaction.
-- For Next/Astro/Vite and similar apps, a passing build should still be followed by actual route-open checks, especially for changed pages.
-- Even for style-only fixes, do a light page-open check when the page entry is clear; if browser or server startup is unavailable, state why and list remaining risk.
-- If page opening fails and the failure comes from the current change, enter Recovery Gate and repair the page-level error before continuing UI rechecks.
+1. Align the verification target: prefer the start command, URL / port, route, auth state, and operation path provided by the user or project docs. Do not use a different temporary port, empty-state page, direct URL, or different run mode as proof that the fix is complete unless you can explain why it is equivalent. If the page can be reached through navigation, menu, list, card, search result, or CTA, verify at least one real upstream entry; direct URL access is only supplementary.
+2. Manage service ownership: if reusing a user-started server, record the URL / port and do not shut it down; if this fix run starts a temporary dev / preview / static server for verification, record the start command, URL / port, and process information.
+3. Separate path results: record `Direct route check` (opening the target URL), `Client navigation check` (clicking from a real entry), and `Deep link check` (refreshing or directly deep-linking the target). Route/page/client-component/data-rendering fixes should cover direct route, client navigation, and console/runtime errors. Navigation/header/menu fixes should cover one entry path to the target page and one adjacent page or core action from the target.
+4. Check page usability: confirm at minimum that there is no blank screen, error boundary, hydration/runtime error, key asset 404, failed initialization of critical interaction, or obvious console error. For Next.js App Router, RSC, client components, and `next/link` routes, verify direct load and client-side navigation separately; a passing build, HTTP 200, or returned SSR HTML does not prove client navigation has no runtime error.
+5. Handle failure and light checks: if page or path verification fails and the failure comes from the current change, enter Recovery Gate, repair the page-level error, then continue UI rechecks. If only styles changed but the page entry is clear, still do a light page-open check. If browser, Playwright, CDP, or screenshot verification cannot run, mark browser verification as not completed; do not replace browser path verification with curl, Invoke-WebRequest, HTTP 200, or a passing build, and list uncovered items as residual risk.
+6. Save evidence: if screenshots are generated, prefer saving them under `examples/reports/assets/fix/` in the current project, with one subdirectory per fix run, for example `examples/reports/assets/fix/2026-05-25-admin-terms/`. Filenames should include page or region, viewport, state, and phase, such as `terms-375-after.png` or `terms-1280-filter-open-after.png`; when before screenshots are captured too, use paired `before` / `after` names.
+7. Clean up services: after verification, shut down any service started temporarily by this fix run to avoid occupying ports. Leave it running only when the user explicitly asks for that or shutting it down would affect a pre-existing user service, and report that decision.
 
-### Visual Verification
+### UI Verification
 
-- Recheck relevant viewports, at least the widths where issues occurred.
-- Compare the fixed area before and after, ensuring no new overlap, overflow, or layout shift.
-- For layout findings, prefer screenshot or browser notes showing first-viewport relationships, search-to-next-section spacing, visual-container occupancy, and core-content alignment.
-- When fixing visual tokens, check same-type components remain consistent.
-- When fixing media, tables, scrolling, or overlays, prefer screenshots or concrete viewport notes to prove the problem did not move elsewhere.
-- When fixing visual issues inside a theme, verify the defect is fixed and the original theme direction was not replaced.
+- Recheck relevant viewports, at least the width where the issue appeared. When the page can run, prefer browser or screenshot confirmation.
+- For layout, media, tables, scrolling, overlays, and visual tokens, confirm the issue did not move elsewhere and the theme direction was not replaced.
+- For buttons, forms, menus, dialogs, navigation, native-control replacement, and custom controls, recheck key states, keyboard paths, hit targets, mobile behavior, and consistency with same-type UI.
+- Without a browser, explain unverified layout, pointer, hover, interaction, and visual risks based on code.
 
-### Interaction Verification
-
-- Recheck hover, active, focus-visible, disabled, loading, error.
-- Run a pointer / hover smoke test for primary buttons, search buttons, links, chips/tags, card actions, icon buttons, and custom clickable containers.
-- When fixing dialogs, menus, forms, or navigation, recheck open, close, keyboard path, and mobile when the page can run; when it cannot run, state which interactions are code-inferred only.
-- When replacing native controls or creating custom controls, recheck same-type pages for remaining native-control mixing and verify the new control follows existing tokens.
-- When fixing scrolling, motion, or transform, recheck scroll path, hit targets, reduced motion, and layout stability.
-- Without a browser, explain unverified layout, pointer, hover, and interaction risk based on code.
-
-## 12. Output Gate
+## 7. Output Gate
 
 ```markdown
 ## Fix Summary
-
 - Fixed:
 - Preserved:
-- Theme direction preserved:
 - Still runnable:
 - Not handled:
 
 ## Gate Results
-
 - Baseline:
+- Source mode:
 - Scope:
 - Verification:
+- Direct route check:
+- Client navigation check:
+- Deep link check:
+- Runtime errors:
+- Dev server:
+- Verification target:
 - Recovery:
 - Recheck:
-
-## Fixed Findings
-
-- Finding:
-  Change:
-  Recheck:
+- Screenshots:
+- Not verified:
+- Residual risk:
 
 ## Changed Files
-
 - `path/to/file`
 
-## Verification
-
-- Ran:
-- Result:
-- Page-open check:
-- Not verified:
-- New errors:
-
 ## Remaining Questions
-
-- Questions needing user confirmation.
+- ...
 ```
 
-Be specific. Do not say only "optimized UI". State which finding was fixed, how, and whether it was rechecked.
+Be specific. Do not only say "optimized the UI". State which issue was fixed, how it was fixed, and whether it was rechecked. If screenshots were saved, list the screenshot directory and key files; if screenshots were only temporary or could not be saved, state why. When real browser path verification was not completed, fill `Not verified` and `Residual risk`; do not omit them.
 
-## 13. Prohibited
+## 8. Prohibited
 
-- Do not turn fix into redesign unless explicitly requested.
-- Do not change theme, light/dark mode, brand direction, component shape, or page tone unless explicitly requested.
-- Do not rewrite a page because of taste.
-- Do not force a preset when the user did not choose one.
-- Do not perform unrelated refactors.
-- Do not change tech stack or introduce dependencies unless necessary and approved.
-- Do not delete user content, business logic, or real data.
-- Do not fabricate lint/build/browser verification.
-- Do not finish when the current change caused build failure, an unopenable page, or a key route crash.
-- Do not fix one issue by introducing new responsive, state, or accessibility problems.
-- Do not introduce global visual changes to repair a local issue.
-- Do not fake-fix overflow, tables, media, or long copy by hiding, clipping, or deleting necessary content.
+- Do not turn fix into redesign, or change theme, light/dark mode, brand direction, page tone, or preset unless the user requested it.
+- Do not rewrite the page for taste, do unrelated refactors, switch tech stack, introduce unnecessary dependencies, or delete user content, business logic, or real data.
+- Do not fabricate lint/build/browser verification results. Do not finish when the current change caused build failure, an unopenable page, or a key route crash.
+- Do not leave a dev / preview / static server started only for this verification running in the background and occupying a port, unless the user explicitly asked to keep it running.
+- Do not fix one issue by introducing new responsive, state, accessibility, or global visual regressions.
+- Do not fake-fix overflow, tables, media, or long-copy issues by hiding, clipping, or deleting necessary content.

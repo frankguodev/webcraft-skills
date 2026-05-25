@@ -52,10 +52,43 @@
       "score": "only-if-requested"
     }
   },
+  "focused": {
+    "label": "Focused Audit",
+    "intent": "Deeper practical audit for serious UI review without the full cost of Deep Audit.",
+    "maxFindings": 32,
+    "recommendedFindings": [12, 24],
+    "severity": ["Critical", "Major", "Minor"],
+    "includeMinor": "high-value-only",
+    "score": false,
+    "fullCategoryReport": false,
+    "contentStressTest": "targeted",
+    "browserRequiredWhenRunnable": true,
+    "requiredViewports": ["375px", "1280px"],
+    "optionalViewports": ["768px-or-834px", "1440px-or-1920px", "360px-or-390px"],
+    "checks": {
+      "criticalUsability": true,
+      "responsiveSmoke": true,
+      "firstViewportLayout": true,
+      "pointerHoverSmoke": true,
+      "componentStates": "core-and-risky",
+      "visualSystem": "systemic-and-visible",
+      "mediaRichContent": "when-present",
+      "scrollBehavior": "when-risky",
+      "nativeControls": true,
+      "forcedColors": "targeted",
+      "reducedMotion": "targeted"
+    },
+    "output": {
+      "topFindings": true,
+      "fixOrder": true,
+      "passNotes": "short",
+      "score": false
+    }
+  },
   "deep": {
     "label": "Deep Audit",
     "intent": "Full audit for launch readiness, strict review, or systemic UI quality work.",
-    "maxFindings": 32,
+    "maxFindings": 100,
     "severity": ["Critical", "Major", "Minor"],
     "includeMinor": true,
     "score": true,

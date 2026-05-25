@@ -1,357 +1,146 @@
 # UI Build Workflow
 
-Use this workflow to create a page, site, component, or new UI inside an existing project. `build-ui` should produce real, usable, maintainable UI that fits the project context, not a fragile concept image.
+Use this workflow to create a website, complete page, or user-task-oriented feature module inside an existing page. `build-ui` should deliver real, usable, maintainable UI that fits the project context, not a fragile concept image.
 
-Build inherits the quality standards from audit, review, polish, and fix: understand the goal and constraints first, create structure second, then self-check and repair obvious issues.
+Build inherits the quality standards from audit, review, polish, and fix: understand goals and constraints first, create structure and implementation second, then self-check, verify, and repair obvious issues.
 
 ## Locale Rule
 
 The skill's Locale Contract has already selected one runtime locale before this workflow is read. Stay in this locale. Do not open the paired `.zh.md` or English workflow/checklist/module files unless the user explicitly asks for translation, bilingual comparison, localization, or locale consistency.
 
-## 1. Confirm Build Scenario
+## 1. Build Scope
 
-Before building, identify the scenario:
+Every build must meet a production-grade baseline: runnable, readable, clickable, responsive without breakage, state-complete for the relevant task, truthful about content, and aligned with the existing project system. Scope changes verification depth and completeness; it does not lower the quality floor.
 
-- New static project page, such as a complete `index.html`.
-- New page in an existing project, such as Next.js / Astro / Vue / Svelte / React.
-- New section in an existing page.
-- Single component or component group.
-- Prototype page for quickly showing an idea.
-- High-fidelity page close to production quality.
+- `Site Build`: build a website, product site, multi-page skeleton, or complete static site from zero. Focus on information architecture, global navigation, homepage structure, key page entries, overall visual system, and extensible structure.
+- `Page Build`: default scope for one complete page. Focus on first-viewport hierarchy, page structure, CTA, content sections, states, responsive behavior, content pressure, and basic accessibility.
+- `Feature Build`: build a page area or feature module with a clear user task. Focus on task loop, entry and exit, forms/lists/action feedback, states, error recovery, and integration with the existing page.
 
-Different scenarios have different completion bars. Do not turn a prototype into a large product build, and do not ship a production page that only works with ideal content.
+Small buttons, individual inputs, isolated cards, icon buttons, and similar small components usually do not need `build-ui`; implement them directly with project conventions. Treat them as `Feature Build` only when they carry a clear user task, affect page structure, or belong to a functional module.
 
-## 2. Build Modes
+If the user explicitly asks for a prototype, quick mock, or rough draft, reduce content, state, and verification scope, but keep it runnable, responsive, clear about placeholders, and free of invented business facts.
 
-Choose build depth from the user's goal.
-
-### Prototype Build
-
-- For quickly testing an idea.
-- Placeholder content is allowed, but must be labeled.
-- Full business states are not required, but obvious responsive breakage is not acceptable.
-- Do not add backend, auth, database, or complex state management.
-
-### Page Build
-
-- Default mode.
-- Build one realistic usable page.
-- Consider responsive behavior, core states, long content, and basic accessibility.
-- Good for landing pages, personal pages, product pages, and feature pages.
-
-### Production Build
-
-- For pages close to launch quality.
-- Cover key states, error/empty states, mobile, content pressure, and verification.
-- Prefer existing components and tokens.
-- Do not invent real business facts.
-
-### Component Build
-
-- For a single component or component group.
-- Cover variants, states, long content, accessible names, and composition.
-- Do not overdesign a component with whole-page standards.
-
-## 3. Questions And Reasonable Filling
+## 2. Input And Content Truthfulness
 
 Do not mechanically ask for every missing detail, and do not fabricate facts.
 
-Ask first when:
+Ask first or put into `Open Questions` when:
 
-- Page subject, product name, or audience is completely unclear.
-- The user wants high fidelity or production quality but core content is missing.
+- Page subject, product name, audience, or core task is completely unclear.
+- The user wants high fidelity, launch quality, or a real business page but core content is missing.
 - Existing style, preset choice, or external asset permission will affect implementation direction.
-- The request depends on real prices, customers, metrics, cases, compliance, or business promises.
+- The request depends on real prices, customers, metrics, cases, compliance, promises, team, awards, or sensitive business facts.
 
-Reasonable filling is allowed for:
+Reasonable filling is allowed for section order, secondary button copy, empty-state copy, FAQ placeholders, example lists, placeholder image descriptions, non-critical helper copy, and mock content in prototype mode. Filling must be restrained, concrete, credible, and labeled as placeholder.
 
-- Section order, secondary button copy, empty-state copy, FAQ placeholders.
-- Example lists, placeholder image descriptions, non-critical helper copy.
-- Mock content in prototype mode.
+When real facts are missing, use neutral, replaceable placeholders instead of copy that reads like a real business promise. Landing pages may fill information structure and helper explanations, but not proof. Product names, prices, customers, cases, metrics, compliance claims, team background, and awards must come from the user, existing project, or explicit source material.
 
-Reasonable filling must be restrained, concrete, credible, and must not fabricate real facts.
+## 3. Build Gate
 
-## 4. Pre-Build Checklist
+Before editing, establish the delivery boundary. Do not generate a large page while entry point, visual source, content source, and verification path are all unclear:
 
-Before editing, confirm:
+- `Scope`: Site / Page / Feature, or a small-component task that does not need `build-ui`.
+- `Entry`: new file, new route, insertion point in an existing page, feature mount point, navigation entry, return path, or demo container.
+- `System`: existing components, routing conventions, global styles, design tokens, type, color, spacing, radius, border, shadow, and component states.
+- `Content`: real content, user-provided content, replaceable placeholders, or business facts that must not be invented.
+- `Verify`: lint, typecheck, test, build, dev / preview, browser open, static HTML, or screenshot check.
 
-- Build mode: Prototype / Page / Production / Component.
-- Page type.
-- Target audience.
-- Primary CTA.
-- Whether content is real or placeholder.
-- Whether this is inside an existing project.
-- Existing components, tokens, or visual system.
-- Provided design, screenshot, Figma export, or reference page.
-- Preset choice.
-- Technical constraints, such as no external resources or no new dependencies.
+If the user asked for a feature module, build only that module and do not casually rebuild the whole page. If the user asked for a small component, usually implement it directly using project conventions. If the user asked for a prototype, do not expand it into a complex product. The closer the scope is to a real page, real flow, or launch use, the more complete states, content stress, and verification should be.
 
-Do not generate a large page when these core points are completely unclear.
+## 4. Existing System, References, And Presets
 
-## 5. Collect Required Context
+Inside an existing project, default to the current system: directories and routes, component library, tokens, global styles, component states, page tone, and tech stack. Do not introduce another visual system, component library, preset, or dependency for a new page.
 
-Identify:
+When the user provides a screenshot, design image, Figma export, or reference page, determine its role:
 
-- Page type: landing page, dashboard, docs, portfolio, form, checkout, settings, admin, etc.
-- Subject: product, person, brand, project, or feature.
-- Audience: general users, developers, enterprise buyers, creators, internal operators, etc.
-- Core task: sign up, buy, read, search, manage, create, contact, download, etc.
-- Main content: hero, features, cases, pricing, FAQ, form, list, data, work samples.
-- Tech stack: HTML/CSS/JS, React, Next.js, Astro, Vue, Svelte, Tailwind, component library.
-- Constraints: no external resources, mobile-first, existing components, brand colors, etc.
+- Structure reference: layout, information order, and component relationships.
+- Style reference: color, type feel, radius, border, shadow, and mood.
+- Full design: structure and style should both be followed closely.
 
-If information is missing, fill conservatively, but do not invent real customers, prices, metrics, cases, teams, companies, or product facts.
+For a new project with no visual system, use the reference image's structure and style, with necessary responsive, accessibility, and real-content adaptation. In an existing project, if the user did not explicitly request a style change, default to "structure from the reference, visual style from the existing project." Ask when unclear; if the user does not want to pause, use the conservative path.
 
-## 6. Identify Existing Project And Visual System
+Use presets only when the user explicitly chooses one. When no preset is specified, choose direction from page type and project context. If an existing project has a clear system, a preset is only reference material and must not override it. Do not default to `cinematic-minimal`, and do not force dark, cinematic, minimal, or SaaS styling for "premium" feel. Presets are not product-fact sources.
 
-When building inside an existing project, inspect:
+## 5. Information Structure
 
-- Page entry points, route structure, and directory conventions.
-- Global styles, Tailwind config, design tokens.
-- Existing components: Button, Card, Input, Modal, Nav, Table, Toast.
-- Current visual system: colors, type, spacing, radius, border, shadow, component states.
-- Page tone: marketing, tool, content, admin, personal brand, etc.
+Plan structure before styling. Do not start from backgrounds, gradients, cards, or motion.
 
-Default to the existing system. Do not introduce another style, component library, or preset into an existing project.
-
-## 7. Design Or Reference Image Input
-
-When the user provides a screenshot, design image, Figma export, reference page screenshot, or visual reference, first determine its purpose:
-
-- Structure reference: layout, information order, component relationship.
-- Style reference: color, type feel, radius, border, shadow, mood.
-- Full design: both structure and style should be followed closely.
-
-### New Project
-
-When no visual system exists, default to the reference image's structure and style.
-
-- Preserve information structure, layout proportion, hierarchy, and component relationships.
-- Preserve color, type feel, radius, border, shadow, and overall mood.
-- Add necessary responsive, accessibility, and real-content adaptation.
-- Do not switch to another style or preset.
-
-### Existing Project
-
-If the user does not explicitly request a style change:
-
-- Use the design image for structure.
-- Use its information order and component relationships.
-- Keep colors, type, radius, buttons, cards, and forms aligned with the existing site.
-
-If the user says "use this style" or "match this design visually":
-
-- You may implement the current scope in the design style.
-- Do not casually change the whole site.
-- Explain conflicts if the design style clashes with the existing system.
-- If global unification is needed, suggest a later design-system or token migration.
-
-### When Unclear
-
-If the user does not state the reference purpose and the project already has a clear visual system, ask:
-
-```text
-Is this image a layout reference, or should the new page also use the visual style from the image?
-```
-
-If the user does not want to pause, use the conservative path: structure from the reference, style from the existing project.
-
-## 8. Preset Usage
-
-- Use a preset only when the user explicitly chooses it.
-- When no preset is specified, choose a suitable direction from page type and project context.
-- If an existing project has a clear visual system, a preset is only reference material and must not override that system.
-- Do not default to `cinematic-minimal`.
-- Do not force dark, cinematic, minimal, or SaaS styling to create "premium" feel.
-
-Presets are style constraints, not product-fact sources. Do not invent copy, cases, or business data from a preset.
-
-## 9. Page-Type Structure Templates
-
-Choose an information structure from the page type. Templates are starting points, not rigid layouts.
-
-### Landing Page / Marketing Site
-
-- Hero: what it is, who it is for, what it does, next action.
-- Problem: current user pain.
-- Solution: how the product solves it.
-- Features: a few concrete capabilities.
-- Proof: real cases, work, metrics, or credible explanation.
-- CTA: primary and secondary action.
-- FAQ: key objections.
-
-### SaaS / Product Page
-
-- Hero: specific product claim.
-- Use Cases: target users and scenarios.
-- Feature Detail: key features and workflow.
-- Screenshot / Mockup: aid understanding, not decoration.
-- Pricing / Trial: only if provided or clearly needed.
-- FAQ / Security / Support: based on context.
-
-### Dashboard / Admin
-
-- Overview: core metrics or state.
-- Controls: search, filter, sort, time range.
-- Main Content: table, list, chart, or task flow.
-- Detail / Action: detail panel, bulk action, state feedback.
-- Empty / Loading / Error: data states.
-
-### Portfolio / Personal Site
-
-- Hero: person, positioning, point of view.
-- Selected Work: curated work, not quantity.
-- Process / Thinking: method and judgment.
-- About: credible background.
-- Contact: clear but not oversold.
-
-### Form / Checkout / Onboarding
-
-- Step Context: current step and remaining path.
-- Input Group: clear label, help, error.
-- Review / Confirmation: information and risk confirmation.
-- Submit State: loading, success, error, disabled.
-
-### Docs / Content Site
-
-- Title / Summary: page subject.
-- TOC: contents or anchors.
-- Content Sections: clear heading hierarchy.
-- Code / Table: scrollable or wrappable on mobile.
-- Next Step: next article, related docs, or action.
-
-## 10. Plan Information Structure First
-
-Before visual styling, establish:
-
-- First viewport: what it is, who it is for, what to do next.
-- Body content: each section expresses one core idea.
+- First viewport: what it is, who it is for, and what to do next.
+- Body: each section expresses one core idea.
 - Action path: primary CTA, secondary CTA, contact/buy/sign-up/continue-reading path.
-- Trust information: real cases, work, feature explanation, FAQ, data explanation.
-- States and boundaries: loading, empty, error, success, disabled, long content, missing images.
+- Trust: only real cases, work, feature explanation, FAQ, or data explanation.
+- State boundaries: loading, empty, error, success, disabled, long content, missing images.
 
-Do not start from background, gradients, cards, or motion. Good pages have structure first and styling second.
+Page-type templates are starting points, not rigid layouts:
 
-## 11. Implementation Strategy
+- Landing / Product: hero, value, workflow or features, real proof, CTA / FAQ.
+- Dashboard / Admin: overview, controls, main content, detail/action, data states.
+- Portfolio / Personal: hero, selected work, process, about, contact.
+- Form / Checkout / Onboarding: step context, input groups, review, submit states.
+- Docs / Content: title/summary, TOC, content sections, code/table, next step.
 
-### New Static Page
+## 6. Implementation Boundary
 
-- Generate a complete runnable file.
-- Keep CSS organized; avoid repeated magic numbers.
-- Do not depend on unavailable remote assets.
-- Mobile, tablet, and desktop should be usable.
+New static pages should be complete runnable files with organized CSS, no dependency on unavailable remote resources, and usable mobile/tablet/desktop layouts.
 
-### Existing Project Page
+Existing project pages should follow current directories, routes, components, and styling methods. Prefer existing components and tokens, do not add new dependencies, and do not break existing routes or business logic. When adding a page, decide whether it needs navigation, menu, list, card, CTA, search result, or parent page entry; if an entry is added, provide a return-to-list, breadcrumb, related page, or next action.
 
-- Follow existing directories, components, and styling methods.
-- Prefer existing components and tokens.
-- Do not introduce new dependencies unless requested or already established.
-- Do not break routes or business logic.
+Feature Build should serve the task loop. Do not overdesign it as a whole page and do not rely on accidental parent dimensions to make it work.
 
-### Component
+Do not add login, permissions, user systems, databases, CMS, backend APIs, payment, localization, theme switching, animation systems, complex state management, mock APIs, or large filter/bulk-action systems by default. If necessary for the experience, add light UI placeholders or explain.
 
-- Support common variants: default, hover, active, focus-visible, disabled, loading.
-- Support long content and varied counts.
-- Provide accessible names and keyboard paths.
-- Do not rely on accidental parent dimensions.
+## 7. Quality Baseline
 
-## 12. Avoid Overbuilding
+Cover relevant states for buttons, forms, lists/data, dialogs/menus, and navigation: hover, active, focus-visible, disabled, loading, empty, error, success, and current state where applicable. Do not force unrelated state demos, but every user action needs a state loop.
 
-Implement only the requested UI scope.
+Consider at least 375px, 768px, and 1280px. Avoid horizontal scrolling, edge-touching text, small buttons, overflowing copy, overflowing media/tables/code blocks, sticky/fixed overlap, and desktop layouts merely shrinking on mobile. Use `max-width`, `min-width: 0`, `aspect-ratio`, wrapping, and sensible breakpoints for fixed-format elements.
 
-Do not add by default:
+Build for realistic content variation: longer titles, longer button copy, mixed language, varied image ratios, uneven card content, lists of 0/1/3/10/20 items, longer errors, and very long names, emails, project names, or filenames. Do not build layouts that only fit ideal short copy.
 
-- Login, permissions, user system.
-- Database, CMS, backend API.
-- Complex state management.
-- Payment flow.
-- Localization system.
-- Theme switching.
-- Animation system.
-- Large filter/sort/bulk-action systems.
-- Mock APIs or complex data layers.
+Check for AI-template smell: excessive badges, bento grids, gradient blobs, vague slogans, fake data, meaningless icons, repeated CTAs, and filler cards. Replace decoration stacking with real content and clear structure.
 
-If these are necessary for the experience, add light UI placeholders or explain, but do not expand into a full product.
+## 8. Self-Check And Verification
 
-## 13. Required UI States
-
-Cover relevant states:
-
-- Buttons: primary, secondary, disabled, loading, hover, active, focus-visible.
-- Forms: label, placeholder, help, error, disabled, loading, success.
-- Lists/data: loading, empty, error, success, pagination or count changes.
-- Dialog/menu: open, close, overlay, focus, mobile scroll.
-- Navigation: current state, mobile entry, keyboard reachable.
-
-Do not force state examples for unrelated features, but every user action needs a state loop.
-
-## 14. Responsive Requirements
-
-Consider at least:
-
-- 375px mobile
-- 768px tablet
-- 1280px desktop
-
-Avoid:
-
-- Horizontal scrolling.
-- Text touching screen edges.
-- Buttons too small or overflowing.
-- Images, mockups, tables, or code blocks overflowing.
-- Sticky/fixed elements covering content.
-- Desktop layouts merely shrinking on mobile.
-
-Use `max-width`, `min-width: 0`, `aspect-ratio`, wrapping, and sensible breakpoints instead of relying on content to stretch containers.
-
-## 15. Content Stress Test
-
-Build for realistic content changes:
-
-- Longer titles.
-- Longer button copy.
-- Mixed Chinese/English.
-- Different image ratios.
-- Uneven card content lengths.
-- Lists of 0, 1, 3, 10, or 20 items.
-- Longer form error messages.
-- Very long names, emails, project names, filenames.
-
-Do not build layouts that only fit ideal short copy.
-
-## 16. Self-Check And Fix
-
-After building, self-check in order:
+After building, self-check and fix obvious issues:
 
 1. Critical issues: unreadable, unclickable, overflow, overlap, broken nav/form/dialog.
-2. Fit with existing visual system or selected preset.
-3. Spacing, typography, color, radius, border, shadow consistency.
-4. Component states.
-5. Mobile usability.
-6. Long content and real content pressure.
-7. AI template smell: excessive badges, bento grids, gradient blobs, vague slogans, fake data.
+2. Fit with the existing visual system, reference role, or selected preset.
+3. Spacing, typography, color, radius, border, shadow, and component states.
+4. Mobile, long content, and realistic content pressure.
+5. Obvious AI-template smell or invented facts.
 
-Fix obvious issues directly. Do not leave fixable defects for the user.
+Scale verification by build risk. Do not run every build as a full audit:
 
-## 17. When To Move To Another Workflow
+- New static HTML: open the entry HTML; if relative paths, module scripts, or fetch behavior may be affected, use a simple static server.
+- New page in an existing project: run available project lint / typecheck / build commands and open the new route or target page.
+- New navigation entry: click from a real entry into the new page or section. Direct URL access is only supplementary.
+- New feature module: confirm it renders in the target page, demo container, or actual usage location, and check main entry points, states, and action feedback.
+- Pure visual local build: light engineering verification and target-area check are enough; small-component tasks do not need to become a full build verification matrix.
+
+If browser, dev server, or screenshot verification fails, do not replace page usability verification with a passing build, HTTP 200, or file existence. Report `Not verified` and residual risk.
+
+## 9. When To Move To Another Workflow
 
 - User asks to inspect an existing page: use `review-ui` or `audit-ui`.
-- Generated result has systemic quality issues: use `audit-ui`.
+- Generated result has page-level runtime errors, unreachable routes, broken key entries, or failing builds: use `fix-ui` first to make it runnable.
 - Generated result only needs local refinement: use `polish-ui`.
-- Generated result has concrete repairable defects: use `fix-ui`.
+- Generated result has systemic quality issues or the user asks for pre-launch inspection: suggest `Focused Audit` or `Deep Audit`.
 
-Build should not own all quality work. It creates a usable first version and performs necessary self-checks.
+Build does not own all quality work. It creates a usable first version and performs necessary self-checks and verification.
 
-## 18. Output Format
+## 10. Output Format
 
 ```markdown
 ## Build Summary
 
 - Built:
-- Build mode:
+- Build scope:
 - Structure used:
+- Entry / route:
+- Navigation integration:
 - Design/reference used:
 - Existing style or preset followed:
+- Placeholder content:
 
 ## Changed Files
 
@@ -371,19 +160,19 @@ Build should not own all quality work. It creates a usable first version and per
 
 - Ran:
 - Not verified:
+- Residual risk:
 ```
 
 Do not output only abstract design advice. Implement when possible and report verification.
 
-## 19. Prohibited
+## 11. Prohibited
 
 - Do not force a preset when the user did not choose one.
 - Do not treat a reference image's visual style as default inside an existing project unless requested.
-- Do not introduce another visual system into an existing project.
-- Do not invent real customers, prices, metrics, cases, or team information.
+- Do not introduce another visual system, component library, new dependency, or tech stack switch unless requested.
+- Do not invent real customers, prices, metrics, cases, teams, awards, or business promises.
 - Do not generate pages that only fit ideal short copy.
-- Do not make static pretty screenshots while ignoring states and responsive behavior.
+- Do not make static pretty screenshots while ignoring states, responsive behavior, entry paths, and content pressure.
 - Do not add meaningless cards, badges, icons, gradients, or motion just to fill the page.
 - Do not expand a simple page into backend, auth, database, and complex state management.
-- Do not add dependencies or change stack unless requested.
-- Do not fabricate lint/build/browser verification.
+- Do not fabricate lint, build, browser, or screenshot verification results.

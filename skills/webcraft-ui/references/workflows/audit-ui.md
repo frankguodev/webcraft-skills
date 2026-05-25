@@ -9,7 +9,7 @@ The goal is to find issues, collect evidence, and recommend fix order. Do not re
 - This workflow defines how to run the audit: choose depth, collect context, verify viewports, capture evidence, structure findings, and decide whether to hand off to fixing.
 - For what counts as an issue, severity definitions, scoring, module meaning, reporting ownership, and output rules, read `references/checklists/ui-audit.md`.
 - This workflow decides which modules to read for the current audit; do not copy module-selection rules into the report.
-- For hard budgets for `Quick / Standard / Deep Audit`, read `references/modes/audit-modes.json`; this file explains how to apply those budgets.
+- For hard budgets for `Quick / Standard / Focused / Deep Audit`, read `references/modes/audit-modes.json`; this file explains how to apply those budgets.
 - Do not mechanically dump every rubric category into the report. Report only issues that are real, evidence-backed, and have clear impact.
 - Do not read both English and Chinese references unless the task is translation, bilingual comparison, localization, or consistency checking.
 
@@ -23,6 +23,7 @@ Choose depth from the user's request:
 
 - `Quick Audit`: for "quick look" or "any big issues". Report only Critical and obvious Major issues.
 - `Standard Audit`: default. Report Critical, Major, and a small number of valuable Minor findings.
+- `Focused Audit`: for "serious check", "focused deep review", "pre-launch main risks", or "be thorough but not too heavy". Deeper than Standard, but no default score and no default full category report; up to 32 findings.
 - `Deep Audit`: for "thorough audit", "strict audit", "pre-launch", or "find details". Use the full audit system: main rubric, relevant modules, scoring model, content stress testing, extra viewports, and deeper checks for media ratios, tables/rich content/code blocks, scrolling behavior, native controls, motion, and high-contrast risks.
 
 Use `Standard Audit` when the user does not specify.
@@ -33,6 +34,7 @@ The full audit system is judging context, not a task list to fully execute every
 
 - `Quick Audit`: scan the main path and currently visible UI for risk. When the page can run, check the current viewport or 1 most important viewport; run only obvious layout/clickability/responsive smoke checks. Up to 8 findings, Critical and obvious Major only, no score, no Minor, no long-tail detail.
 - `Standard Audit`: default practical mode. Cover main pages/features and 2 key viewports: 1280px desktop + 1 mobile viewport; run one first-viewport layout relationship check and one pointer / hover smoke check. Find Critical / Major issues first, then include a few high-value Minor findings. Usually 8 to 16 findings, no full category report, no full Content Stress Test, no default score.
+- `Focused Audit`: focused deep practical mode. Cover main pages/features, key viewports, and risk-triggered extra viewports; up to 32 findings, no default score, no full category report. Use core viewports to find systemic Critical / Major issues first, then expand to tablet, wide desktop, small mobile, media, scrolling, native controls, and content stress only when risk signals justify it.
 - `Deep Audit`: systematically use the main rubric, relevant modules, scoring model, Content Stress Test, extra viewports, and deep-audit details. Use it for pre-launch, strict review, or when the user explicitly asks for thorough coverage. Even in Deep Audit, lead with Top Findings before category detail, and do not list passing checks.
 
 In every mode, do not create findings just to cover categories. When multiple issues share one root cause, prefer one systemic finding.
@@ -84,6 +86,7 @@ Use focused modules for detailed checks such as layout, responsive behavior, com
 
 - `Quick Audit`: do not expand modules by default. Read at most the directly relevant module when the issue clearly matches it, such as `responsive` for mobile breakage, `components-states` for missing click affordance, or `layout` for first-viewport relationship problems.
 - `Standard Audit`: prioritize `layout`, `components-states`, and `responsive` by default. If the page includes forms, filters, uploads, or bulk actions, also read `forms-controls`; if the risk is visual collage, token drift, or theme preservation, also read `visual-system`.
+- `Focused Audit`: read Standard modules by default, then add `forms-controls`, `visual-system`, `accessibility`, or `ai-template-smell` when page risk calls for them. Do not read unrelated modules for completeness; prioritize modules that affect the core task, responsive stability, control consistency, and visual maturity.
 - `Deep Audit`: read all relevant modules based on page type and risk, including `accessibility` and `ai-template-smell` when applicable. Still report only issues with evidence, impact, and a worthwhile fix; do not output module items as a checklist.
 
 Module triggers:
@@ -164,6 +167,12 @@ When auditing code, actively check whether the project already has custom base c
 
 If the project can run, prefer browser verification. Control viewport count by mode; do not run every audit like a Deep Audit.
 
+Manage server lifecycle when starting or reusing a service:
+
+- If reusing a user-started localhost / dev server, record the URL / port and do not shut it down.
+- If this audit starts a temporary dev / preview / static server for browser verification, record the start command, URL / port, and process information.
+- After the audit, shut down any service started temporarily by this audit to avoid occupying ports. Leave it running only when the user explicitly asks for that or shutting it down would affect a pre-existing user service, and state that in the report.
+
 `Quick Audit`:
 
 - Check the current viewport or the 1 key viewport the user most cares about.
@@ -177,9 +186,20 @@ If the project can run, prefer browser verification. Control viewport count by m
 
 `Standard Audit` may add 768px tablet when the page type suggests breakpoint risk, such as sidebars, tables, or multi-column layouts, but it is not a mandatory matrix.
 
+`Focused Audit` default checks:
+
+- 375px mobile
+- 1280px desktop
+
+`Focused Audit` adds viewports by risk:
+
+- Tablet/sidebar/table/multi-column risk: 768px or 834px
+- Wide-desktop composition, large-screen whitespace, or container constraint risk: 1440px or 1920px
+- Mobile clipping, horizontal scroll, or density risk already found: 360px or 390px
+
 If time or environment allows only partial viewport coverage, check at least the 1 viewport most likely to show the issue, then state what was not verified.
 
-For `Standard Audit` and `Deep Audit`, browser checks should also scan first-viewport layout relationships:
+For `Standard Audit`, `Focused Audit`, and `Deep Audit`, browser checks should also scan first-viewport layout relationships:
 
 - Whether hero columns, search areas, primary visual containers, and the next section overlap, disconnect, misalign, or feel hollow.
 - Whether mockups, illustrations, screenshots, charts, or decorative containers occupy too much space for too little content and unbalance the first viewport.
@@ -201,6 +221,8 @@ For Deep Audit, also check when possible:
 - Data content: tables, code blocks, rich text, long lists, and multi-column content across mobile, tablet, and wide screens.
 - States and accessibility: focus-visible, keyboard paths, forced colors / high-contrast risk, and reduced motion.
 
+If Deep Audit opens a browser and generates screenshots, prefer saving them under `examples/reports/assets/audit/` in the current project, with one subdirectory per audit run, for example `examples/reports/assets/audit/2026-05-24-home/`. Filenames should include page or region, viewport, and state, such as `home-375.png` or `dashboard-1280-filter-open.png`. If the project is not writable, the user requested another directory, or screenshots are only available as temporary tool artifacts, state the screenshot location or why they were not saved in the report.
+
 If the page cannot run, infer from CSS, layout code, breakpoints, and component structure. State which viewports and interactions were not verified.
 
 ## 8. Capture Evidence
@@ -208,8 +230,10 @@ If the page cannot run, infer from CSS, layout code, breakpoints, and component 
 Capture evidence according to inspection method:
 
 - Browser evidence: viewport width, page region, interaction state, scroll position, visible symptom.
+- Server evidence: if this audit started or reused a dev / preview / static server, state the URL / port, service ownership, and whether the temporary service was shut down.
 - Code evidence: file path, component name, CSS class, breakpoint, state branch, style token, component prop, semantic structure.
 - Screenshot evidence: visible region, element relationship, clipping, overlap, hierarchy.
+- Screenshot files: when this audit saves screenshots, list the screenshot directory and key files in the report; if screenshots were only used as temporary observation artifacts, state that too.
 - Inferred evidence: risks based on code or screenshot must be labeled as untested or needs verification.
 - Systemic evidence: when the same issue appears across pages, components, or states, record the shared cause such as token inconsistency, mixed control systems, missing breakpoint strategy, or confused scroll layering.
 
@@ -262,6 +286,7 @@ Use the report structure and omission rules from `references/checklists/ui-audit
 - If you find a blocking Critical issue, stop digging for Minor polish and report risk plus fix order.
 - In Quick Audit, stop after finding a Critical issue or 5 to 8 obvious Major issues, then give fix order.
 - In Standard Audit, stop when Top Findings cover the meaningful risks; do not continue into low-value polish or deep details.
+- In Focused Audit, expand systemic issues and risk viewports first; if Top Findings already explain the main risks, do not chase low-value Minor polish or full scoring.
 - In Deep Audit, prioritize systemic issues over scattered details; merge similar Minor issues instead of piling them up.
 - If evidence is insufficient, stop inferring and mark it as `Open Questions` or needs verification.
 

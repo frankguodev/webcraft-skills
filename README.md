@@ -2,7 +2,7 @@
 
 English | [中文](./README_zh_CN.md)
 
-UI audit and fix skill for Codex and Claude Code, for inspecting and repairing rough AI-generated web UI.
+UI audit and fix skill pack for Codex and Claude Code, focused on inspecting and repairing rough AI-generated web UI.
 
 AI coding tools can generate code quickly, but their UI often feels too crowded, flashy, inconsistent, or obviously AI-generated.
 
@@ -14,7 +14,7 @@ Webcraft Skills is a UI quality system for AI agents.
 
 It is not a UI framework, design system, component library, or product builder.
 
-The current verified scope is focused: **audit existing UI and fix confirmed audit findings**.
+The current verified scope is focused: **audit existing UI and fix confirmed audit findings**. The installable skill is `webcraft-ui`; the npm package is `webcraft-skills`.
 
 The broader goal is:
 
@@ -25,6 +25,20 @@ The broader goal is:
 - help AI act more like a senior UI/UX and frontend reviewer
 
 The currently tested workflows are audit and fix. Claude Code command prompt files are included, with `/ui-audit` and `/ui-fix` as the recommended stable commands. In Codex, use `/skills`, `$webcraft-ui`, or explicit natural-language invocation.
+
+---
+
+# Stable Scope
+
+Use this package when you want an AI agent to:
+
+- audit an existing page, component, feature flow, screenshot, localhost app, or group of pages
+- find UI problems with evidence, severity, affected viewport, and fix direction
+- fix confirmed audit/review findings without casually redesigning the product
+- preserve the existing visual system, business logic, content, and technical stack
+- verify repaired pages with build checks and browser/page-open checks when possible
+
+It is not yet a stable general-purpose website builder. Build, polish, review, preset, Cursor, and plain-prompt adapters are still experimental or documentation-level capabilities.
 
 ---
 
@@ -85,6 +99,7 @@ In Codex, invoke `webcraft-ui` with natural language. Include the audit depth, t
 ```text
 Use webcraft-ui to run a Standard Audit on the current website.
 Use webcraft-ui to run a Quick Audit on the homepage and only report obvious issues.
+Use webcraft-ui to run a Focused Audit on the admin pages before launch, but keep it practical.
 Use webcraft-ui to run a Standard Audit on the upload flow, focusing on forms, states, and mobile.
 Use webcraft-ui to run a Deep Audit on all admin pages before launch.
 ```
@@ -96,6 +111,7 @@ In Claude Code, use the installed slash command prompts. Text after the command 
 ```text
 /ui-audit Standard Audit for the whole site
 /ui-audit Quick Audit for the homepage, only report obvious issues
+/ui-audit Focused Audit for admin pages before launch, keep it practical
 /ui-audit Standard Audit for the upload flow, focusing on forms, states, and mobile
 /ui-audit Deep Audit for all admin pages before launch
 ```
@@ -106,13 +122,21 @@ In Claude Code, use the installed slash command prompts. Text after the command 
 
 Audit depth:
 
-- `Quick Audit`: fast pass for "take a quick look" requests. Reports only Critical and obvious Major issues, up to 5 findings.
-- `Standard Audit`: default mode. Reports Critical, Major, and a small number of high-value Minor issues, usually 8 to 12 findings.
-- `Deep Audit`: full pass for launch readiness or strict review. Uses the full audit system, scoring model, content stress tests, and more viewport checks.
+- `Quick Audit`: fast pass for "take a quick look" requests. Reports only Critical and obvious Major issues, up to 8 findings.
+- `Standard Audit`: default practical mode. Reports Critical, Major, and a small number of high-value Minor issues, usually 8 to 16 findings.
+- `Focused Audit`: deeper practical audit for serious review without the full cost of Deep Audit. No score by default, up to 32 findings, and expands viewports only when risk signals justify it.
+- `Deep Audit`: full pass for launch readiness or strict review. Uses the full audit system, scoring model, content stress tests, broader viewport coverage, and deeper checks.
 
-These three audit depths now use structured budgets for finding counts, severity scope, scoring expectations, and viewport coverage, so agents are less likely to make Quick Audit too heavy or Deep Audit too shallow.
+These audit depths use structured budgets for finding counts, severity scope, scoring expectations, viewport coverage, and output detail, so agents are less likely to make light audits too heavy or deep audits too shallow.
 
-Default viewport checks are 375px, 768px, and 1280px. Deep Audit also checks smaller mobile widths, larger tablet widths, 1440px, and 1920px when the project can be run or inspected that way.
+Default viewport checks start from 375px mobile and 1280px desktop. Standard may add 768px when useful. Focused adds tablet, wide desktop, or small-mobile viewports by risk. Deep expands to a broader matrix including small mobile, tablet, large desktop, and wide desktop when the project can be run or inspected that way.
+
+Browser evidence:
+
+- When audit opens a browser, it records viewport, page region, interaction state, scroll position, and visible symptoms.
+- If screenshots are saved, audit reports the screenshot directory and key files. Deep Audit defaults to `examples/reports/assets/audit/<audit-run>/`.
+- If audit starts a temporary dev / preview / static server, it records URL / port and shuts the temporary service down afterward unless you ask to keep it running.
+- If audit cannot run the page, it marks layout, hover, focus, overlay, and responsive conclusions as static inference instead of verified browser results.
 
 Common audit targets:
 
@@ -157,6 +181,14 @@ Common fix scopes:
 
 `Fix` preserves the existing visual system, copy, business logic, and technical stack by default. Unless you explicitly request a redesign or specify a preset, it should not turn the page into a different visual direction.
 
+Fix verification:
+
+- Fix aligns verification with the target the user would actually open: command, URL / port, route, auth state, data state, and operation path when available.
+- Build passing is not treated as proof that the page is usable. When the page can run, fix opens the affected page or route and checks for blank screens, runtime errors, error boundaries, missing key assets, broken initialization, and obvious console errors.
+- If fix starts a temporary dev / preview / static server, it records the command and URL / port, then shuts the temporary service down after verification.
+- If screenshots are generated during fix, they are saved under `examples/reports/assets/fix/<fix-run>/` when possible, with `before` / `after` naming when both phases are captured.
+- When fixing findings from `Focused Audit`, fix prioritizes Top Findings, systemic Major issues, and risk viewports without expanding into a Deep-level rewrite.
+
 ## Cursor
 
 Cursor support is not part of the stable install path yet. For now, use the audit and fix guidance manually if you know how to configure Cursor Project Rules.
@@ -177,7 +209,7 @@ For user-level defaults and priority rules, see [`docs/configuration.md`](./docs
 
 Stable:
 
-- audit UI quality with Quick, Standard, or Deep Audit modes
+- audit UI quality with Quick, Standard, Focused, or Deep Audit modes
 - fix confirmed audit findings
 
 Experimental / not yet fully tested:

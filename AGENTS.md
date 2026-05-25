@@ -11,6 +11,8 @@
 - 不要手动同时维护 `core/` 和 `skills/webcraft-ui/references/` 两份内容，除非正在修同步脚本本身。
 - 如果发现 `skills/webcraft-ui/references/` 与 `core/` 不一致，以 `core/` 为准，然后重新同步。
 
+- 每次修改变更的信息都要放入`CHANGELOG_zh_CN.md`中，注意时间、版本和格式。
+
 
 ## 文件职责
 

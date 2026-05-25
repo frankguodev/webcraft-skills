@@ -15,7 +15,7 @@
 
 ## 总原则
 
-1. 先确认审查对象：单页、组件、功能模块还是整站。Rubric 是判断库，不是每次 audit 都要完整执行的任务清单；实际深度由 `Quick / Standard / Deep Audit` 决定。
+1. 先确认审查对象：单页、组件、功能模块还是整站。Rubric 是判断库，不是每次 audit 都要完整执行的任务清单；实际深度由 `Quick / Standard / Focused / Deep Audit` 决定。
 2. 先看核心功能能否完成，再看信息是否清楚，然后看视觉体系、响应式、状态和精致度。
 3. 修复建议默认保留原主题风格。只有用户明确要求 redesign，或当前视觉方向本身阻断理解/使用时，才建议重做方向。
 4. 有浏览器环境时优先实测；没有实测时必须说明“未实测”，并把基于代码/结构推断的风险写清楚。
@@ -262,6 +262,7 @@ Fix(修复建议):
 - 中文报告使用模板中的双语字段标签，例如 `Location(位置):`、`Evidence(证据):`、`Impact(影响):`、`Fix(修复建议):`，不要简化成英文-only 字段。
 - `Quick Audit` 可以省略 `Coverage(覆盖范围)`、`Artifacts(证据产物)`、`Score(评分)` 和 `Minor`。
 - `Standard Audit` 可省略 `Score(评分)` 和 `Artifacts(证据产物)`，除非用户要求或已经生成截图、报告文件等证据产物。
+- `Focused Audit` 默认省略 `Score(评分)`，保留 `Coverage(覆盖范围)`、`Top Findings`、`Fix Order(修复顺序)` 和必要的 `Open Questions(待确认问题)`；如果生成截图、浏览器证据或报告文件，保留 `Artifacts(证据产物)`。
 - `Deep Audit` 保留 `Coverage(覆盖范围)`、`Open Questions(待确认问题)`、`Pass Notes(通过说明)`、`Fix Order(修复顺序)` 和 `Score(评分)`；如果使用了截图、浏览器或写入文件，保留 `Artifacts(证据产物)`。
 - `Top Findings` 用于让用户先看到最重要风险；如果问题很少，可以省略。
 - 每个 finding 必须有具体证据。
@@ -278,6 +279,7 @@ Fix(修复建议):
 
 - Quick Audit：按 `references/modes/audit-modes.json` 的预算执行，只做高风险视口/当前视口扫描。
 - Standard Audit：默认检查或推断 `375px` 和 `1280px`，必要时增加 `768px`。
+- Focused Audit：默认检查或推断 `375px` 和 `1280px`，按风险增加平板、宽屏或小手机视口。
 - Deep Audit：按 mode 文件扩大到小手机、大手机、平板、大桌面和宽屏。
 
 不能运行页面时，仍要基于 CSS、布局代码和断点推断风险，并明确哪些视口未验证。

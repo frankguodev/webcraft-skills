@@ -3,6 +3,57 @@
 English | [中文](./CHANGELOG_zh_CN.md)
 
 ---
+
+## v0.1.23 - 2026-05-25
+
+### Fix
+
+- Upgraded `fix-ui` page-open verification into page-and-path verification with separate direct route, client navigation, and deep-link checks.
+- Added entry surface, adjacent navigation surface, and downstream exit rechecks to reduce blind spots from validating only the target URL.
+- Added risk-based verification cost control: pure visual touch-ups stay lightweight, while high-risk route / navigation / data / client-state fixes use the full path matrix.
+- Added Next.js App Router / RSC / `next/link` guidance clarifying that build success, HTTP 200, or returned SSR HTML cannot replace client navigation verification.
+- Added fallback rules for failed browser automation: curl, HTTP checks, or passing builds cannot be reported as browser path verification; unverified items and residual risk must be output.
+
+### Build
+
+- Strengthened the `build-ui` pre-build gate around build target, project environment, entry location, route/navigation, visual source, content source, and verification path.
+- Added content truthfulness rules to avoid inventing customers, prices, metrics, cases, or business claims in landing pages, product pages, and high-fidelity builds.
+- Added route and navigation integration requirements for existing projects so new pages are reachable and have a way out.
+- Added a post-build verification gate scaled by static HTML, existing project page, navigation entry, component, and pure visual local build risk.
+- Added output fields for entry / route, navigation integration, placeholder content, unverified items, and residual risk.
+- Simplified `build-ui` modes into Site / Page / Feature build scopes, removed production quality as a separate mode, and clarified that every build should meet a production-grade baseline.
+- Compressed the `build-ui` workflow structure by merging repeated input, reference, preset, implementation-boundary, quality-baseline, and verification rules to reduce runtime token cost.
+
+## v0.1.22 - 2026-05-24
+
+Focused audit and safer fix verification release.
+
+### Audit
+
+- Added `Focused Audit`, a practical deep-review mode between Standard and Deep.
+- Set `Focused Audit` to no default scoring, up to 32 findings, and risk-triggered viewport expansion.
+- Clarified audit mode budgets, module loading, viewport behavior, screenshot artifacts, and temporary dev-server cleanup.
+- Added screenshot artifact guidance for browser-based audit runs.
+
+### Fix
+
+- Strengthened page-open verification so fixes align with the user's real command, URL / port, route, auth state, data state, and operation path when available.
+- Added temporary dev / preview / static server lifecycle rules to avoid leaving ports occupied after verification.
+- Added screenshot artifact guidance for fix runs, including before/after naming.
+- Added `Focused Audit` source handling so fix prioritizes Top Findings, systemic Major issues, and risk viewports without expanding into Deep-level refactoring.
+- Added output fields for source mode, verification target, dev server status, and screenshots.
+
+### Review
+
+- Kept `review-ui` lightweight for code, diff, and screenshot review by removing default browser, screenshot, and temporary service handling.
+- Moved issues that require a real page, multiple viewports, or interaction states into `Open Questions`, with follow-up guidance for `audit-ui` or post-fix verification in `fix-ui`.
+
+### Docs
+
+- Reworked README structure around stable scope, installation, usage, audit modes, fix verification, artifacts, and capability status.
+- Updated audit/fix examples to include `Focused Audit`.
+- Updated public capability descriptions to reflect the current stable audit/fix scope.
+
 ## v0.1.2 - 2026-05-22
  - Optimize audit and fix functions
 

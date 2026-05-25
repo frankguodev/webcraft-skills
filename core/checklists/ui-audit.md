@@ -15,7 +15,7 @@ This file is the main index and judgment framework. Detailed inspection paths li
 
 ## General Principles
 
-1. Confirm the target first: page, component, feature module, or whole site. The rubric is a judgment library, not a task list to fully execute every time; depth is controlled by `Quick / Standard / Deep Audit`.
+1. Confirm the target first: page, component, feature module, or whole site. The rubric is a judgment library, not a task list to fully execute every time; depth is controlled by `Quick / Standard / Focused / Deep Audit`.
 2. Check whether the core function can be completed first, then whether information is clear, then visual system, responsiveness, states, and polish.
 3. Fix suggestions preserve the existing theme by default. Recommend redesign only when the user asks for redesign or the current direction itself blocks understanding or use.
 4. Prefer browser verification when available. If not verified in a browser, say so and explain which risks are inferred from code or structure.
@@ -261,6 +261,7 @@ Rules:
 
 - `Quick Audit` may omit `Coverage`, `Artifacts`, `Score`, and `Minor`.
 - `Standard Audit` may omit `Score` and `Artifacts` unless requested or screenshots/report files were produced.
+- `Focused Audit` omits `Score` by default, keeps `Coverage`, `Top Findings`, `Fix Order`, and necessary `Open Questions`; if screenshots, browser artifacts, or report files were produced, keep `Artifacts`.
 - `Deep Audit` keeps `Coverage`, `Open Questions`, `Pass Notes`, `Fix Order`, and `Score`; if screenshots, browser artifacts, or files were produced, keep `Artifacts`.
 - Use `Top Findings` to put the most important risks first; omit it when there are very few issues.
 - Every finding needs concrete evidence.
@@ -277,6 +278,7 @@ Rules:
 
 - Quick Audit: follow `references/modes/audit-modes.json`; scan only high-risk/current viewport.
 - Standard Audit: default to checking or inferring `375px` and `1280px`, adding `768px` when useful.
+- Focused Audit: default to checking or inferring `375px` and `1280px`, adding tablet, wide desktop, or small mobile viewports by risk.
 - Deep Audit: expand according to the mode file across small mobile, large mobile, tablet, large desktop, and wide desktop.
 
 If the page cannot run, still infer risk from CSS, layout code, and breakpoints, and clearly list unverified viewports.

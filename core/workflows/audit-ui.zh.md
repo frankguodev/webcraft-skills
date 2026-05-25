@@ -9,7 +9,7 @@
 - 本 workflow 只定义如何执行 audit：选择模式、收集上下文、验证视口、采集证据、组织报告、决定是否转入修复。
 - 具体什么算问题、如何分级、评分、模块含义、报告归属和输出规则，读取 `references/checklists/ui-audit.zh.md`。
 - 本 workflow 负责决定本次 audit 要读哪些模块；不要把模块选择规则复制成报告内容。
-- `Quick / Standard / Deep Audit` 的硬预算读取 `references/modes/audit-modes.json`；本文件负责解释这些预算如何执行。
+- `Quick / Standard / Focused / Deep Audit` 的硬预算读取 `references/modes/audit-modes.json`；本文件负责解释这些预算如何执行。
 - 不要把 rubric 逐条复制进报告；只输出有证据、有影响、真实存在的问题。
 - 不要同时读取英文和中文 reference，除非任务是翻译、双语对齐或一致性检查。
 
@@ -23,6 +23,7 @@
 
 - `Quick Audit`：用户说“快速看看”“有没有大问题”。只报告 Critical 和明显 Major。
 - `Standard Audit`：默认模式。报告 Critical、Major 和少量有价值的 Minor。
+- `Focused Audit`：用户说“认真检查”“聚焦深查”“上线前先看主要风险”“不要太重但要仔细”。比 Standard 更深入，但不默认评分，不默认完整分类报告；最多 32 条 findings。
 - `Deep Audit`：用户说“全面排查”“严格 audit”“准备上线”“找细节问题”。使用完整 audit 体系：主 rubric、相关 modules、评分模型、Content Stress Test、更多视口，并额外检查媒体比例、表格/富文本/代码块、滚动行为、原生控件、动效和高对比度风险。
 
 如果用户没有指定，使用 `Standard Audit`。
@@ -33,6 +34,7 @@
 
 - `Quick Audit`：只做主路径和当前可见界面的风险扫描。页面可运行时，最多检查当前视口或 1 个最关键视口；只做明显的布局/可点击/响应式 smoke check。最多 8 条 findings，只报告 Critical 和明显 Major，不做评分，不输出 Minor，不展开长尾细节。
 - `Standard Audit`：默认实用模式。覆盖主要页面/功能和 2 个关键视口：1280px 桌面 + 1 个移动端视口；做一次首屏布局关系检查和 pointer / hover smoke check。先找Critical / Major，再挑少量高价值的Minor。通常 8 到 16 条 findings，不输出完整分类报告，不做完整 Content Stress Test，不默认评分。
+- `Focused Audit`：聚焦深查模式。覆盖主要页面/功能、关键视口和风险触发视口；最多 32 条 findings，不默认评分，不输出完整分类报告。先用核心视口定位系统性 Critical / Major，再按风险扩展平板、宽屏、小手机、媒体、滚动、原生控件和内容压力检查。
 - `Deep Audit`：系统展开主 rubric、相关 modules、评分模型、Content Stress Test、更多视口和深度审查细项。适合上线前、严格排查或用户明确要求“全面”。即便是 Deep Audit，也先输出 Top Findings，再按分类展开，不要把所有通过项写进报告。
 
 任何模式都不要为了“覆盖分类”而制造 finding。发现多个同源问题时，优先合并为一个系统性 finding。
@@ -86,6 +88,7 @@
 
 - `Quick Audit`：默认不展开模块。只有当问题明显命中时，读取相关 1 个模块，例如移动端崩坏读 `responsive`，可点击信号缺失读 `components-states`，首屏关系异常读 `layout`。
 - `Standard Audit`：默认优先考虑 `layout`、`components-states`、`responsive`。如果页面包含表单/筛选/上传/批量操作，补读 `forms-controls`；如果主要风险是风格拼贴、token 混乱或主题保持，补读 `visual-system`。
+- `Focused Audit`：默认读取 Standard 相关模块，并按页面风险补读 `forms-controls`、`visual-system`、`accessibility` 或 `ai-template-smell`。不要为了“完整”读取无关模块；优先覆盖会影响核心任务、响应式稳定、控件一致性和主题成熟度的模块。
 - `Deep Audit`：按页面类型和风险读取所有相关模块，可包括 `accessibility` 和 `ai-template-smell`。但仍然只报告有证据、有影响、有修复价值的问题，不把模块条目当作检查清单逐项输出。
 
 模块触发规则：
@@ -166,6 +169,12 @@
 
 如果项目可运行，优先用浏览器验证真实布局和交互，并可用截图记录证据。视口数量按模式控制，不要把所有 audit 都跑成 Deep Audit。
 
+启动或复用服务时必须管理生命周期：
+
+- 如果复用用户已启动的 localhost / dev server，只记录 URL / 端口，不要擅自关闭。
+- 如果本次 audit 为浏览器验证临时启动 dev / preview / static server，记录启动命令、URL / 端口和进程信息。
+- 审查结束后关闭本次 audit 临时启动的服务，避免占用端口；只有用户明确要求保留运行，或关闭会影响用户已有服务时才不关闭，并在报告中说明。
+
 `Quick Audit`：
 
 - 检查当前视口，或用户最关心的 1 个关键视口。
@@ -179,9 +188,20 @@
 
 `Standard Audit` 可按页面类型增加 768px tablet，但不是强制矩阵。只有当问题明显涉及平板断点、侧栏、表格或多列布局时才补查。
 
+`Focused Audit` 默认检查：
+
+- 375px mobile
+- 1280px desktop
+
+`Focused Audit` 按风险增加视口：
+
+- 平板/侧栏/表格/多列风险：768px 或 834px
+- 宽屏构图/大屏留白/容器约束风险：1440px 或 1920px
+- 移动端已经出现裁切、横向滚动或密度风险：360px 或 390px
+
 如果时间或环境只能检查部分视口，至少检查当前问题最可能出现的 1 个视口，并在报告中写清未验证项。
 
-`Standard Audit` 和 `Deep Audit` 的浏览器检查应额外扫一遍首屏布局关系：
+`Standard Audit`、`Focused Audit` 和 `Deep Audit` 的浏览器检查应额外扫一遍首屏布局关系：
 
 - hero 两栏、搜索区、主要视觉容器和下一段内容之间是否有压住、断裂、错位或空洞感。
 - mockup、插画、截图、图表或装饰容器是否内容过少但占位过大，导致首屏构图失衡。
@@ -203,6 +223,8 @@ Deep Audit 还应尽量检查：
 - 数据内容：表格、代码块、富文本、长列表和多列内容在移动端、平板和大屏的降级方式。
 - 状态和可访问性：focus-visible、键盘路径、forced colors / 高对比度风险、reduced motion。
 
+Deep Audit 如果实际打开浏览器并生成截图，优先把截图保存到当前项目的 `examples/reports/assets/audit/` 下，按本次审查建立子目录，例如 `examples/reports/assets/audit/2026-05-24-home/`。文件名应包含页面或区域、视口和状态，例如 `home-375.png`、`dashboard-1280-filter-open.png`。如果项目不可写、用户指定了其他目录，或只能使用工具内临时截图，也要在报告中说明截图保存位置或未落盘原因。
+
 如果无法运行页面：
 
 - 基于 CSS、布局代码、断点和组件结构做静态推断。
@@ -214,8 +236,10 @@ Deep Audit 还应尽量检查：
 根据审查方式记录证据：
 
 - 浏览器证据：视口宽度、页面区域、交互状态、滚动位置、可见现象。
+- 服务证据：如果本次 audit 启动或复用了 dev / preview / static server，报告中写明 URL / 端口、服务来源，以及是否已关闭临时服务。
 - 代码证据：文件路径、组件名、CSS 类、断点、状态分支、样式 token、组件 props、语义结构。
 - 截图证据：截图区域、可见元素、层级关系、裁切或遮挡现象。
+- 截图文件：如果本次 audit 保存了截图，在报告中列出截图目录和关键截图文件；如果截图只用于临时观察且没有落盘，也要说明。
 - 推断证据：基于代码或截图推断的风险，必须标明“未实测”或“需要验证”。
 - 系统性证据：同类问题跨多个页面、组件或状态出现时，记录共同根因，例如 token 不一致、控件体系混用、断点策略缺失或滚动层级混乱。
 
@@ -275,6 +299,7 @@ Deep Audit 还应尽量检查：
 - 已经找到会阻断使用的 Critical 时，先停止深挖 Minor，优先输出风险和修复顺序。
 - Quick Audit 中，找到 Critical 或 5 到 8 个明显 Major 后即可停止，直接给修复顺序。
 - Standard Audit 中，如果 Top Findings 已覆盖主要风险，不继续列低价值 polish 或深度细项。
+- Focused Audit 中，优先扩展系统性问题和风险视口；如果 Top Findings 已经解释主要风险，不继续追逐低价值 Minor 或全量评分。
 - Deep Audit 中，可以继续展开，但要把系统性问题优先于零散细节；同类 Minor 应合并，不逐点堆叠。
 - 如果证据不足，不继续推断；把问题放入 `Open Questions` 或标注需要验证。
 
