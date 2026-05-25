@@ -117,6 +117,19 @@ Scale verification by build risk. Do not run every build as a full audit:
 - New feature module: confirm it renders in the target page, demo container, or actual usage location, and check main entry points, states, and action feedback.
 - Pure visual local build: light engineering verification and target-area check are enough; small-component tasks do not need to become a full build verification matrix.
 
+If verification needs to start a dev / preview / static server:
+
+- First check whether the target port already has a service; when reusing an existing service, record the URL / port and do not shut it down.
+- If this build starts a temporary service, record the command, URL / port, startup directory, and process information.
+- After verification, shut down the service started by this build and check whether the port is still occupied.
+- On Windows, npm, Next.js, Vite, Storybook, and similar multi-process launch paths, do not rely only on the parent PID to decide the service is closed; if remaining port ownership cannot be confirmed as this build run's service, do not shut it down and state that in the output.
+
+If verification generates files:
+
+- Delivered pages, components, styles, and config must be placed in the real project location or user-specified path, not under `examples/reports`.
+- Verification screenshots should be saved under `examples/reports/assets/build/<build-run>/`, with filenames that include page or region, viewport, and state.
+- Temporary preview files, one-off mock data, verification HTML / scripts, or downloads should be deleted before output by default; retain them only when the user asks or when they are evidence artifacts, then place them under `examples/reports/assets/build/<build-run>/` and state the path.
+
 If browser, dev server, or screenshot verification fails, do not replace page usability verification with a passing build, HTTP 200, or file existence. Report `Not verified` and residual risk.
 
 ## 9. When To Move To Another Workflow
@@ -159,11 +172,15 @@ Build does not own all quality work. It creates a usable first version and perfo
 ## Verification
 
 - Ran:
+- Temporary service:
+- Artifacts:
 - Not verified:
 - Residual risk:
 ```
 
 Do not output only abstract design advice. Implement when possible and report verification.
+
+Before output, confirm temporary verification files created during build were deleted. Retained files must be delivered files, user-requested retained data, or evidence artifacts, and must be listed under `Changed Files` or `Verification`.
 
 ## 11. Prohibited
 
@@ -176,3 +193,4 @@ Do not output only abstract design advice. Implement when possible and report ve
 - Do not add meaningless cards, badges, icons, gradients, or motion just to fill the page.
 - Do not expand a simple page into backend, auth, database, and complex state management.
 - Do not fabricate lint, build, browser, or screenshot verification results.
+- Do not leave a dev / preview / static server started by this build running in the background; also do not shut down a service that existed before build or cannot be confirmed as owned by this build run.

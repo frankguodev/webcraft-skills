@@ -16,7 +16,7 @@ Polish 是克制润色，不是 redesign。默认不换风格、不套 preset、
 - typography：字号层级乱、行高压迫、标题断行不自然。
 - color：颜色层级不清、强调色过度、对比度不足。
 - radius / border / shadow：圆角、边框、阴影不成体系。
-- states：hover、focus-visible、disabled、loading、error 缺失或粗糙。
+- states：cursor / pointer、hover、focus-visible、disabled、loading、error 缺失或粗糙。
 - responsive：移动端拥挤、溢出、按钮太小、媒体比例不稳。
 - template smell：文案空泛、badge 太多、装饰多于信息。
 
@@ -45,6 +45,7 @@ Polish 是克制润色，不是 redesign。默认不换风格、不套 preset、
 - 来源是 audit findings：只处理视觉成熟度、模板噪音、状态细节、非阻断响应式和高价值 Minor；Critical 和阻断性 Major 先交给 `fix-ui`。
 - 来源是 `Focused Audit`：优先 polish Top Findings 中与视觉系统、AI 模板感、控件一致性和风险视口相关的问题，不扩展成 Deep Polish。
 - 来源是 `Deep Audit`：按 Fix Order 中排在可用性问题之后的 polish 项处理，不重新跑完整 audit。
+- 来自 review / audit 的 finding 只能作为 polish 诊断线索；执行前必须重新确认它仍属于本次 polish 范围，且不会改变信息结构或重复同页已有内容。
 - 用户只是说“更精致”但页面风险不明：先轻量诊断；发现系统性风险时建议 audit。
 
 ## 4. 保留与收敛
@@ -60,6 +61,7 @@ Polish 是克制润色，不是 redesign。默认不换风格、不套 preset、
 
 - 用现有 token 修，不为 polish 新造一套颜色、圆角、阴影或 spacing 体系。
 - 能局部修就不重构组件；能删除噪音就不添加新装饰。
+- Polish 默认不新增页面级信息模块、数据概览、排行榜、地图、推荐区或内容集合；需要新增这些内容时，先停止并说明这已超出 polish。
 - 收敛颜色、字体层级、圆角、边框、阴影和 spacing。
 - 统一组件状态，而不是增加新的视觉效果。
 
@@ -99,7 +101,7 @@ Deep Polish 遇到以下情况要停止并给 plan 或转 workflow：
 3. 信息层级：首屏主次、标题/正文节奏、CTA 层级。
 4. 视觉 token：spacing、font scale、color、radius、border、shadow。
 5. AI 模板感：过多 badge、bento grid、渐变光斑、空泛 slogan、装饰图标。
-6. 微交互：hover、active、transition、细节对齐。
+6. 微交互：cursor / pointer、hover、active、focus-visible、transition、图标文字对齐和点击热区。
 
 不要先加动效或装饰。真正的精致通常来自更清晰的层级和更稳定的系统。
 
@@ -109,8 +111,9 @@ Deep Polish 遇到以下情况要停止并给 plan 或转 workflow：
 - Typography：减少层级数量，控制字号/字重跳跃，改善 line-height、段落宽度和标题换行。
 - Color：保留品牌色，限制强调色范围，先保证文字对比度和状态可识别。
 - Radius / Border / Shadow：收敛小型 token scale；边框用于结构，阴影只用于真实层级。
-- Components / States：补齐 hover、active、focus-visible、disabled、loading、empty、error、success，且状态反馈不改变布局尺寸。
-- AI Template Smell：删除无意义 badge、装饰图标、重复 CTA 和填空间卡片，用真实内容和清楚结构替代空泛口号。
+- Components / States：补齐真实可点击元素的 cursor / pointer、hover、active、focus-visible、disabled、loading、empty、error、success；状态反馈不应改变元素尺寸、相邻布局或滚动位置。
+- Icons / Click targets：统一图标尺寸、线宽、文字基线和图标文字间距；图标按钮和紧邻操作的点击 / 触控热区要足够清楚，不要只靠视觉小图标承担操作。
+- AI Template Smell：优先删除、弱化或收敛无意义 badge、装饰图标、重复 CTA 和填空间卡片；只有不重复同页已有信息且服务当前任务时，才补少量辅助内容。
 
 如果 token 混乱已经跨页面扩散，停止页面级 polish，建议先做 audit 或设计系统整理。
 
@@ -131,17 +134,21 @@ Polish 不需要完整读取 audit checklist。只有来源不清或边界需要
 润色后检查：
 
 - 375px、768px、1280px 关键视口。
-- 长标题、长按钮文案、中英文混排。
-- hover、active、focus-visible、disabled、loading、error。
+- 长标题、长按钮文案、中英文混排、长标签、badge、chip 和错误文案。
+- 真实可点击元素的 cursor / pointer、hover、active、focus-visible、disabled、loading、error。
+- 图标与文字是否对齐，图标线宽和尺寸是否统一，图标按钮热区是否足够。
 - 弹窗、菜单、表单和导航是否仍可用。
 - 视觉 token 是否更统一，是否引入新的不一致。
 - 是否仍保留原页面风格和产品含义。
+- 信息重复：确认没有把同页已有列表、统计、分类、标签或 CTA 复制到新的装饰区或摘要区。
 
 页面可运行且环境允许时，打开目标页面做轻量复检：
 
 - 对齐用户实际入口：启动命令、URL / 端口、路由、登录态和主要状态。
-- 如果本次 polish 临时启动 dev / preview / static server，记录命令、URL / 端口和进程信息；复检结束后关闭临时服务。复用用户已有服务时只记录，不擅自关闭。
-- 如果生成截图，优先保存到 `examples/reports/assets/polish/` 下，按本次润色建立子目录；文件名包含页面或区域、视口和阶段，例如 `home-375-before.png`、`home-375-after.png`。
+- 如果本次 polish 临时启动 dev / preview / static server，记录命令、URL / 端口和进程信息；复检结束后关闭临时服务，并检查目标端口是否仍被占用。复用用户已有服务时只记录，不擅自关闭。
+- 在 Windows、npm、Next.js、Vite、Storybook 等多进程启动场景下，不要只依赖启动返回的父 PID；无法确认端口残留属于本次 polish 时，不要关闭，并在 `Temporary service(临时服务)` 中说明。
+- 如果生成截图，优先保存到 `examples/reports/assets/polish/` 下，按本次润色建立子目录；`before` / `after` 截图放在同一目录，文件名包含页面或区域、视口和阶段，例如 `home-375-before.png`、`home-375-after.png`。
+- 临时对照文件、视觉草稿、一次性截图、验证脚本或临时数据默认在输出前删除；只有用户要求保留或作为证据产物保留时才放入 `examples/reports/assets/polish/<polish-run>/` 并在 `Screenshots(截图)` 或 `Temporary service(临时服务)` 中说明。
 - 无法打开浏览器、启动服务或保存截图时，说明原因和剩余风险。
 
 ## 10. 输出格式
@@ -173,6 +180,8 @@ Polish 不需要完整读取 audit checklist。只有来源不清或边界需要
 
 输出要说明具体收敛了哪些视觉细节、删除了哪些模板噪音，以及是否保留原风格。
 
+输出前确认 polish 过程中创建的临时文件已删除；保留的文件必须是用户要求保留、证据产物或真实项目改动，并在输出中列明路径。
+
 ## 11. 禁止事项
 
 - 不要把 polish 变成 redesign，或在用户未指定 preset 时强行套用 preset。
@@ -183,3 +192,4 @@ Polish 不需要完整读取 audit checklist。只有来源不清或边界需要
 - 不要用隐藏 overflow、裁切内容、缩小到不可读或删除必要信息来制造“看起来更干净”的假 polish。
 - 不要伪造浏览器验证结果。
 - 不要把本次验证临时启动的 dev / preview / static server 留在后台占用端口，除非用户明确要求保留运行。
+- 不要关闭 polish 开始前已存在或无法确认属于本次 polish 的服务。

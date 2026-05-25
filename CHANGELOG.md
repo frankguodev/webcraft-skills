@@ -4,6 +4,57 @@ English | [中文](./CHANGELOG_zh_CN.md)
 
 ---
 
+## v0.1.24 - 2026-05-25
+
+### Review
+
+- Lightly integrated running-page verification constraints into `review-ui` while keeping review from starting browsers or local services by default.
+- Required mixed reviews that run a page to distinguish reused existing services from temporary services started by the review, with a short output note for service ownership, URL / port, and final state.
+- Added post-shutdown port checks for temporary services so Windows, npm, Next.js, Vite, Storybook, and similar multi-process launches are not treated as closed just because the parent PID stopped.
+- Added review evidence artifact placement rules: review does not write files by default; saved screenshots, browser evidence, or report files use `examples/reports/assets/review/<review-run>/`, and other temporary files are deleted before final.
+
+### Audit
+
+- Strengthened `audit-ui` temporary dev / preview / static server lifecycle rules by requiring target-port and process-residue checks after shutdown.
+- Added service-evidence reporting for port or process residue so audit reports do not record startup details while omitting cleanup state.
+- Expanded audit screenshot placement to any audit mode that saves screenshots, kept report-file writing opt-in, and made temporary scripts, pages, data, and downloads delete-by-default before reporting.
+
+### Fix
+
+- Strengthened service ownership management in `fix-ui` page-and-path verification by checking whether the target port already has a service before starting a temporary one.
+- Required temporary service cleanup to use port and child-process checks instead of relying only on the parent PID returned at startup.
+- Clarified that fix evidence directories are for screenshots, reports, and artifacts while real fix code goes to real project locations; verification temporary files are deleted before output by default.
+
+### Polish
+
+- Strengthened temporary service shutdown and port checks in `polish-ui` light rechecks.
+- Required unclear remaining port ownership to be preserved instead of shutting down pre-existing services, with the result reported in `Temporary service`.
+- Clarified that polish before / after screenshots and retained evidence share the same `examples/reports/assets/polish/<polish-run>/` directory, while temporary comparison files, drafts, and verification files are deleted by default.
+- Tightened `polish-ui` execution boundaries: review / audit findings are diagnostic clues only, polish does not add page-level information modules by default, decoration reduction starts with subtraction, and rechecks must catch same-page information duplication.
+- Strengthened polish interaction-detail checks for cursor / pointer on truly clickable elements, focus-visible, non-shifting state feedback, icon/text alignment, hit targets, and long label / badge / chip / error-text pressure.
+
+### Build
+
+- Added temporary service lifecycle rules to `build-ui` self-check and verification, covering pre-start port ownership, startup records, post-shutdown port checks, and multi-process launch paths.
+- Added a `Temporary service` output field so build verification can state whether a service was reused, closed, or left with residue.
+- Added build artifact rules: delivered files go to real project locations, verification screenshots and retained evidence go under `examples/reports/assets/build/<build-run>/`, and temporary previews, mocks, verification scripts, and downloads are deleted by default.
+
+### Docs
+
+- Updated README and README_zh_CN to present Audit, Review, Fix, Polish, and Build as the five public workflows instead of limiting the stable scope to audit / fix.
+- Added review, polish, and build usage examples, fit guidance, artifact locations, and temporary-file cleanup notes.
+- Reorganized README usage guidance so examples live under each workflow, and added environment, browser-verification, temporary-service, and temporary-file cleanup tips.
+- Kept Cursor and plain-prompt adapters experimental, and clarified presets as optional visual references.
+- Added acknowledgements to README and README_zh_CN thanking `baoyu-skills`, `mattpocock/skills`, and their authors for inspiration in the AI Agent skill ecosystem.
+- Added a disclaimer to README and README_zh_CN reminding users to review AI agent findings, code changes, generated content, and release risk themselves.
+- Further improved the README reader path with workflow selection guidance, artifact and temporary-file behavior, and FAQ / troubleshooting sections.
+
+### Release
+
+- Updated the package version to `0.1.24` so it matches the changelog version.
+- Tightened `SKILL.md` and slash command entry guidance: Build covers sites, pages, and feature modules; Fix supports user-specified issues; presets are read only when the user chooses one or the workflow explicitly needs preset guidance.
+- Corrected `/ui-review` and `/ui-build` prompt boundaries to avoid treating whole-site health checks as Review or auto-applying presets when none were specified.
+
 ## v0.1.23 - 2026-05-25
 
 ### Fix

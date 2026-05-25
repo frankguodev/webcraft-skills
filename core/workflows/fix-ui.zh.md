@@ -108,12 +108,12 @@
 页面可运行且环境允许时，打开受影响页面、路由或组件预览，并优先验证用户真实路径。验证顺序如下：
 
 1. 对齐验证目标：优先使用用户提供或项目文档中的启动命令、URL / 端口、路由、登录态和操作路径。不要用另一个临时端口、空状态页面、直接 URL 或不同启动模式证明修复已完成，除非能说明两者等价。如果页面可通过导航、菜单、列表、卡片、搜索结果或 CTA 进入，必须验证至少一个真实上游入口；直接访问目标 URL 只能作为补充。
-2. 管理服务来源：如果复用用户已启动的服务，只记录 URL / 端口，不要擅自关闭；如果本次 fix 为验证临时启动 dev / preview / static server，记录启动命令、URL / 端口和进程信息。
+2. 管理服务来源：先确认目标端口是否已有服务。如果复用用户已启动的服务，只记录 URL / 端口，不要擅自关闭；如果本次 fix 为验证临时启动 dev / preview / static server，记录启动命令、URL / 端口、启动目录和进程信息。
 3. 区分路径结果：分别记录 `Direct route check`（直接打开目标 URL）、`Client navigation check`（从真实入口点击进入）、`Deep link check`（刷新或直接深链进入）。路由/页面/client component/数据渲染修复至少覆盖 direct route、client navigation 和 console/runtime error；导航/header/menu 修复至少覆盖一个入口到目标页，以及目标页到相邻页面或核心操作。
 4. 检查页面可用性：至少确认没有白屏、错误边界、hydration/runtime error、关键资源 404、关键交互初始化失败和明显 console error。对 Next.js App Router、RSC、client component 和 `next/link` 路由，必须区分直接加载和客户端跳转；build 通过、HTTP 200 或 SSR HTML 可返回，都不能证明 client navigation 没有 runtime error。
 5. 处理失败和轻量场景：如果页面或路径验证失败且失败来自本次修改，进入 Recovery Gate，先修页面级错误，再继续 UI 复检；如果只修样式但页面入口明确，也做一次轻量打开验证。无法打开浏览器、Playwright、CDP 或截图验证时，只能标记为浏览器验证未完成；不能用 curl、Invoke-WebRequest、HTTP 200 或 build 通过替代浏览器路径验证，并把未覆盖项列为剩余风险。
-6. 保存证据：如果生成截图，优先保存到当前项目的 `examples/reports/assets/fix/` 下，按本次修复建立子目录，例如 `examples/reports/assets/fix/2026-05-25-admin-terms/`。文件名应包含页面或区域、视口、状态和阶段，例如 `terms-375-after.png`、`terms-1280-filter-open-after.png`；如果修复前也截图，使用 `before` / `after` 成对命名。
-7. 清理服务：验证结束后，关闭本次 fix 临时启动的服务，避免占用端口；只有用户明确要求保留运行，或关闭会影响用户已有服务时才不关闭，并在输出中说明。
+6. 保存证据：如果生成截图，优先保存到当前项目的 `examples/reports/assets/fix/` 下，按本次修复建立子目录，例如 `examples/reports/assets/fix/2026-05-25-admin-terms/`。文件名应包含页面或区域、视口、状态和阶段，例如 `terms-375-after.png`、`terms-1280-filter-open-after.png`；如果修复前也截图，使用 `before` / `after` 成对命名。修复代码本身必须写到真实项目位置，不放入 evidence 目录。除用户要求保留、输出中明确列出的截图 / 报告 / 证据产物或真实项目改动外，验证中创建的临时脚本、临时页面、临时数据和一次性下载文件应在输出前删除；无法删除时写入 `Residual risk(剩余风险)`。
+7. 清理服务：验证结束后，关闭本次 fix 临时启动的服务，并检查目标端口是否仍被占用；只有用户明确要求保留运行，或关闭会影响用户已有服务时才不关闭，并在输出中说明。在 Windows、npm、Next.js、Vite、Storybook 等多进程启动场景下，不要把父进程停止等同于服务已关闭；如果端口仍被占用，只清理能确认属于本次 fix 启动进程链的进程，无法确认时不要关闭，并写入 `Dev server(开发服务)` / `Residual risk(剩余风险)`。
 
 ### UI 验证
 
@@ -157,11 +157,14 @@
 
 输出要具体，不要只写“优化了 UI”。说明修了哪个问题、如何修、是否复检。如果本次保存了截图，列出截图目录和关键截图文件；如果只是临时截图或无法落盘，也说明原因。没有完成真实浏览器路径验证时，必须填写 `Not verified` 和 `Residual risk`，不要省略。
 
+如果本次为验证创建过临时文件，输出前确认它们已删除；保留的文件必须是用户要求保留、证据产物或真实项目改动，并列在 `Screenshots(截图)`、`Changed Files(修改文件)` 或 `Residual risk(剩余风险)` 中。
+
 ## 8. 禁止事项
 
 - 不要把 fix 变成 redesign，或在用户未要求时改变主题、明暗模式、品牌方向、页面气质或 preset。
 - 不要因为审美偏好重写页面、做无关重构、换技术栈、引入不必要依赖，或删除用户内容、业务逻辑、真实数据。
 - 不要伪造 lint/build/browser 验证结果；不要在本次修改导致构建失败、页面打不开或关键路由崩溃时结束任务。
 - 不要把本次验证临时启动的 dev / preview / static server 留在后台占用端口，除非用户明确要求保留运行。
+- 不要只停止启动返回的父 PID 就声称服务已关闭；必须以端口或子进程检查作为依据。
 - 不要为了修一个问题引入新的响应式、状态、可访问性或全局视觉回归。
 - 不要用隐藏、裁切、删除内容来伪装修复 overflow、表格、媒体或长文案问题。

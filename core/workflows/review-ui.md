@@ -40,7 +40,7 @@ Confirm or infer:
 - Change type: new UI, component refactor, style adjustment, interaction state, responsive fix, copy change.
 - Page type: landing page, dashboard, app screen, form, docs, portfolio, etc.
 - Existing visual system: current color, type, spacing, radius, border, component style, and page tone.
-- Verification level: code review, screenshot review, static inference, or mixed review.
+- Verification level: code review, screenshot review, static inference, or mixed review; if mixed review needs a running page, first distinguish a reused existing service from a temporary service started by this review.
 
 If the scope looks like a page or site health check, decide whether it should be `audit-ui` instead. Do not compress an Audit request into Review for convenience.
 
@@ -100,6 +100,15 @@ If the scope looks like a page or site health check, decide whether it should be
 - Mark unrun issues as "code-based inference" or "needs runtime verification."
 - If an issue depends on the real page, multiple viewports, or interaction states, put it under `Open Questions` and suggest `audit-ui` or post-fix verification in `fix-ui`.
 
+### Running Page Verification
+
+Review does not start a browser or local service by default. Use light runtime verification only when the current finding needs real page, viewport, or interaction evidence.
+
+- Prefer reusing a user-started localhost / dev server; record only the URL / port and do not shut it down.
+- If this review starts a temporary dev / preview / static server, record the command, URL / port, and process information, then shut it down before final.
+- After shutdown, check whether the target port is still occupied; on Windows, npm, Next.js, Vite, Storybook, and similar multi-process launch paths, do not rely only on the parent PID returned at startup.
+- If the port is still occupied, clean up only processes that can be confirmed as started by this review; if ownership cannot be confirmed, do not shut them down and state that in final.
+
 ## 5. Review Focus
 
 Check in this order:
@@ -157,6 +166,7 @@ At 375px, the primary button label wraps to two lines and increases the CTA grou
 - Change type:
 - Page type:
 - Verification level:
+- Runtime note:
 
 ## Findings
 
@@ -190,6 +200,10 @@ Rules:
 - Do not output empty severity sections.
 - Every finding must have location, evidence, impact, and repair direction.
 - For screenshots or unrun pages, do not present inference as fact.
+- If this review started or reused a local service, briefly state service ownership, URL / port, and final state in `Runtime note`.
+- If this review started a temporary service, shut it down and check the port before final; if shutdown cannot be confirmed, state the remaining port / PID / reason.
+- Review does not write files by default; if screenshots, browser evidence, or report files are saved, prefer `examples/reports/assets/review/<review-run>/` and state the path in `Runtime note` or the output.
+- Except for user-requested retained data, report-listed evidence artifacts, or real project changes, temporary files created during review should be deleted before final; if deletion fails, state the path and reason.
 - If no issues are found, say "No Critical / Major UI issues found" and mention residual unverified risk.
 
 If no issues are found, use:
@@ -232,3 +246,4 @@ Suggest `audit-ui` when:
 - Do not output issues without evidence, location, or repair direction.
 - Do not expand PR / diff scope unless there is a clear regression risk.
 - Do not list low-value Minor issues to appear thorough.
+- Do not leave a temporary service started by this review running in the background; also do not shut down a service that existed before review or cannot be confirmed as owned by this review.

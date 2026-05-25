@@ -172,6 +172,8 @@ Manage server lifecycle when starting or reusing a service:
 - If reusing a user-started localhost / dev server, record the URL / port and do not shut it down.
 - If this audit starts a temporary dev / preview / static server for browser verification, record the start command, URL / port, and process information.
 - After the audit, shut down any service started temporarily by this audit to avoid occupying ports. Leave it running only when the user explicitly asks for that or shutting it down would affect a pre-existing user service, and state that in the report.
+- After shutting down a temporary service, check whether the target port is still occupied; on Windows, npm, Next.js, Vite, Storybook, and similar multi-process launch paths, do not rely only on the parent PID returned at startup.
+- If the port is still occupied, clean up only processes that can be confirmed as started by this audit; if ownership cannot be confirmed, do not shut them down and state the remaining port / PID / reason in the report.
 
 `Quick Audit`:
 
@@ -221,7 +223,9 @@ For Deep Audit, also check when possible:
 - Data content: tables, code blocks, rich text, long lists, and multi-column content across mobile, tablet, and wide screens.
 - States and accessibility: focus-visible, keyboard paths, forced colors / high-contrast risk, and reduced motion.
 
-If Deep Audit opens a browser and generates screenshots, prefer saving them under `examples/reports/assets/audit/` in the current project, with one subdirectory per audit run, for example `examples/reports/assets/audit/2026-05-24-home/`. Filenames should include page or region, viewport, and state, such as `home-375.png` or `dashboard-1280-filter-open.png`. If the project is not writable, the user requested another directory, or screenshots are only available as temporary tool artifacts, state the screenshot location or why they were not saved in the report.
+If audit opens a browser and saves screenshots, prefer saving them under `examples/reports/assets/audit/` in the current project, with one subdirectory per audit run, for example `examples/reports/assets/audit/2026-05-24-home/`. Filenames should include page or region, viewport, and state, such as `home-375.png` or `dashboard-1280-filter-open.png`. If the project is not writable, the user requested another directory, or screenshots are only available as temporary tool artifacts, state the screenshot location or why they were not saved in the report.
+
+Audit does not write report files by default. Write only when the user explicitly asks to record findings, generate a report, or update an issue log, preferably under `examples/reports/` or the user-specified path. Except for user-requested retained data, report-listed evidence artifacts, or real project changes, temporary files created during audit should be deleted before the report; if deletion fails, state the path and reason.
 
 If the page cannot run, infer from CSS, layout code, breakpoints, and component structure. State which viewports and interactions were not verified.
 
@@ -230,10 +234,11 @@ If the page cannot run, infer from CSS, layout code, breakpoints, and component 
 Capture evidence according to inspection method:
 
 - Browser evidence: viewport width, page region, interaction state, scroll position, visible symptom.
-- Server evidence: if this audit started or reused a dev / preview / static server, state the URL / port, service ownership, and whether the temporary service was shut down.
+- Server evidence: if this audit started or reused a dev / preview / static server, state the URL / port, service ownership, whether the temporary service was shut down, and whether any port or process residue remains.
 - Code evidence: file path, component name, CSS class, breakpoint, state branch, style token, component prop, semantic structure.
 - Screenshot evidence: visible region, element relationship, clipping, overlap, hierarchy.
 - Screenshot files: when this audit saves screenshots, list the screenshot directory and key files in the report; if screenshots were only used as temporary observation artifacts, state that too.
+- Temporary files: if this audit creates temporary scripts, temporary pages, temporary data, or one-off downloads, delete them before the report by default; list them under `Artifacts` only when they are retained as evidence.
 - Inferred evidence: risks based on code or screenshot must be labeled as untested or needs verification.
 - Systemic evidence: when the same issue appears across pages, components, or states, record the shared cause such as token inconsistency, mixed control systems, missing breakpoint strategy, or confused scroll layering.
 
@@ -298,3 +303,4 @@ Use the report structure and omission rules from `references/checklists/ui-audit
 - Do not force a preset when the user did not choose one.
 - Do not remove necessary business information for the sake of visual consistency.
 - Do not state unverified issues as fact.
+- Do not leave a temporary service started by this audit running in the background; also do not shut down a service that existed before audit or cannot be confirmed as owned by this audit.

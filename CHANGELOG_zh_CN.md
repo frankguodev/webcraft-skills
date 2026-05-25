@@ -4,6 +4,57 @@
 
 ---
 
+## v0.1.24 - 2026-05-25
+
+### Review
+
+- 将 `review-ui` 的运行页面验证约束轻量融入现有流程，保持 review 不默认启动浏览器或本地服务的定位。
+- 要求混合审查运行页面时区分复用已有服务和本轮临时启动服务，并在输出中简短说明服务来源、URL / 端口和最终状态。
+- 增加临时服务关闭后的端口检查规则，避免 Windows、npm、Next.js、Vite、Storybook 等多进程场景下只停止父 PID 后仍残留服务。
+- 增加 review 证据产物存放规则，默认不写文件；保存截图、浏览器证据或报告时使用 `examples/reports/assets/review/<review-run>/`，其他临时文件在 final 前删除。
+
+### Audit
+
+- 强化 `audit-ui` 临时 dev / preview / static server 生命周期规则，要求关闭后检查目标端口和进程残留。
+- 服务证据增加端口或进程残留说明，避免 audit 报告只记录启动信息而遗漏清理状态。
+- 将 audit 截图保存规则扩展到所有实际保存截图的 audit 模式，并明确报告文件默认不写入；临时脚本、页面、数据和下载文件默认在报告前删除。
+
+### Fix
+
+- 强化 `fix-ui` 页面与路径验证中的服务来源管理，启动临时服务前先识别目标端口是否已有服务。
+- 清理临时服务时要求结合端口和子进程检查，不能只依赖启动返回的父 PID。
+- 明确 fix 证据目录只存截图、报告或证据产物，真实修复代码写入项目真实位置；验证临时文件默认在输出前删除。
+
+### Polish
+
+- 强化 `polish-ui` 轻量复检中的临时服务关闭和端口检查规则。
+- 要求无法确认端口残留归属时不误关已有服务，并在 `Temporary service(临时服务)` 中说明。
+- 明确 polish 的 before / after 截图和保留证据放入同一 `examples/reports/assets/polish/<polish-run>/` 目录，临时对照文件、草稿和验证文件默认删除。
+- 收紧 `polish-ui` 的执行边界：review / audit finding 只能作为诊断线索，polish 默认不新增页面级信息模块，并要求去装饰时先做减法、复检同页信息重复。
+- 强化 polish 交互细节检查，覆盖真实可点击元素的 cursor / pointer、focus-visible、状态不跳动、图标文字对齐、点击热区和长标签 / badge / chip / 错误文案压力。
+
+### Build
+
+- 为 `build-ui` 的自检与验证补充临时服务生命周期规则，覆盖启动前端口识别、启动记录、关闭后端口检查和多进程场景。
+- 输出模板增加 `临时服务` 字段，便于说明 build 验证期间服务是否复用、关闭或残留。
+- 增加 build 证据产物规则：交付文件放真实项目位置，验证截图和需保留证据放入 `examples/reports/assets/build/<build-run>/`，临时预览、mock、验证脚本和下载文件默认删除。
+
+### 文档
+
+- 更新 README 和 README_zh_CN，将公开说明从 audit / fix 稳定范围扩展为 Audit、Review、Fix、Polish 和 Build 五个工作流。
+- 补充 review、polish、build 的使用示例、适用范围、验证产物位置和临时文件清理说明。
+- 重排 README 使用方式，把示例分摊到每个具体 workflow 下，并补充使用环境、浏览器验证、临时服务和临时文件清理提示。
+- 将 Cursor 和 Plain Prompt 保留为实验性适配，Preset 明确为可选视觉参考。
+- 在 README 和 README_zh_CN 底部增加致谢，感谢 `baoyu-skills`、`mattpocock/skills` 及其作者对 AI Agent skill 生态的启发。
+- 在 README 和 README_zh_CN 中增加免责声明，提醒使用者自行审查 AI Agent 的结论、代码变更、生成内容和发布风险。
+- 继续优化 README 和 README_zh_CN 的外部读者路径，增加 workflow 选择速查、产物与临时文件说明，以及 FAQ / 故障排查。
+
+### 发布
+
+- 将 package 版本更新为 `0.1.24`，与 changelog 版本保持一致。
+- 收紧 `SKILL.md` 与 slash command 入口说明：Build 覆盖站点、页面和功能模块，Fix 支持用户指定问题，Preset 仅在用户指定或 workflow 明确需要时读取。
+- 修正 `/ui-review` 和 `/ui-build` 的提示边界，避免把整站体检误导为 Review，或在未指定 preset 时自动套用 preset。
+
 ## v0.1.23 - 2026-05-25
 
 ### Fix

@@ -16,7 +16,7 @@ Before editing, identify the main source of roughness:
 - Typography: disordered scale, tight line-height, awkward heading wraps.
 - Color: weak hierarchy, overused accents, insufficient contrast.
 - Radius / border / shadow: no consistent system.
-- States: hover, focus-visible, disabled, loading, or error missing or rough.
+- States: cursor / pointer, hover, focus-visible, disabled, loading, or error missing or rough.
 - Responsive: mobile crowding, overflow, small buttons, unstable media ratio.
 - Template smell: vague copy, too many badges, decoration over information.
 
@@ -45,6 +45,7 @@ Blocking issues go to `fix-ui`; systemic issues go to `audit-ui`; direction rebu
 - Source is audit findings: handle only visual maturity, template noise, state details, non-blocking responsive issues, and high-value Minor items; Critical and blocking Major findings go to `fix-ui` first.
 - Source is `Focused Audit`: prioritize Top Findings related to visual system, AI-template smell, control consistency, and risk viewports. Do not expand into Deep Polish.
 - Source is `Deep Audit`: follow polish items after usability fixes in Fix Order; do not rerun a full audit.
+- Findings from review / audit are only diagnostic clues for polish; before acting, confirm they still fit the current polish scope and will not change information structure or repeat content already present on the page.
 - User only says "make it more polished" and risk is unclear: do a light diagnosis first; suggest audit when systemic risk appears.
 
 ## 4. Preserve And Converge
@@ -60,6 +61,7 @@ Converge first:
 
 - Use existing tokens; do not create a second color, radius, shadow, or spacing system for polish.
 - Prefer local fixes over component refactors; remove noise instead of adding decoration.
+- Polish does not add page-level information modules, data overviews, leaderboards, maps, recommendation areas, or content collections by default; when those are needed, stop and state that the work is beyond polish.
 - Converge color, type scale, radius, border, shadow, and spacing.
 - Unify component states instead of adding new visual effects.
 
@@ -99,7 +101,7 @@ Stop Deep Polish and provide a plan or handoff when:
 3. Information hierarchy: first-screen priority, heading/body rhythm, CTA hierarchy.
 4. Visual tokens: spacing, font scale, color, radius, border, shadow.
 5. AI Template Smell: excessive badges, bento grids, gradient glows, vague slogans, decorative icons.
-6. Microinteraction: hover, active, transition, detail alignment.
+6. Microinteraction: cursor / pointer, hover, active, focus-visible, transition, icon/text alignment, and hit targets.
 
 Do not start with motion or decoration. Refinement usually comes from clearer hierarchy and a steadier system.
 
@@ -109,8 +111,9 @@ Do not start with motion or decoration. Refinement usually comes from clearer hi
 - Typography: reduce levels, control type/weight jumps, improve line-height, paragraph width, and heading wraps.
 - Color: preserve brand color, limit accent usage, and make contrast/state recognition work first.
 - Radius / Border / Shadow: converge a small token scale; borders structure, shadows show real elevation.
-- Components / States: add hover, active, focus-visible, disabled, loading, empty, error, and success where relevant without layout shift.
-- AI Template Smell: remove meaningless badges, decorative icons, repeated CTAs, and filler cards; replace vague slogans with real content and clear structure.
+- Components / States: add cursor / pointer, hover, active, focus-visible, disabled, loading, empty, error, and success for truly clickable elements; state feedback should not change element size, adjacent layout, or scroll position.
+- Icons / Click targets: align icon size, stroke width, text baseline, and icon/text spacing; icon buttons and adjacent actions need clear click / touch targets, not only small visual icons.
+- AI Template Smell: first delete, weaken, or converge meaningless badges, decorative icons, repeated CTAs, and filler cards; add only small supporting content when it does not repeat information already present on the page and serves the current task.
 
 If token drift has spread across pages, stop page-level polish and suggest audit or design-system cleanup first.
 
@@ -131,17 +134,21 @@ If module judgment shows the issue affects core task completion, accessibility, 
 After polishing, check:
 
 - 375px, 768px, 1280px key viewports.
-- Long headings, long button copy, mixed Chinese/English.
-- Hover, active, focus-visible, disabled, loading, error.
+- Long headings, long button copy, mixed Chinese/English, long labels, badges, chips, and error text.
+- Cursor / pointer, hover, active, focus-visible, disabled, loading, and error states for truly clickable elements.
+- Icon/text alignment, consistent icon stroke and size, and sufficient icon-button hit targets.
 - Dialogs, menus, forms, and navigation still work.
 - Visual tokens are more unified and no new inconsistency was introduced.
 - Original page style and product meaning are preserved.
+- Information duplication: confirm existing lists, stats, categories, tags, or CTAs were not copied into a new decorative or summary area.
 
 When the page can run and the environment allows it, open the target page for a light recheck:
 
 - Align with the user's actual entry: start command, URL / port, route, auth state, and main state.
-- If this polish run starts a temporary dev / preview / static server, record command, URL / port, and process information; shut it down after recheck. If reusing a user-started service, record it but do not shut it down.
-- If screenshots are generated, prefer saving them under `examples/reports/assets/polish/` with one subdirectory per run; filenames include page/region, viewport, and phase, such as `home-375-before.png` and `home-375-after.png`.
+- If this polish run starts a temporary dev / preview / static server, record command, URL / port, and process information; shut it down after recheck and check whether the target port is still occupied. If reusing a user-started service, record it but do not shut it down.
+- On Windows, npm, Next.js, Vite, Storybook, and similar multi-process launch paths, do not rely only on the parent PID returned at startup; if remaining port ownership cannot be confirmed as this polish run's service, do not shut it down and state that in `Temporary service`.
+- If screenshots are generated, prefer saving them under `examples/reports/assets/polish/` with one subdirectory per run; keep `before` / `after` screenshots in the same directory, and include page/region, viewport, and phase in filenames, such as `home-375-before.png` and `home-375-after.png`.
+- Temporary comparison files, visual drafts, one-off screenshots, verification scripts, or temporary data should be deleted before output by default; retain them only when the user asks or when they are evidence artifacts, then place them under `examples/reports/assets/polish/<polish-run>/` and state them in `Screenshots` or `Temporary service`.
 - If browser opening, service startup, or screenshot saving is unavailable, state why and list remaining risk.
 
 ## 10. Output Format
@@ -173,6 +180,8 @@ When the page can run and the environment allows it, open the target page for a 
 
 State exactly which visual details were converged, what template noise was removed, and whether the original style was preserved.
 
+Before output, confirm temporary files created during polish were deleted. Retained files must be user-requested, evidence artifacts, or real project changes, and their paths must be listed in the output.
+
 ## 11. Prohibited
 
 - Do not turn polish into redesign or force a preset when the user did not choose one.
@@ -183,3 +192,4 @@ State exactly which visual details were converged, what template noise was remov
 - Do not hide overflow, clip content, make text unreadable, or delete necessary information to create fake polish.
 - Do not fabricate browser verification.
 - Do not leave a dev / preview / static server started only for verification running in the background and occupying a port, unless the user explicitly asked to keep it running.
+- Do not shut down a service that existed before polish or cannot be confirmed as owned by this polish run.
