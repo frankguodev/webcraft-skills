@@ -4,6 +4,15 @@ English | [中文](./CHANGELOG_zh_CN.md)
 
 ---
 
+## v0.1.25 - 2026-05-25
+
+### Architecture
+
+- Changed the npm installer from a hardcoded single-`webcraft-ui` installer into a skills-collection installer that discovers `skills/*/SKILL.md` and supports `--skill <name|all>` plus `list`.
+- Added the standard `npx skills add frankguodev/webcraft-skills --skill webcraft-ui` install path to README and README_zh_CN while keeping the package installer for Claude Code slash command prompts.
+- Updated the package description to present Webcraft as a skills collection and bumped the version to `0.1.25`.
+- Added skills-collection validation so future skills must have a `SKILL.md` frontmatter name that matches the skill directory.
+
 ## v0.1.24 - 2026-05-25
 
 ### Review
