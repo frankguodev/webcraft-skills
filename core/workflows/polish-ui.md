@@ -12,7 +12,7 @@ The skill's Locale Contract has already selected one runtime locale before this 
 
 Before editing, identify the main source of roughness:
 
-- Spacing: cramped/empty rhythm, uncontrolled width, unstable padding.
+- Spacing / rhythm: cramped/empty rhythm, sections without pause, uncontrolled width, unstable padding.
 - Typography: disordered scale, tight line-height, awkward heading wraps.
 - Color: weak hierarchy, overused accents, insufficient contrast.
 - Radius / border / shadow: no consistent system.
@@ -28,7 +28,7 @@ Find the main problem first. Do not tweak everywhere without diagnosis.
 
 - The page is basically usable but rough, unstable, or not realistic enough.
 - Spacing, typography, color, radius, border, shadow, states, or template noise need convergence.
-- The user says "make it more polished", "less AI-looking", "refine details", or "make it better without big changes".
+- The user says "make it more polished", "less AI-looking", "refine details", "too crowded", or "make it better without big changes".
 - Audit has confirmed that the main issues are not blocking use, and remaining work is mostly Minor polish, visual-system convergence, state completion, or AI-template smell.
 
 `polish-ui` does not fit:
@@ -98,7 +98,7 @@ Stop Deep Polish and provide a plan or handoff when:
 
 1. Usability boundary: blocking issues go to `fix-ui`; polish handles only non-blocking states and details.
 2. Responsive details: mobile wrapping, button height, media ratio, sticky overlap, dialog scroll.
-3. Information hierarchy: first-screen priority, heading/body rhythm, CTA hierarchy.
+3. Information hierarchy: first-screen priority, section breathing room, heading/body rhythm, CTA hierarchy.
 4. Visual tokens: spacing, font scale, color, radius, border, shadow.
 5. AI Template Smell: excessive badges, bento grids, gradient glows, vague slogans, decorative icons.
 6. Microinteraction: cursor / pointer, hover, active, focus-visible, transition, icon/text alignment, and hit targets.
@@ -107,7 +107,7 @@ Do not start with motion or decoration. Refinement usually comes from clearer hi
 
 ## 7. Strategies
 
-- Spacing: normalize page container, section spacing, and component padding first; reduce mobile spacing without edge crowding.
+- Spacing: normalize page container, section spacing, grouping, and component padding first; reduce mobile spacing without edge crowding or directly compressing desktop density onto small screens.
 - Typography: reduce levels, control type/weight jumps, improve line-height, paragraph width, and heading wraps.
 - Color: preserve brand color, limit accent usage, and make contrast/state recognition work first.
 - Radius / Border / Shadow: converge a small token scale; borders structure, shadows show real elevation.
@@ -139,6 +139,7 @@ After polishing, check:
 - Icon/text alignment, consistent icon stroke and size, and sufficient icon-button hit targets.
 - Dialogs, menus, forms, and navigation still work.
 - Visual tokens are more unified and no new inconsistency was introduced.
+- The page is easier to scan, sections have pauses, and the main CTA is not buried by equal-weight elements.
 - Original page style and product meaning are preserved.
 - Information duplication: confirm existing lists, stats, categories, tags, or CTAs were not copied into a new decorative or summary area.
 
@@ -190,6 +191,7 @@ Before output, confirm temporary files created during polish were deleted. Retai
 - Do not delete real business information, rewrite positioning, or rewrite core copy unless requested.
 - Do not add dependencies, change component library, rewrite routes, or change business logic.
 - Do not hide overflow, clip content, make text unreadable, or delete necessary information to create fake polish.
+- Do not create "neatness" only by compressing spacing, shrinking type, or filling the page with cards; that breaks breathing room and readability.
 - Do not fabricate browser verification.
 - Do not leave a dev / preview / static server started only for verification running in the background and occupying a port, unless the user explicitly asked to keep it running.
 - Do not shut down a service that existed before polish or cannot be confirmed as owned by this polish run.
