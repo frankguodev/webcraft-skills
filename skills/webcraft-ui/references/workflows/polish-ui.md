@@ -80,7 +80,7 @@ After polishing, check:
 - Each section answers one clear question, serves one clear entry, or supports one decision; two sections should not use the same form to answer the same entry question.
 - Original page style and product meaning are preserved, and existing lists, stats, categories, tags, or CTAs were not copied into a new decorative or summary area.
 
-When the page can run and the environment allows it, open the target page for a light recheck. Align with the user's actual entry. If this polish run starts a temporary service, record command, URL / port, and process information, then shut it down after recheck and inspect the port; if reusing a user-started service, record it but do not shut it down. Save screenshots under `examples/reports/assets/polish/<polish-run>/`; delete temporary comparison files, drafts, verification scripts, and temporary data before output by default.
+Polish does not start a browser or save screenshots by default. Prefer diff review, code review, type checks, or existing context for rechecks, and state any residual risk from not doing browser verification. Open the page or save screenshots only when the user explicitly asks for browser verification, before/after screenshots, multi-viewport checks, or a verified delivery; saved screenshots go under `examples/reports/assets/polish/<polish-run>/`. If the polish changes broad layout, responsiveness, interaction paths, or reference-guided structure and the user did not request verification, state `Not verified in browser` and, when useful, suggest follow-up `audit-ui` or `fix-ui` verification.
 
 ## 8. Output
 
@@ -89,11 +89,10 @@ Output `Source`, `Boundary`, `Preserved`, `Adjusted`, `Removed`, `Changed Files`
 ## 9. Prohibited
 
 - Do not turn polish into redesign or force a preset when the user did not choose one.
-- Do not default to dark, cinematic, minimal, or SaaS style.
 - Do not add gradients, blobs, cards, or motion to create "premium" feel.
 - Do not delete real business information, rewrite positioning, or rewrite core copy unless requested.
 - Do not treat a reference site as a visual skin to copy, or copy its brand, copy, data, metrics, logo, or business claims.
 - Do not add dependencies, change component library, rewrite routes, or change business logic.
 - Do not hide overflow, clip content, make text unreadable, or delete necessary information to create fake polish.
 - Do not create "neatness" only by compressing spacing, shrinking type, or filling the page with cards; do not create "premium" feel only by enlarging section padding, pulling modules apart, or diluting content density.
-- Do not fabricate browser verification, leave a temporary verification service running, or shut down a service that existed before polish or cannot be confirmed as owned by this polish run.
+- Do not start a browser, save screenshots, or manage local services for polish unless the user asked for it.
